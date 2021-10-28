@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="kyanite:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/kyanite_jar</output-path>
+    <root id="archive" name="kyanite.jar">
+      <element id="module-output" name="kyanite" />
+      <element id="module-source" name="kyanite" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jsfml/bin/jsfml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/annotations-20.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jackson-annotations-2.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jackson-core-2.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jackson-databind-2.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/json-20210307.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
