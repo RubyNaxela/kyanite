@@ -1,0 +1,160 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: #2b2b2b;
+    color: white;
+    font-family: 'Maven Pro', sans-serif;
+}
+
+body {
+    width: 100vw;
+}
+
+a {
+    color: unset;
+    text-decoration: none;
+}
+
+hr {
+    margin: 2rem 0;
+}
+
+ul {
+    margin: 0.5rem 1.25rem;
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 250ms ease-in;
+}
+
+.fade-in.appearred {
+    opacity: 1;
+}
+
+.padding-container {
+    padding: min(4rem, 6.667vw);
+}
+
+.monospace {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.generic-text {
+    font-size: min(1.25rem, 2.083vw);
+    text-align: justify;
+}
+
+.ghost-button {
+    background-color: black;
+    border: white 0.15rem solid;
+    border-radius: 3rem;
+    display: table;
+    font-size: min(1.5rem, 2.5vw);
+    height: min(3rem, 5vw);
+    margin: 0.333rem;
+    mix-blend-mode: screen;
+    padding: 0 min(1rem, 1.667vw);
+    text-align: center;
+}
+
+.ghost-button:hover {
+    filter: invert(1);
+    font-weight: bold;
+}
+
+.ghost-button-text {
+    display: table-cell;
+    transform: translateY(-5%);
+    vertical-align: middle;
+}
+
+.subtitle-container {
+    padding: min(2rem, 3.333vw);
+    font-size: min(2rem, 3.333vw);
+    font-weight: bold;
+    text-align: center;
+    transform: translateY(0);
+}
+
+.subtitle-container hr {
+    width: 0;
+    border-style: solid;
+    margin: min(1rem, 1.667vw) auto 0;
+    transition: all 500ms cubic-bezier(0, 0.5, 0, 1);
+    transition-delay: 100ms;
+}
+
+.appearred .subtitle-container hr {
+    width: 5rem;
+}
+
+.subtitle-container .initial {
+    position: absolute;
+    left: 50%;
+    top: -10%;
+    transform: translate(-50%) scale(1.5);
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.subtitle-container .subtitle {
+    display: inline-block;
+    position: relative;
+}
+
+.illustration {
+    background-attachment: fixed;
+    background-position-x: right;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 25vh;
+    width: 100vw;
+}
+
+#cover {
+    background: url('background.jpeg') no-repeat fixed;
+    background-size: cover;
+    background-position-x: right;
+    height: 100vh;
+    position: relative;
+    width: 100vw;
+}
+
+#cover-bar {
+    display: flex;
+    padding: 2rem;
+    width: 100vw;
+}
+
+#cover-title-icon {
+    height: min(6rem, 10vw);
+    position: absolute;
+    right: 33%;
+    top: 50%;
+    transform: translate(-50%, -50%) translateX(max(-10.125rem, -16.875vw));
+    transform-origin: right center;
+}
+
+#cover-title {
+    font-size: min(6rem, 10vw);
+    position: absolute;
+    right: 33%;
+    top: 50%;
+    transform: translate(50%, -50%);
+}
+
+#cover-subtitle {
+    font-size: min(1.5rem, 2.5vw);
+    position: absolute;
+    right: 33%;
+    top: 50%;
+    transform: translate(50%, -50%) translateY(min(3.75rem, 6.25vw)) translateX(min(2.75rem, 4.583vw));
+}
+
+#intro-logo {
+    height: min(32rem, 32vw);
+}

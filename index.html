@@ -2,11 +2,83 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="site/kyanite_white_outline.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="site/style.css">
     <title>Kyanite</title>
 </head>
 <body>
 
-<p><b>Stub!</b></p>
+<div id="container">
+
+    <div id="cover">
+
+        <div id="cover-bar">
+            <a href="#intro"><div class="ghost-button"><span class="ghost-button-text">Wstęp</span></div></a>
+            <a href="doc/index.html"><div class="ghost-button"><span class="ghost-button-text">Dokumentacja</span></div></a>
+            <div class="ghost-button"><span class="ghost-button-text">Tutoriale</span></div>
+        </div>
+
+        <div id="cover-title-section">
+            <img id="cover-title-icon" src="site/kyanite_white_outline.png">
+            <div id="cover-title" class="monospace"><b>Kyanite</b></div>
+            <div id="cover-subtitle" class="monospace"><b>A level-up in gamedev</b></div>
+        </div>
+
+    </div>
+
+    <a id="intro"></a>
+    <div class="fade-in" style="display:flex">
+
+        <img id="intro-logo" src="site/kyanite_gray.png">
+        <div class="padding-container" style="padding-left: 0">
+            <div class="subtitle-container">
+                <div class="subtitle">
+                    <span class="initial">C</span>
+                    Czym jest Kyanite
+                    <hr>
+                </div>
+            </div>
+            <p class="generic-text">Kyanite jest biblioteką multimedialną ułatwiającą tworzenie gier
+                komputerowych w języku Java. Oparty jest na bibliotece SFML autorstwa Laurenta Gomili,
+                która stanowi rdzeń biblioteki. Wiele mechanizmów zostało jednak zastąpionych bardziej
+                wysokopoziomowymi rozwiązaniami oddającymi charakter języka Java.</p>
+        </div>
+
+    </div>
+
+    <div class="illustration" style="background-image: url('site/illustration1.jpeg')"></div>
+
+    <div style="display:flex;">
+
+        <div class="padding-container fade-in" style="height:30vw">
+            <div class="subtitle-container">
+                <div class="subtitle">
+                    <span class="initial">K</span>
+                    Kluczowe funkcje
+                    <hr>
+                </div>
+            </div>
+            <p class="generic-text">Do najważniejszych funkcjonalności Kyanite można zaliczyć:</p>
+            <ul class="generic-text">
+                <li>wbudowaną obsługę zasobów (assets), w tym plików danych</li>
+                <li>wygodne zarządzanie niezależnymi scenami gry</li>
+                <li>funkcje matematyczne pozwalające na znaczne uproszczenie rutynowych
+                    obliczeń związanych z obrotami, symulacją praw fizyki, itd.
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="illustration" style="background-image: url('site/illustration2.jpeg'); height:100vh;"></div>
+
+</div>
+<script type="text/javascript" src="site/animations.js"></script>
 
 </body>
 </html>
