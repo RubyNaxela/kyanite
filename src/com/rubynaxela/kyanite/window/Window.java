@@ -2,6 +2,7 @@ package com.rubynaxela.kyanite.window;
 
 import com.rubynaxela.kyanite.game.Scene;
 import com.rubynaxela.kyanite.game.assets.Icon;
+import com.rubynaxela.kyanite.game.entities.MouseActionListener;
 import com.rubynaxela.kyanite.util.Utils;
 import com.rubynaxela.kyanite.util.Vec2;
 import com.rubynaxela.kyanite.window.event.*;
@@ -13,6 +14,7 @@ import org.jsfml.graphics.View;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.ContextSettings;
+import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.*;
@@ -408,8 +410,25 @@ public class Window extends RenderWindow {
                 case KEY_PRESSED -> keyListener.keyPressed((KeyEvent) event);
                 case KEY_RELEASED -> keyListener.keyReleased((KeyEvent) event);
                 case MOUSE_WHEEL_MOVED -> mouseWheelListener.mouseWheelMoved((MouseWheelEvent) event);
-                case MOUSE_BUTTON_PRESSED -> mouseButtonListener.mouseButtonPressed((MouseButtonEvent) event);
-                case MOUSE_BUTTON_RELEASED -> mouseButtonListener.mouseButtonReleased((MouseButtonEvent) event);
+                case MOUSE_BUTTON_PRESSED -> {
+                    mouseButtonListener.mouseButtonPressed((MouseButtonEvent) event);
+                    for (int i = scene.size(); i >= 0; i--) {
+                        final MouseActionListener listener = Utils.cast(scene.get(i), MouseActionListener.class);
+                        if (listener != null && listener.isCursorInside(Mouse.getPosition(this))) {
+                            listener.mouseButtonPressed((MouseButtonEvent) event);
+                            break;
+                        }
+                    }
+                }
+                case MOUSE_BUTTON_RELEASED -> {
+                    for (int i = scene.size(); i >= 0; i--) {
+                        final MouseActionListener listener = Utils.cast(scene.get(i), MouseActionListener.class);
+                        if (listener != null && listener.isCursorInside(Mouse.getPosition(this))) {
+                            listener.mouseButtonReleased((MouseButtonEvent) event);
+                            break;
+                        }
+                    }
+                }
                 case MOUSE_MOVED -> mouseListener.mouseMoved((MouseEvent) event);
                 case MOUSE_ENTERED -> mouseListener.mouseEntered((MouseEvent) event);
                 case MOUSE_LEFT -> mouseListener.mouseLeft((MouseEvent) event);

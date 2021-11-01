@@ -12,12 +12,12 @@ import org.jsfml.system.Vector2i;
  * Represents an axis-aligned rectangle using floating point coordinates. Useful when the
  * right and bottom side coordinates of a rectangle are needed instead of its width and height.
  */
-public class GlobalBounds {
+public class GlobalRect {
 
     public final float top, right, bottom, left;
     private final FloatRect floatRect;
 
-    public GlobalBounds(float top, float right, float bottom, float left) {
+    public GlobalRect(float top, float right, float bottom, float left) {
         this.top = top;
         this.right = right;
         this.bottom = bottom;
@@ -32,8 +32,8 @@ public class GlobalBounds {
      * @return a new {@code GlobalBounds} object
      */
     @Contract(pure = true, value = "_ -> new")
-    public static GlobalBounds from(@NotNull FloatRect boundingBox) {
-        return new GlobalBounds(boundingBox.top, boundingBox.left + boundingBox.width,
+    public static GlobalRect from(@NotNull FloatRect boundingBox) {
+        return new GlobalRect(boundingBox.top, boundingBox.left + boundingBox.width,
                                 boundingBox.top + boundingBox.height, boundingBox.left);
     }
 
@@ -70,22 +70,22 @@ public class GlobalBounds {
     /**
      * Calculates the rectangle of bounds intersection.
      *
-     * @param globalBounds the bounds to test against
+     * @param globalRect the bounds to test against
      * @return the intersection rectangle, or {@code null} if the bounds do not intersect
      */
     @Nullable
     @Contract(pure = true)
-    public GlobalBounds intersection(@NotNull GlobalBounds globalBounds) {
-        return GlobalBounds.from(floatRect.intersection(globalBounds.floatRect));
+    public GlobalRect intersection(@NotNull GlobalRect globalRect) {
+        return GlobalRect.from(floatRect.intersection(globalRect.floatRect));
     }
 
     /**
-     * @param globalBounds the rectangle to test against
+     * @param globalRect the rectangle to test against
      * @return whether these bounds intersect with another bounds
      */
     @Contract(pure = true)
-    public boolean intersects(@NotNull GlobalBounds globalBounds) {
-        return intersection(globalBounds) != null;
+    public boolean intersects(@NotNull GlobalRect globalRect) {
+        return intersection(globalRect) != null;
     }
 
     /**

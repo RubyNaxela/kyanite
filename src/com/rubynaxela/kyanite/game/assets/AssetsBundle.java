@@ -32,10 +32,14 @@ public final class AssetsBundle {
      *
      * @param id the identifier of this asset
      * @return an {@link Asset} object
+     * @throws NullPointerException when an asset of the specified id does not exist
+     *                              or was attempted to be used before being registered
      */
     @SuppressWarnings("unchecked")
     public <T extends Asset> T get(@NotNull @AssetId String id) {
-        if (!assets.containsKey(id)) throw new NullPointerException("Asset of ID " + id + " does not exist");
+        if (!assets.containsKey(id))
+            throw new NullPointerException("Asset of ID " + id + " either does not exist or " +
+                                           "was attempted to be used before being registered");
         return (T) assets.get(id);
     }
 }

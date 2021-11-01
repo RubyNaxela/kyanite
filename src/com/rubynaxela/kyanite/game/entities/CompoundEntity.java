@@ -54,17 +54,17 @@ public class CompoundEntity implements Transformable, Drawable {
     /**
      * @return the object's global bounding rectangle in the scene, taking the object's transformation into account
      */
-    public FloatRect getGlobalBounds() {
+    public FloatRect getGlobalRect() {
         Float top = null, right = null, bottom = null, left = null;
         for (final TransformableDrawableWrapper object : objects) {
             final Object unwrapped = object.getOriginal();
             try {
-                final Method getGlobalBounds = unwrapped.getClass().getMethod("getGlobalBounds");
-                final GlobalBounds globalBounds = GlobalBounds.from((FloatRect) getGlobalBounds.invoke(unwrapped));
-                top = MathUtils.min(top, globalBounds.top);
-                right = MathUtils.max(right, globalBounds.right);
-                bottom = MathUtils.max(bottom, globalBounds.bottom);
-                left = MathUtils.min(left, globalBounds.left);
+                final Method getGlobalRect = unwrapped.getClass().getMethod("getGlobalBounds");
+                final GlobalRect globalRect = GlobalRect.from((FloatRect) getGlobalRect.invoke(unwrapped));
+                top = MathUtils.min(top, globalRect.top);
+                right = MathUtils.max(right, globalRect.right);
+                bottom = MathUtils.max(bottom, globalRect.bottom);
+                left = MathUtils.min(left, globalRect.left);
             } catch (NoSuchMethodException e) {
                 final String message = "Cannot determine global bounds for this compound entity because class " +
                                        unwrapped.getClass().getName() + " does not have a getGlobalBounds method.";
@@ -75,8 +75,8 @@ public class CompoundEntity implements Transformable, Drawable {
                 throw new UnsupportedOperationException(message);
             }
         }
-        return new GlobalBounds(Objects.requireNonNull(top), Objects.requireNonNull(right),
-                                Objects.requireNonNull(bottom), Objects.requireNonNull(left)).toFloatRect();
+        return new GlobalRect(Objects.requireNonNull(top), Objects.requireNonNull(right),
+                              Objects.requireNonNull(bottom), Objects.requireNonNull(left)).toFloatRect();
     }
 
     /**

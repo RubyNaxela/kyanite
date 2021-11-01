@@ -86,16 +86,21 @@ li {
 
 .ghost-label.inline {
     font-size: 80%;
-    font-weight: bold;
+    font-weight: 900;
     height: 1.5rem;
+    letter-spacing: 0.1rem;
     margin: 0;
     padding: 0 0.5rem;
+    text-shadow: white 0.05rem 0 0;
 }
 
 .ghost-label-text {
     display: table-cell;
-    transform: translateY(-5%);
     vertical-align: middle;
+}
+
+.ghost-button .ghost-label-text {
+    transform: translateY(-5%);
 }
 
 .ghost-button:hover {

@@ -17,6 +17,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 /**
  * Provides a scene that can be given a custom behavior and displayed on a {@link com.rubynaxela.kyanite.window.Window}.
@@ -30,6 +31,13 @@ public abstract class Scene implements Iterable<Drawable> {
     private Time previousFrameTime, currentFrameTime;
     private Color backgroundColor = Color.BLACK;
     private RectangleShape background;
+
+    /**
+     * Creates an empty scene. Overriding this constructor is possible
+     * but not recommended. Use the {@link #init} method instead.
+     */
+    public Scene() {
+    }
 
     /**
      * This method is executed when this scene is assigned to a window.
@@ -145,6 +153,16 @@ public abstract class Scene implements Iterable<Drawable> {
     @Override
     public void forEach(@NotNull Consumer<? super Drawable> action) {
         drawables.forEach(action);
+    }
+
+    /**
+     * Creates a sequential {@code Stream} with the collection of objects of this scene as its source.
+     *
+     * @return a sequential {@code Stream} over this scene's objects
+     */
+    @NotNull
+    public Stream<Drawable> stream() {
+        return drawables.stream();
     }
 
     /**

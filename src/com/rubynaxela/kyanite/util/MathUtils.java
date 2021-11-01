@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.util;
 
-import com.rubynaxela.kyanite.game.entities.GlobalBounds;
+import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.CircleShape;
@@ -83,7 +83,7 @@ public final class MathUtils {
                                               @NotNull RectangleShape rectangle) {
 
         final Vector2f circlePosition = circle.getPosition();
-        final GlobalBounds rectangleBounds = GlobalBounds.from(rectangle.getGlobalBounds());
+        final GlobalRect rectangleBounds = GlobalRect.from(rectangle.getGlobalBounds());
 
         final boolean horizontalCollision = rectangleBounds.isOnTheLeft(circlePosition) ||
                                             rectangleBounds.isOnTheRight(circlePosition);

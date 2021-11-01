@@ -1,14 +1,12 @@
 package com.rubynaxela.kyanite.util;
 
-import com.rubynaxela.kyanite.game.assets.AssetsBundle;
-import com.rubynaxela.kyanite.system.IOException;
+import com.rubynaxela.kyanite.game.gui.HUD;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jsfml.graphics.Color;
 
-import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 public class Utils {
@@ -33,6 +31,19 @@ public class Utils {
     public static <T> T lambdaInit(@NotNull T object, @NotNull Consumer<T>... initActions) {
         Arrays.stream(initActions).forEach(a -> a.accept(object));
         return object;
+    }
+
+    /**
+     * Casts an object to the class or interface represented by the specified {@code Class} object.
+     *
+     * @param object the object to be cast
+     * @param type   the target class
+     * @return the object after casting, or null if the object cannot be cast to the specified class or is null
+     */
+    @Nullable
+    public static <T> T cast(@NotNull Object object, @NotNull Class<T> type) {
+        if (type.isInstance(object)) return type.cast(object);
+        else return null;
     }
 
     /**
