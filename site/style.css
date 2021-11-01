@@ -11,6 +11,7 @@ html {
 }
 
 body {
+    overflow: hidden;
     width: 100vw;
 }
 
@@ -168,7 +169,11 @@ li {
 }
 
 #cover-title {
+    display: flex;
     font-size: min(6rem, 10vw);
+    flex-direction: column;
+    font-weight: bold;
+    justify-content: flex-end;
     position: absolute;
     right: 33%;
     top: 50%;
@@ -176,11 +181,12 @@ li {
 }
 
 #cover-subtitle {
+    bottom: -1ch;
     font-size: min(1.5rem, 2.5vw);
     position: absolute;
-    right: 33%;
-    top: 50%;
-    transform: translate(50%, -50%) translateY(min(3.75rem, 6.25vw)) translateX(min(2.75rem, 4.583vw));
+    text-align: right;
+    transform: translateX(max(-0.375rem, -0.6vw));
+    width: 100%;
 }
 
 #intro-logo {
