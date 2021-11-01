@@ -11,8 +11,13 @@ html {
 }
 
 body {
-    overflow: hidden;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
     width: 100vw;
+}
+
+body::-webkit-scrollbar {
+    display: none; /* WebKit */
 }
 
 a {
