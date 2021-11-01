@@ -27,17 +27,25 @@ ul {
     margin: 0.5rem 1.25rem;
 }
 
-.fade-in {
+li {
+    margin: 0.5ch 0;
+}
+
+.fade-in, .fade-in-early {
     opacity: 0;
     transition: opacity 250ms ease-in;
 }
 
-.fade-in.appearred {
+.fade-in.appearred, .fade-in-early.appearred {
     opacity: 1;
 }
 
 .padding-container {
     padding: min(4rem, 6.667vw);
+}
+
+.horizontal-padding-container {
+    padding: 0 min(4rem, 6.667vw);
 }
 
 .monospace {
@@ -49,7 +57,15 @@ ul {
     text-align: justify;
 }
 
-.ghost-button {
+.big {
+    font-size: 200%;
+}
+
+.small {
+    font-size: 75%;
+}
+
+.ghost-label, .ghost-button {
     background-color: black;
     border: white 0.15rem solid;
     border-radius: 3rem;
@@ -62,15 +78,23 @@ ul {
     text-align: center;
 }
 
-.ghost-button:hover {
-    filter: invert(1);
+.ghost-label.inline {
+    font-size: 80%;
     font-weight: bold;
+    height: 1.5rem;
+    margin: 0;
+    padding: 0 0.5rem;
 }
 
-.ghost-button-text {
+.ghost-label-text {
     display: table-cell;
     transform: translateY(-5%);
     vertical-align: middle;
+}
+
+.ghost-button:hover {
+    filter: invert(1);
+    font-weight: bold;
 }
 
 .subtitle-container {
@@ -111,8 +135,12 @@ ul {
     background-position-x: right;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 25vh;
+    height: 40vh;
     width: 100vw;
+}
+
+.bottom-margin {
+    margin-bottom: 2rem;
 }
 
 #cover {

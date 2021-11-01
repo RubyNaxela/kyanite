@@ -17,9 +17,18 @@
     <div id="cover">
 
         <div id="cover-bar">
-            <a href="#intro"><div class="ghost-button"><span class="ghost-button-text">Wstęp</span></div></a>
-            <a href="doc/index.html"><div class="ghost-button"><span class="ghost-button-text">Dokumentacja</span></div></a>
-            <div class="ghost-button"><span class="ghost-button-text">Tutoriale</span></div>
+            <a href="#intro">
+                <div class="ghost-button"><span class="ghost-label-text">Wstęp</span></div>
+            </a>
+            <a href="#tutorials">
+                <div class="ghost-button"><span class="ghost-label-text">Tutoriale</span></div>
+            </a>
+            <a href="doc/index.html">
+                <div class="ghost-button"><span class="ghost-label-text">Dokumentacja</span></div>
+            </a>
+            <a href="#download">
+                <div class="ghost-button"><span class="ghost-label-text">Pobieranie</span></div>
+            </a>
         </div>
 
         <div id="cover-title-section">
@@ -32,7 +41,6 @@
 
     <a id="intro"></a>
     <div class="fade-in" style="display:flex">
-
         <img id="intro-logo" src="site/kyanite_gray.png">
         <div class="padding-container" style="padding-left: 0">
             <div class="subtitle-container">
@@ -47,37 +55,182 @@
                 która stanowi rdzeń biblioteki. Wiele mechanizmów zostało jednak zastąpionych bardziej
                 wysokopoziomowymi rozwiązaniami oddającymi charakter języka Java.</p>
         </div>
-
     </div>
 
-    <div class="illustration" style="background-image: url('site/illustration1.jpeg')"></div>
+    <div class="illustration" style="background-image: url('site/illustration1.jpeg');"></div>
 
-    <div style="display:flex;">
-
-        <div class="padding-container fade-in" style="height:30vw">
-            <div class="subtitle-container">
-                <div class="subtitle">
-                    <span class="initial">K</span>
-                    Kluczowe funkcje
-                    <hr>
-                </div>
+    <div class="padding-container fade-in">
+        <div class="subtitle-container">
+            <div class="subtitle">
+                <span class="initial">K</span>
+                Kluczowe funkcje
+                <hr>
             </div>
-            <p class="generic-text">Do najważniejszych funkcjonalności Kyanite można zaliczyć:</p>
-            <ul class="generic-text">
-                <li>wbudowaną obsługę zasobów (assets), w tym plików danych</li>
-                <li>wygodne zarządzanie niezależnymi scenami gry</li>
-                <li>funkcje matematyczne pozwalające na znaczne uproszczenie rutynowych
-                    obliczeń związanych z obrotami, symulacją praw fizyki, itd.
-                </li>
-            </ul>
-
         </div>
-
+        <p class="generic-text">Do najważniejszych funkcjonalności Kyanite można zaliczyć:</p>
+        <ul class="generic-text">
+            <li>wbudowaną obsługę zasobów (assets), w tym plików danych</li>
+            <li>wygodne zarządzanie niezależnymi scenami i interfejsami graficznymi gry</li>
+            <li>funkcje matematyczne pozwalające na znaczne uproszczenie rutynowych
+                obliczeń związanych z obrotami, symulacją praw fizyki, itd.
+            </li>
+        </ul>
     </div>
 
-    <div class="illustration" style="background-image: url('site/illustration2.jpeg'); height:100vh;"></div>
+    <div class="illustration"
+         style="background-image: url('site/illustration2.jpeg'); background-position-x: center;"></div>
+
+    <a id="tutorials"></a>
+    <div class="padding-container fade-in">
+        <div class="subtitle-container">
+            <div class="subtitle">
+                <span class="initial">T</span>
+                Tutoriale
+                <hr>
+            </div>
+        </div>
+        <p class="generic-text" style="text-align: center; font-size: 300%; color: rgba(255, 255, 255, 0.15);">
+            <i>COMING SOON</i>
+        </p>
+    </div>
+
+    <div class="illustration"
+         style="background-image: url('site/illustration3.jpeg'); background-position-x: left;"></div>
+
+    <a id="download"></a>
+    <div class="padding-container fade-in">
+        <div class="subtitle-container">
+            <div class="subtitle">
+                <span class="initial">T</span>
+                Pobieranie
+                <hr>
+            </div>
+        </div>
+        <div style="display: flex; width: 100%; align-items: flex-start; justify-content: space-evenly;">
+            <div>
+                <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite</span></div>
+                <p style="text-align: center;">wersja: 1.5.2</p>
+            </div>
+            <div>
+                <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>
+                <p style="text-align: center;">wersja: 1.5.3</p>
+                <ul>
+                    <li>potencjalnie niestabilna wersja</li>
+                    <li>może zawierać błędy</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="horizontal-padding-container fade-in">
+        <div class="subtitle-container">
+            <div class="subtitle">
+                <span class="initial">D</span>
+                Dziennik zmian
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.6</p>
+        <div style="display: inline-block;">
+            <div class="inline ghost-label"><span class="ghost-label-text">closed-beta</span></div>
+        </div>
+        <p class="small">November 1st, 2021</p>
+        <ul>
+            <li>Dodano klasę <span class="monospace">HUD</span> służącą do wyświetlania w oknie zawartości nad sceną</li>
+            <li>Dodano interfejs <span class="monospace">MouseActionListener</span> służącą do uproszczenia obsługi akcji
+                wywoływanych przez przyciski myszy
+            </li>
+        </ul>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.5.3</p>
+        <div style="display: inline-block;">
+            <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
+        </div>
+        <p class="small">October 28th, 2021</p>
+        <ul>
+            <li>Dodano metodę tworzącą obiekt <span class="monospace">InputStream</span> z zasobu znajdującego się w katalogu
+                głównym źródeł (w konsekwencji również we wnętrzu pliku <span class="monospace">.jar</span>)
+            </li>
+            <li>Od teraz nieudana próba załadowania natywnych <span class="monospace">Asset</span>ów powoduje błąd krytyczny
+                i kończy program zamiast powodować brak odpowiedzi
+            </li>
+        </ul>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.5.2</p>
+        <p class="small">October 26th, 2021</p>
+        <ul>
+            <li>Dodano nowy typ zasobu: <span class="monospace">Icon</span></li>
+            <li>Dodano natywną obsługę ikony okna</li>
+            <li><span class="monospace">Asset</span>y od teraz mogą zostać stworzone z obiektu
+                <span class="monospace">InputStream</span>
+            </li>
+            <li>Naprawiono błąd przy bindowaniu danych z obiektu JSON do obiektu klasy <span class="monospace">Dictionary</span>
+                podczas konwersji obiektu <span class="monospace">DataAsset</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.5.1</p>
+        <p class="small">October 25th, 2021</p>
+        <ul>
+            <li>Naprawiono widoczność klasy <span class="monospace">Dictionary</span></li>
+        </ul>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.5</p>
+        <p class="small">October 24th, 2021</p>
+        <ul>
+            <li>Dodano nowy typ zasobu: <span class="monospace">DataAsset</span> służący do deserializacji danych z plików JSON
+            </li>
+            <li>Dodano interfejs <span class="monospace">AnimatedEntity</span> w celu uproszczenia animacji bytów</li>
+            <li>Dodano metodę służącą do sprawdzania i obliczania przecięcia dwóch prostokątów - obiektów klasy
+                <span class="monospace">GlobalBounds</span></li>
+            <li>Dodano metodę służącą do obliczania wektora kierunku między dwoma punktami</li>
+            <li>Dodano metodę służącą do obliczania wektora kierunku dla zderzenia ruchomego okręgu z nieruchomym prostokątem
+            </li>
+            <li>Dodano natywną obsługę tła sceny</li>
+            <li>Metoda <span class="monospace">getDeltaTime</span> została przeniesiona do klasy
+                <span class="monospace">Scene</span></li>
+            <li>Włączanie synchronizacji pionowej jest teraz realizowane poprzez wywołanie metody
+                <span class="monospace">setFramerateLimit</span> z argumentem <span class="monospace">Window.Framerate.VSYNC
+                </span></li>
+            <li>Klasa <span class="monospace">GlobalBounds</span> nie jest już klasą typu <span class="monospace">record</span>
+        </ul>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.4.1</p>
+        <p class="small">October 21st, 2021</p>
+        <ul>
+            <li>Dodano możliwość zmiany głośności i wysokości dźwięku dla obiektów <span class="monospace">Sound</span></li>
+            <li>Dla obiektu <span class="monospace">GlobalBounds</span> można sprawdzać, czy zawiera dany punkt</li>
+        </ul>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.4</p>
+        <p class="small">October 20th, 2021</p>
+        <ul>
+            <li>Pierwsze publiczne wydanie</li>
+        </ul>
+    </div>
+
+    <div class="padding-container">
+        <p class="small" style="color: rgba(255, 255, 255, 0.5);">Copyright © 2021 by RubyNaxela</p>
+    </div>
 
 </div>
+
+
 <script type="text/javascript" src="site/animations.js"></script>
 
 </body>
