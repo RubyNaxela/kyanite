@@ -44,24 +44,4 @@ public class Utils {
     public static Color darker(@NotNull Color color) {
         return new Color(color.r / 2, color.g / 2, color.b / 2);
     }
-
-    /**
-     * Finds a resource file with a given path. The path must be relative to the module source root
-     * package. For instance, if the file is located at {@code project_name/src/res/sound/step1.ogg},
-     * then the specified path must be {@code "res/sound/step1.ogg"}.
-     *
-     * @param path the path to the desired file (relative to the module source root package)
-     * @return an {@link java.io.InputStream} from the specified file
-     * @throws IOException if no resource with this name is found, or access to the resource
-     *                     is denied by the security manager or {@code path} is {@code null}
-     */
-    @NotNull
-    @Contract(pure = true, value = "_ -> new")
-    public static InputStream resourceStream(@NotNull String path) {
-        try {
-            return Objects.requireNonNull(AssetsBundle.class.getResourceAsStream(!path.startsWith("/") ? "/" : "" + path));
-        } catch (NullPointerException e) {
-            throw new IOException(e);
-        }
-    }
 }
