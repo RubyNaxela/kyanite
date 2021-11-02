@@ -1,5 +1,6 @@
 package com.rubynaxela.kyanite.window;
 
+import com.rubynaxela.kyanite.game.HUD;
 import com.rubynaxela.kyanite.game.Scene;
 import com.rubynaxela.kyanite.game.assets.Icon;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
@@ -39,6 +40,11 @@ public class Window extends RenderWindow {
 
         @Override
         public void loop() {
+        }
+    };
+    private HUD hud = new HUD() {
+        @Override
+        protected void init() {
         }
     };
     private CloseListener closeListener = this::close;
@@ -371,7 +377,24 @@ public class Window extends RenderWindow {
      */
     public void setScene(@NotNull Scene scene) {
         this.scene = scene;
-        scene.fullInit(this);
+        scene.fullInit();
+    }
+
+    /**
+     * @return reference to the current HUD layer of this window.
+     */
+    public HUD getHUD() {
+        return hud;
+    }
+
+    /**
+     * Changes the current HUD of this window and initializes it (calls its {@code init()} method).
+     *
+     * @param hud the new HUD to be displayed on this window
+     */
+    public void setHUD(@NotNull HUD hud) {
+        this.hud = hud;
+        hud.fullInit();
     }
 
     /**
@@ -384,6 +407,7 @@ public class Window extends RenderWindow {
                 clear(scene.getBackgroundColor());
                 handleEvents();
                 scene.fullLoop(this);
+                hud.draw(this);
                 display();
             }
         } else throw new IllegalStateException("The window loop is already running");
