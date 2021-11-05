@@ -366,8 +366,9 @@ public class Window extends RenderWindow {
     /**
      * @return reference to the current render scene of this window.
      */
-    public Scene getScene() {
-        return scene;
+    @SuppressWarnings("unchecked")
+    public <T extends Scene> T getScene() {
+        return (T) scene;
     }
 
     /**
@@ -383,8 +384,9 @@ public class Window extends RenderWindow {
     /**
      * @return reference to the current HUD layer of this window.
      */
-    public HUD getHUD() {
-        return hud;
+    @SuppressWarnings("unchecked")
+    public <T extends HUD> T getHUD() {
+        return (T) hud;
     }
 
     /**

@@ -22,7 +22,7 @@ public final class Vec2 {
      */
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2f f(T x, T y) {
+    public static <T extends Number> Vector2f f(@NotNull T x, @NotNull T y) {
         return new Vector2f(x.floatValue(), y.floatValue());
     }
 
@@ -34,7 +34,7 @@ public final class Vec2 {
      */
     @NotNull
     @Contract(pure = true, value = "_ -> new")
-    public static Vector2f f(Vector2i vector) {
+    public static Vector2f f(@NotNull Vector2i vector) {
         return new Vector2f(vector);
     }
 
@@ -47,7 +47,7 @@ public final class Vec2 {
      */
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2i i(T x, T y) {
+    public static <T extends Number> Vector2i i(@NotNull T x, @NotNull T y) {
         return new Vector2i(x.intValue(), y.intValue());
     }
 
@@ -59,7 +59,175 @@ public final class Vec2 {
      */
     @NotNull
     @Contract(pure = true, value = "_ -> new")
-    public static Vector2i i(Vector2f vector) {
+    public static Vector2i i(@NotNull Vector2f vector) {
         return new Vector2i(vector);
+    }
+
+    /**
+     * Adds two vectors.
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return a new vector, representing the sum of the two vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f add(@NotNull Vector2f vector1, @NotNull Vector2f vector2) {
+        return Vector2f.add(vector1, vector2);
+    }
+
+    /**
+     * Adds two vectors.
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return a new vector, representing the sum of the two vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f add(@NotNull Vector2i vector1, @NotNull Vector2f vector2) {
+        return Vector2f.add(Vec2.f(vector1), vector2);
+    }
+
+    /**
+     * Adds two vectors.
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return a new vector, representing the sum of the two vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f add(@NotNull Vector2f vector1, @NotNull Vector2i vector2) {
+        return Vector2f.add(vector1, Vec2.f(vector2));
+    }
+
+    /**
+     * Adds two vectors.
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return a new vector, representing the sum of the two vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2i add(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
+        return Vector2i.add(vector1, vector2);
+    }
+
+    /**
+     * Subtracts two vectors.
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return a new vector, representing the difference between the two vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f subtract(@NotNull Vector2f vector1, @NotNull Vector2f vector2) {
+        return Vector2f.sub(vector1, vector2);
+    }
+
+    /**
+     * Subtracts two vectors.
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return a new vector, representing the difference between the two vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f subtract(@NotNull Vector2i vector1, @NotNull Vector2f vector2) {
+        return Vector2f.sub(Vec2.f(vector1), vector2);
+    }
+
+    /**
+     * Subtracts two vectors.
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return a new vector, representing the difference between the two vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f subtract(@NotNull Vector2f vector1, @NotNull Vector2i vector2) {
+        return Vector2f.sub(vector1, Vec2.f(vector2));
+    }
+
+    /**
+     * Subtracts two vectors.
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return a new vector, representing the difference between the two vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2i subtract(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
+        return Vector2i.sub(vector1, vector2);
+    }
+
+    /**
+     * Multiplies a vector by a scalar.
+     *
+     * @param vector the vector
+     * @param scalar the scalar to multiply by
+     * @return a new vector, representing the scaled vector
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static <T extends Number> Vector2f multiply(@NotNull Vector2f vector, @NotNull T scalar) {
+        return Vector2f.mul(vector, scalar.floatValue());
+    }
+
+    /**
+     * Multiplies a scalar by a vector.
+     *
+     * @param scalar the scalar to multiply by
+     * @param vector the vector
+     * @return a new vector, representing the scaled vector
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static <T extends Number> Vector2f multiply(@NotNull T scalar, @NotNull Vector2f vector) {
+        return Vector2f.mul(vector, scalar.floatValue());
+    }
+
+    /**
+     * Multiplies a vector by a scalar.
+     *
+     * @param vector the vector
+     * @param scalar the scalar to multiply by
+     * @return a new vector, representing the scaled vector
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static <T extends Number> Vector2i multiply(@NotNull Vector2i vector, @NotNull T scalar) {
+        return Vector2i.mul(vector, scalar.intValue());
+    }
+
+    /**
+     * Multiplies a scalar by a vector.
+     *
+     * @param scalar the scalar to multiply by
+     * @param vector the vector
+     * @return a new vector, representing the scaled vector
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static <T extends Number> Vector2i multiply(@NotNull T scalar, @NotNull Vector2i vector) {
+        return Vector2i.mul(vector, scalar.intValue());
+    }
+
+    /**
+     * Multiplies a vector by the inverse of a scalar.
+     *
+     * @param vector the vector
+     * @param scalar the scalar to divide by
+     * @return a new vector, representing the scaled vector
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static <T extends Number> Vector2f divide(@NotNull Vector2f vector, @NotNull T scalar) {
+        return Vector2f.div(vector, scalar.floatValue());
+    }
+
+    /**
+     * Multiplies a vector by the inverse of a scalar.
+     *
+     * @param vector the vector
+     * @param scalar the scalar to divide by
+     * @return a new vector, representing the scaled vector
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static <T extends Number> Vector2i divide(@NotNull Vector2i vector, @NotNull T scalar) {
+        return Vector2i.div(vector, scalar.intValue());
     }
 }

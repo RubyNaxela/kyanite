@@ -37,17 +37,18 @@ public class CompoundEntity implements Transformable, Drawable {
     }
 
     /**
-     * Adds an object and puts it on its relative position.
+     * Adds an object and puts it on its relative position. Takes the current origin of the object into account.
+     * It is not recommended to change the object's origin after it has been added to this {@code CompoundEntity}.
      *
-     * @param object           an object of a class that implements both {@link Transformable} and {@link Drawable} interfaces
-     * @param relativePosition the object's position relative to the top-left corner of this compound entity
+     * @param object      an object of a class that implements both {@link Transformable} and {@link Drawable} interfaces
+     * @param relativePos the object's position relative to the top-left corner of this compound entity
      */
-    public void add(@NotNull Object object, @NotNull Vector2f relativePosition) {
+    public void add(@NotNull Object object, @NotNull Vector2f relativePos) {
         if (!(object instanceof Transformable && object instanceof Drawable))
             throw new IllegalArgumentException("The object must be an instance of a class that implements both " +
                                                "org.jsfml.graphics.Transformable and org.jsfml.graphics.Drawable interfaces.");
         final TransformableDrawableWrapper obj = new TransformableDrawableWrapper(object, position);
-        obj.asTransformable().setOrigin(Vector2f.sub(origin, relativePosition));
+        obj.asTransformable().setOrigin(Vector2f.add(Vector2f.sub(origin, relativePos), obj.asTransformable().getOrigin()));
         objects.add(obj);
     }
 

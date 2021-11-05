@@ -110,22 +110,22 @@
         </div>
         <div style="display: flex; width: 100%; align-items: flex-start; justify-content: space-evenly;">
             <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/release/kyanite-1.5.3.jar">
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/release/kyanite-1.6.0.jar">
                     <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite</span></div>
                 </a>
-                <p style="text-align: center;">wersja: 1.5.3</p>
+                <p style="text-align: center;">wersja: 1.6.0</p>
             </div>
-            <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.6.0-beta.2.jar">
-                    <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>
-                </a>
-                <p style="text-align: center;">wersja: 1.6.0-beta.2</p>
-                <ul>
-                    <li>potencjalnie niestabilna wersja</li>
-                    <li>może zawierać błędy</li>
-                    <li>część wspomnianych zmian<br>może nie być wdrożona</li>
-                </ul>
-            </div>
+<!--            <div>-->
+<!--                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.6.0-beta.5.jar">-->
+<!--                    <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>-->
+<!--                </a>-->
+<!--                <p style="text-align: center;">wersja: 1.6.0-beta.5</p>-->
+<!--                <ul>-->
+<!--                    <li>potencjalnie niestabilna wersja</li>-->
+<!--                    <li>może zawierać błędy</li>-->
+<!--                    <li>część wspomnianych zmian<br>może nie być wdrożona</li>-->
+<!--                </ul>-->
+<!--            </div>-->
         </div>
     </div>
 
@@ -140,19 +140,31 @@
     </div>
 
     <div class="horizontal-padding-container fade-in-early bottom-margin">
-        <p class="big" style="display: inline-block;">1.6.0</p>
+        <p class="big" style="display: inline-block;">1.6.1</p>
         <div style="display: inline-block;">
             <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
         </div>
-        <p class="small">2 listopada 2021</p>
+        <p class="small">6 listopada 2021</p>
         <ul>
             <li>
                 <div style="display: flex; align-items: center;">
-                    <i>Dodano klasę <span class="monospace">HUD</span> służącą do wyświetlania w oknie zawartości nad sceną</i>
+                    <div> Dodano klasę <span class="monospace">TextureAtlas</span> służącą do odczytu wielu
+                        tekstur zapisanych w pojedynczym pliku obrazu
+                    </div>
                     <div style="display: inline-block; margin-left: 0.5ch">
-                        <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
+                        <div class="inline ghost-label"><span class="ghost-label-text">TODO</span></div>
                     </div>
                 </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.6.0</p>
+        <p class="small">5 listopada 2021</p>
+        <ul>
+            <li>
+                Dodano klasę <span class="monospace">HUD</span> służącą do wyświetlania w oknie zawartości nad sceną
             </li>
             <li>Dodano interfejs <span class="monospace">MouseActionListener</span> służący do uproszczenia obsługi akcji
                 wywoływanych przez przyciski myszy
@@ -160,6 +172,10 @@
             <li>Dodano funkcję tworzącą strumień do klasy <span class="monospace">Scene</span></li>
             <li>Nazwa klasy <span class="monospace">GlobalBounds</span> została zmieniona na <span
                     class="monospace">GlobalRect</span></li>
+            <li>Dodawanie komponentu do obiektu <span class="monospace">CompoundEntity</span> od teraz uwzględnia początek
+                układu lokalnego (<span class="monospace">origin</span>) komponentu sprzed dodania go
+            </li>
+            <li>Dodano aliasy działań arytmetycznych do klasy <span class="monospace">Vec2</span></li>
         </ul>
     </div>
 
