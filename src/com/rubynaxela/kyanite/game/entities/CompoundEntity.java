@@ -128,6 +128,15 @@ public class CompoundEntity implements Transformable, Drawable {
     /**
      * Sets the scaling of this object, using its origin as the scaling center.
      *
+     * @param factor the new scaling factor
+     */
+    public void setScale(float factor) {
+        setScale(Vec2.f(factor, factor));
+    }
+
+    /**
+     * Sets the scaling of this object, using its origin as the scaling center.
+     *
      * @param x the new X scaling factor
      * @param y the new Y scaling factor
      */
