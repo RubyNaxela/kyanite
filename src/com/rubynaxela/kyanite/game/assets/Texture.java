@@ -18,6 +18,10 @@ public class Texture implements Asset {
 
     private final org.jsfml.graphics.Texture texture;
 
+    Texture(@NotNull org.jsfml.graphics.Texture texture) {
+        this.texture = texture;
+    }
+
     /**
      * Creates a new texture from the source specified by the path.
      *
