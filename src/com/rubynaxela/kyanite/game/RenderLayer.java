@@ -328,4 +328,15 @@ abstract class RenderLayer implements Iterable<Drawable> {
             add(0, object);
         } else throw new NullPointerException("This render layer does not contain the specified object");
     }
+
+    /**
+     * Creates an immutable list containing the elements of this render layer, in the same order as they are inside the render
+     * layer. Query operations on the returned list "read through" to the specified list, and attempts to modify the returned
+     * list, whether direct or via its iterator, result in an {@code UnsupportedOperationException}.
+     *
+     * @return an immutable list containing the elements of this render layer
+     */
+    public List<Drawable> asList() {
+        return Collections.unmodifiableList(drawables);
+    }
 }
