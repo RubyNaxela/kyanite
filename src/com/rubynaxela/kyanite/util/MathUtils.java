@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.RectangleShape;
+import org.jsfml.graphics.Transform;
 import org.jsfml.system.Vector2f;
 
 public final class MathUtils {
@@ -45,6 +46,28 @@ public final class MathUtils {
     }
 
     /**
+     * Converts an angle value in degrees to a value in radians
+     *
+     * @param angle an angle value in degrees
+     * @return the specified angle in radians
+     */
+    @Contract(pure = true)
+    public static float degToRad(float angle) {
+        return angle * ((float) Math.PI) / 180.0f;
+    }
+
+    /**
+     * Converts an angle value in radians to a value in degrees
+     *
+     * @param angle an angle value in radians
+     * @return the specified angle in degrees
+     */
+    @Contract(pure = true)
+    public static float radToDeg(float angle) {
+        return angle / ((float) Math.PI) * 180.0f;
+    }
+
+    /**
      * Returns {@code true} with given probability using the {@link java.util.Random} pseudorandom-number generator.
      *
      * @param probability the probability that returned value is {@code true}
@@ -53,6 +76,19 @@ public final class MathUtils {
     @Contract(pure = true)
     public static boolean probability(float probability) {
         return Math.random() <= probability;
+    }
+
+    /**
+     * Combines transformation matrices by multiplying them.
+     *
+     * @param transforms the transformation matrices
+     * @return the product of the specified matrices
+     */
+    @Contract(pure = true, value = "_ -> new")
+    public static Transform combineTransforms(@NotNull Transform... transforms) {
+        Transform result = Transform.IDENTITY;
+        for (final Transform transform : transforms) result = Transform.combine(result, transform);
+        return result;
     }
 
     /**
