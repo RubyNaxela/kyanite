@@ -15,8 +15,9 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
- * Provides a layer of {@link Drawable}s that can be displayed on
- * a {@link Window}. The base class of {@link Scene} and {@link HUD}.
+ * Provides a layer of {@link Drawable}s that can be displayed on a {@link Window}. The collection index of
+ * an element is also its z-index. If two elements overlap each other, the one with the higher index will
+ * be displayed over the other one. This class is the base of the {@link Scene} and {@link HUD} classes.
  */
 abstract class RenderLayer implements Iterable<Drawable> {
 

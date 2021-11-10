@@ -14,9 +14,36 @@ import org.jsfml.system.Vector2i;
  */
 public class GlobalRect {
 
-    public final float top, right, bottom, left;
+    /**
+     * The Y-coordinate of the top side of this rectangle.
+     */
+    public final float top;
+
+    /**
+     * The X-coordinate of the right side of this rectangle.
+     */
+    public final float right;
+
+    /**
+     * The Y-coordinate of the top bottom of this rectangle.
+     */
+    public final float bottom;
+
+    /**
+     * The X-coordinate of the top left of this rectangle.
+     */
+    public final float left;
+
     private final FloatRect floatRect;
 
+    /**
+     * Creates a new rectangle.
+     *
+     * @param top    the Y-coordinate of the top side of this rectangle
+     * @param right  the X-coordinate of the right side of this rectangle
+     * @param bottom the Y-coordinate of the bottom side of this rectangle
+     * @param left   the X-coordinate of the left side of this rectangle
+     */
     public GlobalRect(float top, float right, float bottom, float left) {
         this.top = top;
         this.right = right;
@@ -34,7 +61,7 @@ public class GlobalRect {
     @Contract(pure = true, value = "_ -> new")
     public static GlobalRect from(@NotNull FloatRect boundingBox) {
         return new GlobalRect(boundingBox.top, boundingBox.left + boundingBox.width,
-                                boundingBox.top + boundingBox.height, boundingBox.left);
+                              boundingBox.top + boundingBox.height, boundingBox.left);
     }
 
     /**
