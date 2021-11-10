@@ -208,6 +208,125 @@ public final class Vec2 {
     }
 
     /**
+     * Computes the Hadamard (element-wise) product of the specified vectors, which is the result of the following expression:
+     * <pre>[x1 * x2, y1 * y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return the Hadamard (element-wise) product of the specified vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f multiply(@NotNull Vector2f vector1, @NotNull Vector2f vector2) {
+        return Vec2.f(vector1.x * vector2.x, vector1.y * vector2.y);
+    }
+
+    /**
+     * Computes the Hadamard (element-wise) product of the specified vectors, which is the result of the following expression:
+     * <pre>[x1 * x2, y1 * y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return the Hadamard (element-wise) product of the specified vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f multiply(@NotNull Vector2f vector1, @NotNull Vector2i vector2) {
+        return Vec2.f(vector1.x * vector2.x, vector1.y * vector2.y);
+    }
+
+    /**
+     * Computes the Hadamard (element-wise) product of the specified vectors, which is the result of the following expression:
+     * <pre>[x1 * x2, y1 * y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return the Hadamard (element-wise) product of the specified vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f multiply(@NotNull Vector2i vector1, @NotNull Vector2f vector2) {
+        return Vec2.f(vector1.x * vector2.x, vector1.y * vector2.y);
+    }
+
+    /**
+     * Computes the Hadamard (element-wise) product of the specified vectors, which is the result of the following expression:
+     * <pre>[x1 * x2, y1 * y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return the Hadamard (element-wise) product of the specified vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2i multiply(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
+        return Vec2.i(vector1.x * vector2.x, vector1.y * vector2.y);
+    }
+
+    /**
+     * Computes the Hadamard (element-wise) quotient of the specified vectors, which is the result of the following expression:
+     * <pre>[x1 / x2, y1 / y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return the Hadamard (element-wise) quotient of the specified vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f divide(@NotNull Vector2f vector1, @NotNull Vector2f vector2) {
+        return Vec2.f(vector1.x / vector2.x, vector1.y / vector2.y);
+    }
+
+    /**
+     * Computes the Hadamard (element-wise) quotient of the specified vectors, which is the result of the following expression:
+     * <pre>[x1 / x2, y1 / y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return the Hadamard (element-wise) quotient of the specified vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f divide(@NotNull Vector2f vector1, @NotNull Vector2i vector2) {
+        return Vec2.f(vector1.x / vector2.x, vector1.y / vector2.y);
+    }
+
+    /**
+     * Computes the Hadamard (element-wise) quotient of the specified vectors, which is the result of the following expression:
+     * <pre>[x1 / x2, y1 / y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return the Hadamard (element-wise) quotient of the specified vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f divide(@NotNull Vector2i vector1, @NotNull Vector2f vector2) {
+        return Vec2.f(vector1.x / vector2.x, vector1.y / vector2.y);
+    }
+
+    /**
+     * Computes the Hadamard (element-wise) quotient of the specified vectors, which is the result of the following expression:
+     * <pre>[x1 / x2, y1 / y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return the Hadamard (element-wise) quotient of the specified vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2i divide(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
+        return Vec2.i(vector1.x / vector2.x, vector1.y / vector2.y);
+    }
+
+    /**
+     * Computes the Hadamard (element-wise) quotient of the specified vectors, which is the result of the following expression:
+     * <pre>[x1 / x2, y1 / y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     * Despite accepting two {@link Vector2i} arguments, performs mathematically correct
+     * division with the {@code float} precision and returns a {@link Vector2f}.
+     *
+     * @param vector1 the first vector
+     * @param vector2 the second vector
+     * @return the Hadamard (element-wise) quotient of the specified vectors
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f divideFloat(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
+        return Vec2.f(1.0f * vector1.x / vector2.x, 1.0f * vector1.y / vector2.y);
+    }
+
+    /**
      * Multiplies a vector by the inverse of a scalar.
      *
      * @param vector the vector
