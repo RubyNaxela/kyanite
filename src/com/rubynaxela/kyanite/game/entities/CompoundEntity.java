@@ -13,15 +13,16 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * An entity consisting of many components. A {@code CompoundEntity} can be drawn to a render target,
- * as well as positioned in the scene, rotated and scaled around an origin. This class can be used,
- * for instance, to create complex structures out of primitive shapes or to compose spannable texts.
+ * An entity consisting of many components. A {@code CompoundEntity} can be drawn to a render target, as well as
+ * positioned in the scene, rotated and scaled around an origin. The collection index of an element is also its z-index.
+ * If two elements overlap each other, the one with the higher index will be displayed over the other one. This class
+ * can be used, for instance, to creae complex structures out of primitive shapes or to compose spannable texts.
  */
 public class CompoundEntity implements Transformable, Drawable {
 
-    private final List<TransformableDrawableWrapper> objects = new ArrayList<>();
-    private Vector2f position = Vector2f.ZERO, scale = Vec2.f(1, 1), origin = Vector2f.ZERO;
+    private final List<Object> components = new ArrayList<>();
     private float rotation = 0;
+    private Vector2f origin = Vector2f.ZERO, position = Vector2f.ZERO, scale = Vec2.f(1, 1);
 
     /**
      * Creates an empty compound entity.
@@ -37,19 +38,31 @@ public class CompoundEntity implements Transformable, Drawable {
     }
 
     /**
-     * Adds an object and puts it on its relative position. Takes the current origin of the object into account.
-     * It is not recommended to change the object's origin after it has been added to this {@code CompoundEntity}.
+     * Adds the specified component objects to this compound entity.
+     *
+     * @param objects objects of a class that implements both {@link Transformable} and {@link Drawable} interfaces
+     */
+    public void add(@NotNull Object... objects) {
+        for (final Object object : objects) {
+            if (!(object instanceof Transformable && object instanceof Drawable))
+                throw new IllegalArgumentException("Added objects must be an instances of a class that implements both " +
+                                                   "org.jsfml.graphics.Transformable and org.jsfml.graphics.Drawable " +
+                                                   "interfaces.");
+//        obj.asTransformable().setOrigin(Vector2f.add(Vector2f.sub(origin, relativePos), obj.asTransformable().getOrigin()));
+            components.add(object);
+        }
+    }
+
+    /**
+     * Adds the specified component object to this compound entity.
      *
      * @param object      an object of a class that implements both {@link Transformable} and {@link Drawable} interfaces
-     * @param relativePos the object's position relative to the top-left corner of this compound entity
+     * @param relativePos unused
+     * @deprecated Use the {@link #add(Object...)} method instead.
      */
-    public void add(@NotNull Object object, @NotNull Vector2f relativePos) {
-        if (!(object instanceof Transformable && object instanceof Drawable))
-            throw new IllegalArgumentException("The object must be an instance of a class that implements both " +
-                                               "org.jsfml.graphics.Transformable and org.jsfml.graphics.Drawable interfaces.");
-        final TransformableDrawableWrapper obj = new TransformableDrawableWrapper(object, position);
-        obj.asTransformable().setOrigin(Vector2f.add(Vector2f.sub(origin, relativePos), obj.asTransformable().getOrigin()));
-        objects.add(obj);
+    @Deprecated
+    public void add(@NotNull Object object, @SuppressWarnings("unused") @NotNull Vector2f relativePos) {
+        add(object);
     }
 
     /**
@@ -57,22 +70,21 @@ public class CompoundEntity implements Transformable, Drawable {
      */
     public FloatRect getGlobalRect() {
         Float top = null, right = null, bottom = null, left = null;
-        for (final TransformableDrawableWrapper object : objects) {
-            final Object unwrapped = object.getOriginal();
+        for (final Object object : components) {
             try {
-                final Method getGlobalRect = unwrapped.getClass().getMethod("getGlobalBounds");
-                final GlobalRect globalRect = GlobalRect.from((FloatRect) getGlobalRect.invoke(unwrapped));
+                final Method getGlobalRect = object.getClass().getMethod("getGlobalBounds");
+                final GlobalRect globalRect = GlobalRect.from((FloatRect) getGlobalRect.invoke(object));
                 top = MathUtils.min(top, globalRect.top);
                 right = MathUtils.max(right, globalRect.right);
                 bottom = MathUtils.max(bottom, globalRect.bottom);
                 left = MathUtils.min(left, globalRect.left);
             } catch (NoSuchMethodException e) {
                 final String message = "Cannot determine global bounds for this compound entity because class " +
-                                       unwrapped.getClass().getName() + " does not have a getGlobalBounds method.";
+                                       object.getClass().getName() + " does not have a getGlobalBounds method.";
                 throw new UnsupportedOperationException(message);
             } catch (InvocationTargetException | IllegalAccessException e) {
                 final String message = "Cannot determine global bounds for this compound entity because the " +
-                                       "getGlobalBounds method from class" + unwrapped.getClass().getName() + "is unavailable.";
+                                       "getGlobalBounds method from class" + object.getClass().getName() + "is unavailable.";
                 throw new UnsupportedOperationException(message);
             }
         }
@@ -88,7 +100,10 @@ public class CompoundEntity implements Transformable, Drawable {
      */
     @Override
     public void draw(@NotNull RenderTarget target, @NotNull RenderStates states) {
-        objects.forEach(object -> target.draw(object.asDrawable(), Objects.requireNonNull(states)));
+        final RenderStates renderStates = new RenderStates(states.blendMode,
+                                                           Transform.combine(states.transform, getTransform()),
+                                                           states.texture, states.shader);
+        components.forEach(object -> target.draw(((Drawable) object), renderStates));
     }
 
     /**
@@ -104,6 +119,16 @@ public class CompoundEntity implements Transformable, Drawable {
     }
 
     /**
+     * Scales the object, using its origin as the scaling center. Given
+     * scaling factor is multiplied by the current factors of this object.
+     *
+     * @param factor the scaling factor
+     */
+    public void scale(float factor) {
+        scale(factor, factor);
+    }
+
+    /**
      * Sets the position of this object in the scene so that its origin will be exactly on it.
      *
      * @param position the new position of this object
@@ -111,7 +136,6 @@ public class CompoundEntity implements Transformable, Drawable {
     @Override
     public void setPosition(@NotNull Vector2f position) {
         this.position = position;
-        objects.forEach(object -> object.setPosition(position));
     }
 
     /**
@@ -122,7 +146,6 @@ public class CompoundEntity implements Transformable, Drawable {
     @Override
     public void setRotation(float angle) {
         this.rotation = angle;
-        objects.forEach(object -> object.asTransformable().setRotation(angle));
     }
 
     /**
@@ -153,7 +176,6 @@ public class CompoundEntity implements Transformable, Drawable {
     @Override
     public void setScale(@NotNull Vector2f factors) {
         this.scale = factors;
-        objects.forEach(object -> object.asTransformable().setScale(factors));
     }
 
     /**
@@ -175,7 +197,6 @@ public class CompoundEntity implements Transformable, Drawable {
     @Override
     public void setOrigin(@NotNull Vector2f origin) {
         this.origin = origin;
-        objects.forEach(object -> object.asTransformable().setOrigin(Vector2f.sub(origin, object.getPosition())));
     }
 
     /**
@@ -269,8 +290,10 @@ public class CompoundEntity implements Transformable, Drawable {
      */
     @Override
     public Transform getTransform() {
-        if (!objects.isEmpty()) return objects.get(0).asTransformable().getTransform();
-        return null;
+        final Vector2f localOrigin = Vec2.add(position, origin);
+        return MathUtils.combineTransforms(Transform.rotate(Transform.IDENTITY, rotation, localOrigin),
+                                           Transform.scale(Transform.IDENTITY, scale, localOrigin),
+                                           Transform.translate(Transform.IDENTITY, Vec2.subtract(position, origin)));
     }
 
     /**
@@ -278,40 +301,6 @@ public class CompoundEntity implements Transformable, Drawable {
      */
     @Override
     public Transform getInverseTransform() {
-        if (!objects.isEmpty()) return objects.get(0).asTransformable().getInverseTransform();
-        return null;
-    }
-
-    private static class TransformableDrawableWrapper {
-
-        final Object item;
-        Vector2f position;
-
-        TransformableDrawableWrapper(@NotNull Object item, @NotNull Vector2f position) {
-            this.item = item;
-            this.position = position;
-            asTransformable().setPosition(position);
-        }
-
-        Object getOriginal() {
-            return item;
-        }
-
-        Transformable asTransformable() {
-            return (Transformable) item;
-        }
-
-        Drawable asDrawable() {
-            return (Drawable) item;
-        }
-
-        public Vector2f getPosition() {
-            return position;
-        }
-
-        public void setPosition(Vector2f position) {
-            this.position = position;
-            asTransformable().setPosition(position);
-        }
+        return getTransform().getInverse();
     }
 }
