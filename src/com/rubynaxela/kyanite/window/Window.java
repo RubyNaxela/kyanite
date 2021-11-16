@@ -438,7 +438,7 @@ public class Window extends RenderWindow {
                 case MOUSE_WHEEL_MOVED -> mouseWheelListener.mouseWheelMoved((MouseWheelEvent) event);
                 case MOUSE_BUTTON_PRESSED -> {
                     mouseButtonListener.mouseButtonPressed((MouseButtonEvent) event);
-                    for (int i = scene.size(); i >= 0; i--) {
+                    for (int i = scene.size() - 1; i >= 0; i--) {
                         final MouseActionListener listener = Utils.cast(scene.get(i), MouseActionListener.class);
                         if (listener != null && listener.isCursorInside(Mouse.getPosition(this))) {
                             listener.mouseButtonPressed((MouseButtonEvent) event);
@@ -447,7 +447,7 @@ public class Window extends RenderWindow {
                     }
                 }
                 case MOUSE_BUTTON_RELEASED -> {
-                    for (int i = scene.size(); i >= 0; i--) {
+                    for (int i = scene.size() - 1; i >= 0; i--) {
                         final MouseActionListener listener = Utils.cast(scene.get(i), MouseActionListener.class);
                         if (listener != null && listener.isCursorInside(Mouse.getPosition(this))) {
                             listener.mouseButtonReleased((MouseButtonEvent) event);
