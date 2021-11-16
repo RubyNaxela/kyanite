@@ -33,11 +33,12 @@ public class Utils {
     }
 
     /**
-     * Casts an object to the class or interface represented by the specified {@code Class} object.
+     * Performs a C++ {@code dynamic_cast}-style cast of an object to the
+     * class or interface represented by the specified {@code Class} object.
      *
      * @param object the object to be cast
      * @param type   the target class
-     * @return the object after casting, or null if the object cannot be cast to the specified class or is null
+     * @return the object after casting, or null if the object is null or cannot be cast to the specified class
      */
     @Nullable
     public static <T> T cast(@NotNull Object object, @NotNull Class<T> type) {
