@@ -1,5 +1,7 @@
 package com.rubynaxela.kyanite.util;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.Color;
 
 /**
@@ -710,6 +712,11 @@ public class Colors {
     public static final Color TOMATO = new Color(255, 99, 71);
 
     /**
+     * The {@code transparent} color.
+     */
+    public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
+
+    /**
      * <span bgcolor="#40e0d0">&nbsp;&nbsp;&nbsp;&nbsp;</span> The {@code turquoise} color.
      */
     public static final Color TURQUOISE = new Color(64, 224, 208);
@@ -743,4 +750,18 @@ public class Colors {
      * <span bgcolor="#9acd32">&nbsp;&nbsp;&nbsp;&nbsp;</span> The {@code yellowgreen} color.
      */
     public static final Color YELLOW_GREEN = new Color(154, 205, 50);
+
+    /**
+     * Returns the color specified in the first parameter with the specified alpha (opacity) value
+     *
+     * @param color   a color
+     * @param opacity the color's opacity value ranging between {@code 0.0f}
+     *                (fully transparent) and {@code 1.0f} (fully opaque)
+     * @return the specified color with the specified opacity
+     */
+    @NotNull
+    @Contract(pure = true)
+    public static Color opacity(@NotNull Color color, float opacity) {
+        return new Color(color.r, color.g, color.b, (int) (opacity * 255));
+    }
 }
