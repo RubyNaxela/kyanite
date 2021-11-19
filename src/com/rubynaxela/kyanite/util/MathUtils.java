@@ -46,7 +46,8 @@ public final class MathUtils {
     }
 
     /**
-     * Converts an angle value in degrees to a value in radians
+     * Converts an angle value in degrees to a value in radians. Unlike
+     * {@link Math#toRadians}, this method operates on {@code float} values.
      *
      * @param angle an angle value in degrees
      * @return the specified angle in radians
@@ -57,7 +58,8 @@ public final class MathUtils {
     }
 
     /**
-     * Converts an angle value in radians to a value in degrees
+     * Converts an angle value in radians to a value in degrees. Unlike
+     * {@link Math#toDegrees}, this method operates on {@code float} values.
      *
      * @param angle an angle value in radians
      * @return the specified angle in degrees

@@ -1,3 +1,4 @@
-// TODO Add documentation
+/**
+ * In-game entities and entity-related classes
+ */
 package com.rubynaxela.kyanite.game.entities;
-// TODO Add mouse click listener interface

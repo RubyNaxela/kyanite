@@ -1,5 +1,6 @@
 package com.rubynaxela.kyanite.game.gui;
 
+import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -85,6 +86,8 @@ public class Text extends org.jsfml.graphics.Text {
 
     /**
      * Sets the alignment mode of this text. The default value is {@code TOP_LEFT}.
+     * This does not properly align multiline texts. For proper multiline text alignment,
+     * build a {@link CompoundEntity} consisting of multiple {@code Text} objects.
      *
      * @param alignment the new alignment mode of this text
      */
