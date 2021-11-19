@@ -116,10 +116,10 @@
                 <p style="text-align: center;">wersja: 1.6.0</p>
             </div>
             <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.6.1-rc.2.jar">
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.7.0-rc.3.jar">
                     <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>
                 </a>
-                <p style="text-align: center;">wersja: 1.6.1-rc.2</p>
+                <p style="text-align: center;">wersja: 1.7.0-rc.3</p>
                 <ul>
                     <li>potencjalnie niestabilna wersja</li>
                     <li>może zawierać błędy</li>
@@ -140,30 +140,36 @@
     </div>
 
     <div class="horizontal-padding-container fade-in-early bottom-margin">
-        <p class="big" style="display: inline-block;">1.6.1</p>
+        <p class="big" style="display: inline-block;">1.7.0</p>
         <div style="display: inline-block;">
             <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
         </div>
-        <p class="small">16 listopada 2021</p>
+        <p class="small">19 listopada 2021</p>
         <ul>
             <li>
-                <div style="display: flex; align-items: center;">
-                    <div>Przebudowano wewnętrzne działanie klasy <span class="monospace">CompoundEntity</span>
-                    </div>
-                    <div style="display: inline-block; margin-left: 0.5ch">
-                        <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
-                    </div>
-                </div>
+                <!--                <div style="display: flex; align-items: center;">-->
+                <!--                    <div>-->
+                Przebudowano wewnętrzne działanie klasy <span class="monospace">CompoundEntity</span>
+                <!--                    </div>-->
+                <!--                    <div style="display: inline-block; margin-left: 0.5ch">-->
+                <!--                        <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </li>
             <li>
-                <div style="display: flex; align-items: center;">
-                    <div>Dodano nowy typ zasobu: <span class="monospace">TextureAtlas</span> służący do odczytu wielu
-                        tekstur zapisanych w pojedynczym pliku obrazu
-                    </div>
-                    <div style="display: inline-block; margin-left: 0.5ch">
-                        <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
-                    </div>
-                </div>
+                Metoda <span class="monospace">CompoundEntity#getGlobalRect</span> została przemianowana na
+                <span class="monospace">getGlobalBounds</span>
+            </li>
+            <li>
+                Sygnatura metody <span class="monospace">CompoundEntity#add</span> została zmieniona z
+                <span class="monospace">add(Object, Vector2f)</span> na <span class="monospace">add(Drawable...)</span>
+            </li>
+            <li>
+                Dodano metodę sprawdzającą, czy dwa obiekty <span class="monospace">CompoundEntity</span> się przecinają
+            </li>
+            <li>
+                Dodano nowy typ zasobu: <span class="monospace">TextureAtlas</span> służący do odczytu wielu
+                tekstur zapisanych w pojedynczym pliku obrazu
             </li>
             <li>
                 Dodano klasę <span class="monospace">Colors</span> przechowującą paletę kolorów języka CSS
