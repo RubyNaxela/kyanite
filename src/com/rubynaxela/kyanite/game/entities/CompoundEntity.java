@@ -9,6 +9,7 @@ import org.jsfml.system.Vector2f;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,11 +17,11 @@ import java.util.Objects;
  * An entity consisting of many components. A {@code CompoundEntity} can be drawn to a render target, as well as
  * positioned in the scene, rotated and scaled around an origin. The collection index of an element is also its z-index.
  * If two elements overlap each other, the one with the higher index will be displayed over the other one. This class
- * can be used, for instance, to creae complex structures out of primitive shapes or to compose spannable texts.
+ * can be used, for instance, to create complex structures out of primitive shapes or to compose spannable texts.
  */
 public class CompoundEntity implements Transformable, Drawable {
 
-    private final List<Object> components = new ArrayList<>();
+    private final List<Drawable> components = new ArrayList<>();
     private float rotation = 0;
     private Vector2f origin = Vector2f.ZERO, position = Vector2f.ZERO, scale = Vec2.f(1, 1);
 
@@ -37,59 +38,71 @@ public class CompoundEntity implements Transformable, Drawable {
         setPosition(position);
     }
 
+    @NotNull
+    private static FloatRect getGlobalBounds(@NotNull Drawable component, @NotNull CompoundEntity compoundEntity) {
+        try {
+            final Method getGlobalBounds = component.getClass().getMethod("getGlobalBounds");
+            return compoundEntity.getTransform().transformRect((FloatRect) getGlobalBounds.invoke(component));
+        } catch (NoSuchMethodException e) {
+            final String message = "Cannot determine global bounds for this compound entity because class " +
+                                   component.getClass().getName() + " does not have a getGlobalBounds method.";
+            throw new UnsupportedOperationException(message);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            final String message = "Cannot determine global bounds for this compound entity because the " +
+                                   "getGlobalBounds method from class" + component.getClass().getName() + "is unavailable.";
+            throw new UnsupportedOperationException(message);
+        }
+    }
+
     /**
      * Adds the specified component objects to this compound entity.
      *
-     * @param objects objects of a class that implements both {@link Transformable} and {@link Drawable} interfaces
+     * @param objects {@link Drawable} components
      */
-    public void add(@NotNull Object... objects) {
-        for (final Object object : objects) {
-            if (!(object instanceof Transformable && object instanceof Drawable))
-                throw new IllegalArgumentException("Added objects must be an instances of a class that implements both " +
-                                                   "org.jsfml.graphics.Transformable and org.jsfml.graphics.Drawable " +
-                                                   "interfaces.");
-//        obj.asTransformable().setOrigin(Vector2f.add(Vector2f.sub(origin, relativePos), obj.asTransformable().getOrigin()));
-            components.add(object);
-        }
+    public void add(@NotNull Drawable... objects) {
+        components.addAll(Arrays.asList(objects));
     }
 
     /**
-     * Adds the specified component object to this compound entity.
-     *
-     * @param object      an object of a class that implements both {@link Transformable} and {@link Drawable} interfaces
-     * @param relativePos unused
-     * @deprecated Use the {@link #add(Object...)} method instead.
+     * @return the object's global bounding rectangle in the scene, taking the entity's transformation
+     * into account, or {@code null} if this {@code CompoundEntity} has no components
+     * @throws UnsupportedOperationException if any of the component's global bounds cannot be determined
      */
-    @Deprecated
-    public void add(@NotNull Object object, @SuppressWarnings("unused") @NotNull Vector2f relativePos) {
-        add(object);
-    }
-
-    /**
-     * @return the object's global bounding rectangle in the scene, taking the object's transformation into account
-     */
-    public FloatRect getGlobalRect() {
+    public FloatRect getGlobalBounds() {
         Float top = null, right = null, bottom = null, left = null;
-        for (final Object object : components) {
-            try {
-                final Method getGlobalRect = object.getClass().getMethod("getGlobalBounds");
-                final GlobalRect globalRect = GlobalRect.from((FloatRect) getGlobalRect.invoke(object));
-                top = MathUtils.min(top, globalRect.top);
-                right = MathUtils.max(right, globalRect.right);
-                bottom = MathUtils.max(bottom, globalRect.bottom);
-                left = MathUtils.min(left, globalRect.left);
-            } catch (NoSuchMethodException e) {
-                final String message = "Cannot determine global bounds for this compound entity because class " +
-                                       object.getClass().getName() + " does not have a getGlobalBounds method.";
-                throw new UnsupportedOperationException(message);
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                final String message = "Cannot determine global bounds for this compound entity because the " +
-                                       "getGlobalBounds method from class" + object.getClass().getName() + "is unavailable.";
-                throw new UnsupportedOperationException(message);
-            }
+        for (final Drawable component : components) {
+            final GlobalRect globalRect = GlobalRect.from(getGlobalBounds(component, this));
+            top = MathUtils.min(top, globalRect.top);
+            right = MathUtils.max(right, globalRect.right);
+            bottom = MathUtils.max(bottom, globalRect.bottom);
+            left = MathUtils.min(left, globalRect.left);
         }
-        return new GlobalRect(Objects.requireNonNull(top), Objects.requireNonNull(right),
-                              Objects.requireNonNull(bottom), Objects.requireNonNull(left)).toFloatRect();
+        try {
+            return new GlobalRect(Objects.requireNonNull(top), Objects.requireNonNull(right),
+                                  Objects.requireNonNull(bottom), Objects.requireNonNull(left)).toFloatRect();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Tests whether any of the global bounds of this {@code CompoundEntity}'s components intersect
+     * with any of the global bounds of the parameter {@code CompoundEntity}'s components
+     *
+     * @param other the other {@code CompoundEntity}
+     * @return whether any of this {@code CompoundEntity} components intersects
+     * with any of the parameter {@code CompoundEntity}'s components
+     * @throws UnsupportedOperationException if any of the component's global bounds cannot be determined
+     * @apiNote This method's time complexity is O(m*n), where m and n are the numbers
+     * of this and the other's {@code CompoundEntity}'s components. Using it on
+     * {@code CompoundEntity}s with a lot of components can cause performance issues.
+     */
+    public boolean intersects(@NotNull CompoundEntity other) {
+        for (final Drawable component : components)
+            for (final Drawable otherComponent : other.components)
+                if ((getGlobalBounds(component, this)).intersection(getGlobalBounds(otherComponent, other)) != null)
+                    return true;
+        return false;
     }
 
     /**
@@ -103,7 +116,7 @@ public class CompoundEntity implements Transformable, Drawable {
         final RenderStates renderStates = new RenderStates(states.blendMode,
                                                            Transform.combine(states.transform, getTransform()),
                                                            states.texture, states.shader);
-        components.forEach(object -> target.draw(((Drawable) object), renderStates));
+        components.forEach(component -> target.draw(component, renderStates));
     }
 
     /**
