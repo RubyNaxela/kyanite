@@ -76,6 +76,7 @@ public class DataAsset extends Dictionary implements Asset {
      * @param type the destination class
      * @return an object of the specified class
      */
+    @Override
     public <T> T convertTo(@NotNull Class<T> type) {
         if (dataFile != null) return new JSONParser(dataFile).as(type);
         else return new JSONParser(inputStream).as(type);
@@ -96,40 +97,6 @@ public class DataAsset extends Dictionary implements Asset {
                 return fileContents.toString();
             } catch (FileNotFoundException e) {
                 throw new IOException(e);
-            }
-        }
-    }
-
-    @SuppressWarnings("ClassCanBeRecord")
-    private static final class JSONParser {
-
-        private static final ObjectReader objectReader = new ObjectMapper().reader();
-        private final File inputFile;
-        private final InputStream inputStream;
-
-        private JSONParser(@NotNull File inputFile) {
-            this.inputFile = inputFile;
-            this.inputStream = null;
-        }
-
-        private JSONParser(@NotNull InputStream stream) {
-            this.inputFile = null;
-            this.inputStream = stream;
-        }
-
-//        public static JSONParser read(@NotNull File file) {
-//            if (!file.exists()) throw new IOException("File " + file.getAbsolutePath() + " does not exist");
-//            return new JSONParser(file);
-//        }
-
-        public <T> T as(@NotNull Class<T> type) {
-            try {
-                if (inputFile != null) return objectReader.readValue(inputFile, type);
-                else return objectReader.readValue(inputStream, type);
-            } catch (java.io.IOException e) {
-                throw new IOException(e);
-            } catch (Exception e) {
-                throw new RuntimeException("An error occurred while binding data to a " + type + " object", e);
             }
         }
     }

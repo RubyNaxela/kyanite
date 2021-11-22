@@ -1,21 +1,26 @@
 package com.rubynaxela.kyanite.util;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 
 /**
  * {@code Map}-like class designed to hold JSON data. Provides methods for retrieving
- * the {@code Object} values as values of specific Java types. Does not support modifications.
+ * the values as values of specific Java types. Does not support modifications.
  */
 public class Dictionary {
 
     protected final Map<String, Object> data;
+    private final String json;
 
     /**
      * Constructs a {@code MapObject} with the specified data set.
@@ -25,6 +30,7 @@ public class Dictionary {
     @JsonCreator
     public Dictionary(@NotNull Map<String, Object> data) {
         this.data = data;
+        this.json = new JSONObject(data).toString(2);
     }
 
     /**
@@ -182,15 +188,56 @@ public class Dictionary {
         return data.entrySet();
     }
 
+    /**
+     * Creates an object of the specified class and binds the data from the assigned file to it.
+     * The target class must have the same structure as the data in the source JSON file.
+     *
+     * @param type the destination class
+     * @return an object of the specified class
+     */
+    public <T> T convertTo(@NotNull Class<T> type) {
+        return new JSONParser(json).as(type);
+    }
+
     @Override
     public String toString() {
-        return new JSONObject(data).toString(2);
+        return json;
     }
 
     private static class JSONParseException extends JSONException {
 
         public JSONParseException(@NotNull String message) {
             super(message);
+        }
+    }
+
+    protected static final class JSONParser {
+
+        private static final ObjectReader objectReader = new ObjectMapper().reader();
+        private File inputFile;
+        private InputStream inputStream;
+        private String json;
+
+        public JSONParser(@NotNull File inputFile) {
+            this.inputFile = inputFile;
+        }
+
+        public JSONParser(@NotNull InputStream stream) {
+            this.inputStream = stream;
+        }
+
+        public JSONParser(@NotNull String json) {
+            this.json = json;
+        }
+
+        public <T> T as(@NotNull Class<T> type) {
+            try {
+                if (inputFile != null) return objectReader.readValue(inputFile, type);
+                else if (inputStream != null) return objectReader.readValue(inputStream, type);
+                else return objectReader.readValue(json, type);
+            } catch (Exception e) {
+                throw new RuntimeException("An error occurred while binding data to a " + type + " object", e);
+            }
         }
     }
 }
