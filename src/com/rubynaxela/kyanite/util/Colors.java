@@ -764,4 +764,30 @@ public class Colors {
     public static Color opacity(@NotNull Color color, float opacity) {
         return new Color(color.r, color.g, color.b, (int) (opacity * 255));
     }
+
+    /**
+     * Returns a color darker than the specified color. Each component of the resulting
+     * color is the corresponding component of the original color divided by two.
+     *
+     * @param color a color
+     * @return a color darker than the specified color
+     */
+    @NotNull
+    @Contract(pure = true, value = "_ -> new")
+    public static Color darker(@NotNull Color color) {
+        return new Color(color.r / 2, color.g / 2, color.b / 2);
+    }
+
+    /**
+     * Returns a color brighter than the specified color. Each component of the resulting color
+     * is the arithmetic mean of the corresponding component of the original color and 255.
+     *
+     * @param color a color
+     * @return a color brighter than the specified color
+     */
+    @NotNull
+    @Contract(pure = true, value = "_ -> new")
+    public static Color brighter(@NotNull Color color) {
+        return new Color((color.r + 255) / 2, (color.g + 255) / 2, (color.b + 255) / 2);
+    }
 }

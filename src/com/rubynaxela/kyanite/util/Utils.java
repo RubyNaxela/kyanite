@@ -49,6 +49,7 @@ public class Utils {
     /**
      * @param color a color
      * @return a color 50% darker than the specified color
+     * @deprecated This method has been moved to the {@link Colors} class and will be removed from this class in the future.
      */
     @NotNull
     @Contract(pure = true, value = "_ -> new")
