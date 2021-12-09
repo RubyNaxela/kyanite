@@ -7,6 +7,7 @@ import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.Transform;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 
 public final class MathUtils {
 
@@ -91,6 +92,18 @@ public final class MathUtils {
         Transform result = Transform.IDENTITY;
         for (final Transform transform : transforms) result = Transform.combine(result, transform);
         return result;
+    }
+
+    /**
+     * Returns the taxicab (Manhattan geometry) distance between two points, which is the result of the following expression:
+     * <code>Math.abs(a.x - b.x) + Math.abs(a.x - b.y)</code>
+     *
+     * @param a first point
+     * @param b second point
+     * @return the taxicab distance between the points
+     */
+    public static int taxicabDistance(Vector2i a, Vector2i b) {
+        return Math.abs(a.x - b.x) + Math.abs(a.x - b.y);
     }
 
     /**
