@@ -9,12 +9,14 @@ public interface JoystickConnectionListener {
      *
      * @param e the event to be processed
      */
-    void joystickConnected(JoystickEvent e);
+    default void joystickConnected(JoystickEvent e) {
+    }
 
     /**
      * Invoked when a joystick or gamepad was disconnected.
      *
      * @param e the event to be processed
      */
-    void joystickDisconnected(JoystickEvent e);
+    default void joystickDisconnected(JoystickEvent e) {
+    }
 }

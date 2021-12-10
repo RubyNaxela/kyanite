@@ -11,12 +11,14 @@ public interface MouseButtonListener extends EventListener {
      *
      * @param e the event to be processed
      */
-    void mouseButtonPressed(MouseButtonEvent e);
+    default void mouseButtonPressed(MouseButtonEvent e) {
+    }
 
     /**
      * Invoked when a mouse button was released while the window had focus.
      *
      * @param e the event to be processed
      */
-    void mouseButtonReleased(MouseButtonEvent e);
+    default void mouseButtonReleased(MouseButtonEvent e) {
+    }
 }

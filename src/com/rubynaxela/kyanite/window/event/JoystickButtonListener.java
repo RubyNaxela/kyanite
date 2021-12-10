@@ -11,12 +11,14 @@ public interface JoystickButtonListener extends EventListener {
      *
      * @param e the event to be processed
      */
-    void joystickButtonPressed(JoystickButtonEvent e);
+    default void joystickButtonPressed(JoystickButtonEvent e) {
+    }
 
     /**
      * Invoked when a joystick or gamepad button was released while the window had focus.
      *
      * @param e the event to be processed
      */
-    void joystickButtonReleased(JoystickButtonEvent e);
+    default void joystickButtonReleased(JoystickButtonEvent e) {
+    }
 }

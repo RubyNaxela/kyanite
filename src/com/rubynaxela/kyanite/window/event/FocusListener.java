@@ -7,10 +7,12 @@ public interface FocusListener extends EventListener {
     /**
      * Invoked when the window lost focus.
      */
-    void focusGained();
+    default void focusGained() {
+    }
 
     /**
      * Invoked when the window gained focus.
      */
-    void focusLost();
+    default void focusLost() {
+    }
 }

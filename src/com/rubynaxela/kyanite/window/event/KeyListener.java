@@ -11,12 +11,14 @@ public interface KeyListener extends EventListener {
      *
      * @param e the event to be processed
      */
-    void keyPressed(KeyEvent e);
+    default void keyPressed(KeyEvent e) {
+    }
 
     /**
      * Invoked when a keyboard key was released while the window had focus.
      *
      * @param e the event to be processed
      */
-    void keyReleased(KeyEvent e);
+    default void keyReleased(KeyEvent e) {
+    }
 }
