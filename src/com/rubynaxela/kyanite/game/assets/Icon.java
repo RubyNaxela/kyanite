@@ -10,6 +10,11 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * A wrapper class for JSFML {@link org.jsfml.graphics.Image} objects, representing an icon asset.
+ * An icon can be set as a {@link Window} icon. The source must be the path or an {@link InputStream}
+ * to an image file. Supported formats are: BMP, DDS, JPEG, PNG, TGA and PSD.
+ */
 public class Icon implements Asset {
 
     private final org.jsfml.graphics.Image icon;

@@ -192,7 +192,8 @@ public class Dictionary {
      * Creates an object of the specified class and binds the data from the assigned file to it.
      * The target class must have the same structure as the data in the source JSON file.
      *
-     * @param type the destination class
+     * @param <T>  the destination class
+     * @param type the destination class object
      * @return an object of the specified class
      */
     public <T> T convertTo(@NotNull Class<T> type) {

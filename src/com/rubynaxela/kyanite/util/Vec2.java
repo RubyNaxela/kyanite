@@ -16,8 +16,9 @@ public final class Vec2 {
     /**
      * Constructs a new {@link Vector2f} with given values.
      *
-     * @param x the X component of this vector
-     * @param y the Y component of this vector
+     * @param <T> a number class
+     * @param x   the X component of this vector
+     * @param y   the Y component of this vector
      * @return a new {@link Vector2f}
      */
     @NotNull
@@ -41,8 +42,9 @@ public final class Vec2 {
     /**
      * Constructs a new {@link Vector2i} with given values.
      *
-     * @param x the X component of this vector
-     * @param y the Y component of this vector
+     * @param <T> a number class
+     * @param x   the X component of this vector
+     * @param y   the Y component of this vector
      * @return a new {@link Vector2i}
      */
     @NotNull
@@ -162,6 +164,7 @@ public final class Vec2 {
     /**
      * Multiplies a vector by a scalar.
      *
+     * @param <T>    the number class of the scalar parameter
      * @param vector the vector
      * @param scalar the scalar to multiply by
      * @return a new vector, representing the scaled vector
@@ -174,6 +177,7 @@ public final class Vec2 {
     /**
      * Multiplies a scalar by a vector.
      *
+     * @param <T>    the number class of the scalar parameter
      * @param scalar the scalar to multiply by
      * @param vector the vector
      * @return a new vector, representing the scaled vector
@@ -186,6 +190,7 @@ public final class Vec2 {
     /**
      * Multiplies a vector by a scalar.
      *
+     * @param <T>    the number class of the scalar parameter
      * @param vector the vector
      * @param scalar the scalar to multiply by
      * @return a new vector, representing the scaled vector
@@ -198,6 +203,7 @@ public final class Vec2 {
     /**
      * Multiplies a scalar by a vector.
      *
+     * @param <T>    the number class of the scalar parameter
      * @param scalar the scalar to multiply by
      * @param vector the vector
      * @return a new vector, representing the scaled vector
@@ -329,6 +335,7 @@ public final class Vec2 {
     /**
      * Multiplies a vector by the inverse of a scalar.
      *
+     * @param <T>    the number class of the scalar parameter
      * @param vector the vector
      * @param scalar the scalar to divide by
      * @return a new vector, representing the scaled vector
@@ -341,6 +348,7 @@ public final class Vec2 {
     /**
      * Multiplies a vector by the inverse of a scalar.
      *
+     * @param <T>    the number class of the scalar parameter
      * @param vector the vector
      * @param scalar the scalar to divide by
      * @return a new vector, representing the scaled vector

@@ -1,6 +1,7 @@
 package com.rubynaxela.kyanite.game.gui;
 
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
+import com.rubynaxela.kyanite.util.Colors;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -85,9 +86,9 @@ public class Text extends org.jsfml.graphics.Text {
     }
 
     /**
-     * Sets the alignment mode of this text. The default value is {@code TOP_LEFT}.
-     * This does not properly align multiline texts. For proper multiline text alignment,
-     * build a {@link CompoundEntity} consisting of multiple {@code Text} objects.
+     * Sets the alignment mode of this text. The default value is {@code TOP_LEFT}. This does
+     * not properly align multiline texts in horizontal direction. For proper multiline text
+     * alignment, build a {@link CompoundEntity} consisting of multiple {@code Text} objects.
      *
      * @param alignment the new alignment mode of this text
      */
@@ -112,12 +113,48 @@ public class Text extends org.jsfml.graphics.Text {
     }
 
     /**
-     * Values for the alignment mode. The first word of the name indicates vertical alignment and the second
-     * word indicates horizontal alignment. The {@code CENTER} value indicates centering on both axes.
+     * Values for the alignment mode. The first word of the name indicates vertical alignment and the
+     * second word indicates horizontal alignment. The {@code CENTER} value indicates centering on both axes.
+     * The alignment determines where (relative to the text) is the origin point of that text object.
      *
      * @see Text#setAlignment
      */
     public enum Alignment {
-        TOP_LEFT, TOP_CENTER, TOP_RIGHT, CENTER_LEFT, CENTER, CENTER_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT
+        /**
+         * Horizontal alignment: left; vertical alignment: top.
+         */
+        TOP_LEFT,
+        /**
+         * Horizontal alignment: center; vertical alignment: top.
+         */
+        TOP_CENTER,
+        /**
+         * Horizontal alignment: right; vertical alignment: top.
+         */
+        TOP_RIGHT,
+        /**
+         * Horizontal alignment: left; vertical alignment: center.
+         */
+        CENTER_LEFT,
+        /**
+         * Horizontal alignment: center; vertical alignment: center.
+         */
+        CENTER,
+        /**
+         * Horizontal alignment: right; vertical alignment: center.
+         */
+        CENTER_RIGHT,
+        /**
+         * Horizontal alignment: left; vertical alignment: bottom.
+         */
+        BOTTOM_LEFT,
+        /**
+         * Horizontal alignment: center; vertical alignment: bottom.
+         */
+        BOTTOM_CENTER,
+        /**
+         * Horizontal alignment: right; vertical alignment: bottom.
+         */
+        BOTTOM_RIGHT
     }
 }

@@ -8,6 +8,9 @@ import org.jsfml.graphics.Color;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
+/**
+ * Unclassified utility funcions.
+ */
 public class Utils {
 
     /**
@@ -20,6 +23,7 @@ public class Utils {
      * final Window window = Utils.lambdaInit(new Window(), Window::maximize, w -> w.setTitle("Game"));
      * </pre>
      *
+     * @param <T>         the object class
      * @param object      the object to initialize
      * @param initActions actions to be performed on the specified object
      * @return the specified object after initialization
@@ -36,8 +40,9 @@ public class Utils {
      * Performs a C++ {@code dynamic_cast}-style cast of an object to the
      * class or interface represented by the specified {@code Class} object.
      *
+     * @param <T>    the target class
      * @param object the object to be cast
-     * @param type   the target class
+     * @param type   the target class object
      * @return the object after casting, or null if the object is null or cannot be cast to the specified class
      */
     @Nullable

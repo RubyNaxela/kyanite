@@ -2,6 +2,14 @@ package com.rubynaxela.kyanite.window.event;
 
 import org.jsfml.window.event.JoystickEvent;
 
+/**
+ * The listener interface for receiving the joystick connection event. To add a {@code JoystickConnectionListener},
+ * call the {@link com.rubynaxela.kyanite.window.Window#addJoystickConnectionListener} with the parameter of an object
+ * implementing this interface. When a joystick button event occurs, that object's {@code joystickConnected} or
+ * {@code joystickDisconnected} method is invoked, depending on whether the connected was pressed or disconnected.
+ *
+ * @see JoystickEvent
+ */
 public interface JoystickConnectionListener {
 
     /**

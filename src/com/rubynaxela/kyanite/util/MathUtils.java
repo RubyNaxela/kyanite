@@ -9,6 +9,9 @@ import org.jsfml.graphics.Transform;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
+/**
+ * A set of mathematical functions and algorithms.
+ */
 public final class MathUtils {
 
     private MathUtils() {
@@ -19,8 +22,9 @@ public final class MathUtils {
      * If either value is NaN, then the result is also NaN. If exactly one of the arguments is {@code null}, the result
      * is the other argument, whereas if both values are {@code null}, then the result is also {@code null}.
      *
-     * @param a first operand
-     * @param b second operand
+     * @param <T> the number class
+     * @param a   first operand
+     * @param b   second operand
      * @return the smaller of {@code a} and {@code b}
      */
     @Contract(pure = true, value = "_, _ -> new")
@@ -35,6 +39,7 @@ public final class MathUtils {
      * If either value is NaN, then the result is also NaN. If exactly one of the arguments is {@code null}, the result
      * is the other argument, whereas if both values are {@code null}, then the result is also {@code null}.
      *
+     * @param <T> the number class
      * @param a first operand
      * @param b second operand
      * @return the bigger of {@code a} and {@code b}

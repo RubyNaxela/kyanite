@@ -1,7 +1,5 @@
 package com.rubynaxela.kyanite.game.assets;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 import com.rubynaxela.kyanite.system.IOException;
 import com.rubynaxela.kyanite.util.Dictionary;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +13,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * This class is designed to store data loaded from an external file as an asset. Currently the only supported format is JSON.
+ * This class is designed to store data loaded from an external file as an asset. The source must be
+ * the path or an {@link InputStream} to an data file. Currently the only supported format is JSON.
  */
 @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class DataAsset extends Dictionary implements Asset {

@@ -5,7 +5,7 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.event.MouseButtonEvent;
 
 /**
- * This interface server the purpose of simplifying the handling of actions triggered by the mouse buttons.
+ * This interface serves the purpose of simplifying the handling of actions triggered by the mouse buttons.
  */
 public interface MouseActionListener {
 
@@ -18,7 +18,7 @@ public interface MouseActionListener {
      *     final float deltaX = cursorPosition.x - getPosition().x;
      *     final float deltaY = cursorPosition.y - getPosition().y;
      *     final float r = getRadius();
-     *     return deltaX * deltaX + deltaY * deltaY <= r * r;
+     *     return deltaX * deltaX + deltaY * deltaY &lt;= r * r;
      * }</pre>
      *
      * @param cursorPosition the mouse cursor position

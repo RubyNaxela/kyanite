@@ -1,5 +1,9 @@
 package com.rubynaxela.kyanite.game;
 
+/**
+ * The game root class. Provides a {@link GameContext} object, which
+ * provides a set of references to the basic objects used by the game.
+ */
 public abstract class Game {
 
     private final GameContext context = GameContext.getInstance();

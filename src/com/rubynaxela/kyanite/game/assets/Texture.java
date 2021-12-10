@@ -15,9 +15,9 @@ import java.util.Objects;
 
 /**
  * A wrapper class for JSFML {@link org.jsfml.graphics.Texture} objects, representing a texture asset.
- * The source must be the path or the stream to an image file. Supported formats are: BMP, DDS, JPEG,
- * PNG, TGA and PSD. If the specified image data source is not valid (for instance, if the specified
- * file does not exist), the texture is replaced with a magenta-black checkboard.
+ * The source must be the path or an {@link InputStream}to an image file. Supported formats are: BMP,
+ * DDS, JPEG, PNG, TGA and PSD. If the specified image data source is not valid (for instance, if
+ * if the specified file does not exist), the texture is replaced with a magenta-black checkboard.
  */
 public class Texture implements Asset {
 

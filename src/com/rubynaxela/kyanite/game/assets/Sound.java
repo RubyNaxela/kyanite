@@ -12,8 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * A wrapper class for JSFML {@link org.jsfml.audio.Sound} objects, representing a sound asset.
- * The source must be the path to an audio file. Supported formats are: WAV, OGG/Vorbis and FLAC.
+ * A wrapper class for JSFML {@link org.jsfml.audio.Sound} objects, representing a sound asset. The source
+ * must be the path or an {@link InputStream} to an audio file. Supported formats are: WAV, OGG/Vorbis and FLAC.
  */
 public class Sound implements Asset {
 

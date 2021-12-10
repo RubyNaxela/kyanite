@@ -33,6 +33,8 @@ public class CompoundEntity implements Transformable, Drawable {
 
     /**
      * Creates an empty compound entity with initial position.
+     *
+     * @param position the initial position of this compound entity
      */
     public CompoundEntity(@NotNull Vector2f position) {
         setPosition(position);
@@ -95,7 +97,7 @@ public class CompoundEntity implements Transformable, Drawable {
      * @throws UnsupportedOperationException if any of the component's global bounds cannot be determined
      * @apiNote This method's time complexity is O(m*n), where m and n are the numbers
      * of this and the other's {@code CompoundEntity}'s components. Using it on
-     * {@code CompoundEntity}s with a lot of components can cause performance issues.
+     * {@code CompoundEntity}s with many components can cause performance issues.
      */
     public boolean intersects(@NotNull CompoundEntity other) {
         for (final Drawable component : components)

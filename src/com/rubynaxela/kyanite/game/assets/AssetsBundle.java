@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Provides a handy assets storage. Assets are registered and retrieved with {@code String} identifiers.
  *
- * @apiNote An identifier can be any text, however it is good to keep the identifiers
+ * @implNote An identifier can be any text, however it is good to keep the identifiers
  * organized, compliant with a consistent convention. For instance, {@code kyanite:texture.flowers.purple}
  * makes up a good identifier, however {@code txt_flower_13} does not.
  */
@@ -20,6 +20,7 @@ public final class AssetsBundle {
     /**
      * Registers an {@link Asset} in the bundle.
      *
+     * @param <T>   the asset type class
      * @param id    the identifier of this asset
      * @param asset the asset to be stored
      */
@@ -30,7 +31,8 @@ public final class AssetsBundle {
     /**
      * Finds an {@link Asset} by its identifier.
      *
-     * @param id the identifier of this asset
+     * @param <T> the asset type class
+     * @param id  the identifier of this asset
      * @return an {@link Asset} object
      * @throws NullPointerException when an asset of the specified id does not exist
      *                              or was attempted to be used before being registered

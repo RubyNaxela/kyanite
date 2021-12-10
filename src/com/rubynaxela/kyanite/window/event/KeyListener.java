@@ -4,6 +4,14 @@ import org.jsfml.window.event.KeyEvent;
 
 import java.util.EventListener;
 
+/**
+ * The listener interface for receiving the key event. To add a {@code KeyListener}, call the
+ * {@link com.rubynaxela.kyanite.window.Window#addKeyListener} with the parameter of an object
+ * implementing this interface. When a key event occurs, that object's {@code keyPressed} or
+ * {@code keyReleased} method is invoked, depending on whether the event key was pressed or released.
+ *
+ * @see KeyEvent
+ */
 public interface KeyListener extends EventListener {
 
     /**

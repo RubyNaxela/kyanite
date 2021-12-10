@@ -11,14 +11,17 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 /**
- * A wrapper class for JSFML {@link org.jsfml.graphics.Font} objects, representing
- * a font face asset. The source must be the path to an font file. Supported formats
- * are: TrueType, Type 1, CFF, OpenType, SFNT, X11 PCF, Windows FNT, BDF, PFR and Type 42.
+ * A wrapper class for JSFML {@link org.jsfml.graphics.Font} objects, representing a font
+ * face asset. The source must be the path or an {@link InputStream} to an font file. Supported
+ * formats are: TrueType, Type 1, CFF, OpenType, SFNT, X11 PCF, Windows FNT, BDF, PFR and Type 42.
  *
  * @see Font
  */
 public class FontFace implements Asset {
 
+    /**
+     * JetBrains Mono, a built-in font face.
+     */
     public static final FontFace JETBRAINS_MONO = new FontFace(
             Objects.requireNonNull(FontFace.class.getResourceAsStream("/res/jetbrains_mono.ttf")));
 

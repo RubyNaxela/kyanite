@@ -195,7 +195,7 @@ public class Window extends RenderWindow {
      * Sets the ability for the user to resize this window. The default value is {@code false}.
      *
      * @param resizable true to enable looping, false to disable
-     * @apiNote This only affects <b>the user's</b> ability to resize this window.
+     * @implSpec This only affects <b>the user's</b> ability to resize this window.
      * Even if this is set to {@code false}, {@link Window#setSize} can still be used.
      */
     public void setResizable(boolean resizable) {
@@ -505,6 +505,7 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * @param <T> the current render scene class
      * @return reference to the current render scene of this window.
      */
     @SuppressWarnings("unchecked")
@@ -523,6 +524,7 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * @param <T> the current HUD layer class
      * @return reference to the current HUD layer of this window.
      */
     @SuppressWarnings("unchecked")
@@ -557,7 +559,6 @@ public class Window extends RenderWindow {
     }
 
     private void handleEvents() {
-        // TODO Add position change event
         for (Event event = pollEvent(); event != null; event = pollEvent()) {
             final Event ev = event;
             switch (ev.type) {
@@ -615,8 +616,19 @@ public class Window extends RenderWindow {
         }
     }
 
+    /**
+     * Predefined framerate modes
+     */
     public static class Framerate {
 
-        public static final int UNLIMITED = 0, VSYNC = -1;
+        /**
+         * Unlimited framerate: game ticks are triggered as frequently as the computing power of the computer allows.
+         */
+        public static final int UNLIMITED = 0;
+
+        /**
+         * Vertical synchronization mode: game ticks are triggered at most once every monitor framerate.
+         */
+        public static final int VSYNC = -1;
     }
 }

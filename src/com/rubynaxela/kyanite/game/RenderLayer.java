@@ -21,11 +21,27 @@ import java.util.stream.Stream;
  */
 abstract class RenderLayer implements Iterable<Drawable> {
 
+    /**
+     * The game context.
+     */
     protected final GameContext context = GameContext.getInstance();
+    /**
+     * The list of objects on this render layer.
+     */
     protected final List<Drawable> drawables = new LinkedList<>();
+    /**
+     * The background color of this render layer.
+     */
     protected Color backgroundColor = Color.BLACK;
+    /**
+     * The background of this render layer. If the background image is set, this overrides the background color.
+     */
     protected RectangleShape background;
+    /**
+     * Indicates whether this render layer was initialized and is ready to be drawn on the window.
+     */
     protected boolean ready = false;
+    private Texture backgroundTexture;
 
     /**
      * This method is executed when this render layer is assigned to a window.

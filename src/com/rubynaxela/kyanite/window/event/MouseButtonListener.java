@@ -1,9 +1,18 @@
 package com.rubynaxela.kyanite.window.event;
 
+import org.jsfml.window.event.KeyEvent;
 import org.jsfml.window.event.MouseButtonEvent;
 
 import java.util.EventListener;
 
+/**
+ * The listener interface for receiving the mouse button event. To add a {@code MouseButtonListener}, call
+ * the {@link com.rubynaxela.kyanite.window.Window#addMouseButtonListener} with the parameter of an object
+ * implementing this interface. When a mouse button occurs, that object's {@code mouseButtonPressed} or
+ * {@code mouseButtonReleased} method is invoked, depending on whether the event button was pressed or released.
+ *
+ * @see MouseButtonEvent
+ */
 public interface MouseButtonListener extends EventListener {
 
     /**
