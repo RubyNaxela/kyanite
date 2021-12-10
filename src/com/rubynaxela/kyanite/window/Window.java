@@ -8,6 +8,7 @@ import com.rubynaxela.kyanite.util.Utils;
 import com.rubynaxela.kyanite.util.Vec2;
 import com.rubynaxela.kyanite.window.event.*;
 import org.intellij.lang.annotations.MagicConstant;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.RenderWindow;
@@ -129,6 +130,7 @@ public class Window extends RenderWindow {
     /**
      * @deprecated Use {@code setFramerateLimit(Window.Framerate.VSYNC)} instead.
      */
+    @Contract("_ -> fail")
     @Deprecated
     @Override
     public void setVerticalSyncEnabled(boolean enable) {
