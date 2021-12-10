@@ -97,7 +97,7 @@ public class Text extends org.jsfml.graphics.Text {
     }
 
     private void updateOrigin() {
-        final float width = getGlobalBounds().width, height = getCharacterSize();
+        final float width = getGlobalBounds().width, height = getGlobalBounds().height;
         switch (alignment) {
             case TOP_LEFT -> setOrigin(0, 0);
             case TOP_CENTER -> setOrigin(width / 2, 0);
