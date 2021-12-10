@@ -59,11 +59,21 @@ abstract class RenderLayer implements Iterable<Drawable> {
      * Sets the background texture of this render layer.
      *
      * @param backgroundTexture the background texture of this render layer
-     * @apiNote When the window is resized, the background texture should be re-applied to fit the new size of the window.
      */
     public void setBackgroundTexture(@NotNull Texture backgroundTexture) {
-        background = new RectangleShape(Vec2.f(GameContext.getInstance().getWindow().getSize()));
-        backgroundTexture.apply(background);
+        this.backgroundTexture = backgroundTexture;
+        refreshBackgroundTexture();
+    }
+
+    /**
+     * Re-applies the render layer background image. This method is called
+     * automatically when the window is resized to also resize the background image.
+     */
+    public void refreshBackgroundTexture() {
+        if (backgroundTexture != null) {
+            background = new RectangleShape(Vec2.f(GameContext.getInstance().getWindow().getSize()));
+            backgroundTexture.apply(background);
+        }
     }
 
     /**

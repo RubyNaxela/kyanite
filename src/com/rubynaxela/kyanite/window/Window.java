@@ -569,6 +569,8 @@ public class Window extends RenderWindow {
                         setView(Utils.lambdaInit((View) getView(),
                                                  v -> v.setSize(size), v -> v.setCenter(Vector2f.mul(size, 0.5f))));
                         setPosition(position);
+                        scene.refreshBackgroundTexture();
+                        hud.refreshBackgroundTexture();
                         resizeListeners.forEach(action -> action.resized(new ResizeEvent(Vec2.i(size))));
                     } else setSize(lastSetSize);
                 }
