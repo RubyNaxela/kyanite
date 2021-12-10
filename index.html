@@ -110,22 +110,22 @@
         </div>
         <div style="display: flex; width: 100%; align-items: flex-start; justify-content: space-evenly;">
             <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/release/kyanite-1.7.0.jar">
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/release/kyanite-1.7.1.jar">
                     <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite</span></div>
                 </a>
-                <p style="text-align: center;">wersja: 1.7.0</p>
+                <p style="text-align: center;">wersja: 1.7.1</p>
             </div>
-<!--            <div>-->
-<!--                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.7.0-rc.3.jar">-->
-<!--                    <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>-->
-<!--                </a>-->
-<!--                <p style="text-align: center;">wersja: 1.7.0-rc.3</p>-->
-<!--                <ul>-->
-<!--                    <li>potencjalnie niestabilna wersja</li>-->
-<!--                    <li>może zawierać błędy</li>-->
-<!--                    <li>część wspomnianych zmian<br>może nie być wdrożona</li>-->
-<!--                </ul>-->
-<!--            </div>-->
+            <!--            <div>-->
+            <!--                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.7.0-rc.3.jar">-->
+            <!--                    <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>-->
+            <!--                </a>-->
+            <!--                <p style="text-align: center;">wersja: 1.7.0-rc.3</p>-->
+            <!--                <ul>-->
+            <!--                    <li>potencjalnie niestabilna wersja</li>-->
+            <!--                    <li>może zawierać błędy</li>-->
+            <!--                    <li>część wspomnianych zmian<br>może nie być wdrożona</li>-->
+            <!--                </ul>-->
+            <!--            </div>-->
         </div>
     </div>
 
@@ -140,10 +140,37 @@
     </div>
 
     <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.7.1</p>
+        <p class="small">10 grudnia 2021</p>
+        <ul>
+            <li>
+                Klasa <span class="monospace">Window</span> od teraz obsługuje wiele detektorów tego samego rodzaju zdarzeń
+            </li>
+            <li>Jeśli źródło danych dla obiektu <span class="monospace">Texture</span> jest niedostępne, tekstura zmieniana
+                jest w purpurowo-czarną kratkę
+            </li>
+            <li>Obrazki tła obiektów <span class="monospace">RenderLayer</span> są od teraz automatycznie odświażane gdy
+                zostanie zmieniony rozmiar okna
+            </li>
+            <li>Od teraz, klasy implementujące typy zdarzeń o wielu metodach nie muszą przeciążać ich wszystkich</li>
+            <li>Dodano klasę <span class="monospace">Marker</span> do celów debugowania gry</li>
+            <li>Dodano metodę <span class="monospace">Colors#brighter</span> i przeniesiono metodę darker z klasy
+                <span class="monospace">Utils</span>do klasy <span class="monospace">Colors</span></li>
+            <li>Dodano metodę <span class="monospace">MathUtils#taxicabDistance</span> do obliczania dystansu w metryce
+                taksówkowej
+            </li>
+            <li>Dodano wbudowany krój czcionki: JetBrains Mono (pole <span class="monospace">FontFace#JETBRAINS_MONO</span>)
+            </li>
+            <li>Naprawiono pozycjonowanie wielolinijkowego tekstu w kontekście trybu wyrównania</li>
+            <li>Dołączono źródła JSFML do pliku jar biblioteki</li>
+        </ul>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
         <p class="big" style="display: inline-block;">1.7.0</p>
-<!--        <div style="display: inline-block;">-->
-<!--            <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>-->
-<!--        </div>-->
+        <!--        <div style="display: inline-block;">-->
+        <!--            <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>-->
+        <!--        </div>-->
         <p class="small">22 listopada 2021</p>
         <ul>
             <li>
