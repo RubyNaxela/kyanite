@@ -1,12 +1,10 @@
 package com.rubynaxela.kyanite.game.assets;
 
 import com.rubynaxela.kyanite.system.IOException;
+import com.rubynaxela.kyanite.util.Vec2;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.IntRect;
-import org.jsfml.graphics.Shape;
-import org.jsfml.graphics.Sprite;
+import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2i;
 
 import javax.imageio.ImageIO;
@@ -167,5 +165,30 @@ public class Texture implements Asset {
         } catch (java.io.IOException ex) {
             throw new IOException(ex);
         }
+    }
+
+    /**
+     * Creates a {@link RectangleShape} with this texture applied. The
+     * size of the {@code RectangleShape} matches this texture's size.
+     *
+     * @param originAtCenter whether or not the origin of the {@code RectangleShape} has
+     *                       to be in its center; the default value is {@code false}
+     * @return a {@link RectangleShape} representing this texture
+     */
+    public RectangleShape createRectangleShape(boolean originAtCenter) {
+        final RectangleShape rectangle = new RectangleShape(Vec2.f(getSize()));
+        apply(rectangle);
+        if (originAtCenter) rectangle.setOrigin(Vec2.divideFloat(getSize(), 2));
+        return rectangle;
+    }
+
+    /**
+     * Creates a {@link RectangleShape} with this texture applied. The
+     * size of the {@code RectangleShape} matches this texture's size.
+     *
+     * @return a {@link RectangleShape} representing this texture
+     */
+    public RectangleShape createRectangleShape() {
+        return createRectangleShape(false);
     }
 }

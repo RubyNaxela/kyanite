@@ -357,4 +357,28 @@ public final class Vec2 {
     public static <T extends Number> Vector2i divide(@NotNull Vector2i vector, @NotNull T scalar) {
         return Vector2i.div(vector, scalar.intValue());
     }
+
+    /**
+     * Multiplies a vector by the inverse of a scalar.
+     *
+     * @param vector the vector
+     * @param scalar the scalar to divide by
+     * @return a new vector, representing the scaled vector
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f divideFloat(@NotNull Vector2f vector, @NotNull Number scalar) {
+        return Vector2f.div(vector, scalar.floatValue());
+    }
+
+    /**
+     * Multiplies a vector by the inverse of a scalar.
+     *
+     * @param vector the vector
+     * @param scalar the scalar to divide by
+     * @return a new vector, representing the scaled vector
+     */
+    @Contract(pure = true, value = "_, _ -> new")
+    public static Vector2f divideFloat(@NotNull Vector2i vector, @NotNull Number scalar) {
+        return Vector2f.div(Vec2.f(vector), scalar.floatValue());
+    }
 }

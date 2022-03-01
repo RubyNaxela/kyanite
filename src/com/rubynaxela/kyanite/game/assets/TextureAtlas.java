@@ -7,6 +7,7 @@ import org.jsfml.graphics.Image;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.TextureCreationException;
+import org.jsfml.system.Vector2i;
 
 import java.io.File;
 import java.io.InputStream;
@@ -100,35 +101,13 @@ public class TextureAtlas implements Asset {
     }
 
     /**
-     * Creates a {@link RectangleShape} textured with the image within the bounds of a rectangle of the specified coordinates.
+     * Creates a {@link Texture} containing the image within the bounds of a rectangle of the specified coordinates.
      *
-     * @param startX         the X-coordinate of the start point
-     * @param startY         the Y-coordinate of the start point
-     * @param endX           the X-coordinate of the end point
-     * @param endY           the Y-coordinate of the end point
-     * @param originAtCenter whether or not the origin of the result shape has
-     *                       to be in its center; the default value is {@code false}
-     * @return a {@link RectangleShape} textured with the image within the bounds of a rectangle of the specified coordinates
+     * @param start the start point
+     * @param end   the end point
+     * @return a {@link Texture} containing image within the bounds of a rectangle of the specified coordinates
      */
-    public RectangleShape getRectangleShape(int startX, int startY, int endX, int endY, boolean originAtCenter) {
-        final float width = endX - startX, height = endY - startY;
-        final RectangleShape rectangle = new RectangleShape(Vec2.f(width, height));
-        final Texture texture = get(startX, startY, endX, endY);
-        texture.apply(rectangle);
-        if (originAtCenter) rectangle.setOrigin(width / 2, height / 2);
-        return rectangle;
-    }
-
-    /**
-     * Creates a {@link RectangleShape} textured with the image within the bounds of a rectangle of the specified coordinates.
-     *
-     * @param startX the X-coordinate of the start point
-     * @param startY the Y-coordinate of the start point
-     * @param endX   the X-coordinate of the end point
-     * @param endY   the Y-coordinate of the end point
-     * @return a {@link RectangleShape} textured with the image within the bounds of a rectangle of the specified coordinates
-     */
-    public RectangleShape getRectangleShape(int startX, int startY, int endX, int endY) {
-        return getRectangleShape(startX, startY, endX, endY, false);
+    public Texture get(@NotNull Vector2i start, @NotNull Vector2i end) {
+        return get(start.x, start.y, end.x, end.y);
     }
 }
