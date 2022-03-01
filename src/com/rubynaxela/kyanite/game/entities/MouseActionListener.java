@@ -14,7 +14,7 @@ public interface MouseActionListener {
      * mouse cursor position is inside the object global bounds. This method is necessary because not every entity has to have
      * rectangular bounds. For instance, if the entity is circle-shaped and its origin in its middle, this method may look
      * like this:<pre>
-     * boolean isBelowMouse(@NotNull Vector2i cursorPosition) {
+     * boolean isCursorInside(@NotNull Vector2i cursorPosition) {
      *     final float deltaX = cursorPosition.x - getPosition().x;
      *     final float deltaY = cursorPosition.y - getPosition().y;
      *     final float r = getRadius();

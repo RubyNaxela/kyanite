@@ -3,6 +3,7 @@ package com.rubynaxela.kyanite.window;
 import com.rubynaxela.kyanite.game.HUD;
 import com.rubynaxela.kyanite.game.Scene;
 import com.rubynaxela.kyanite.game.assets.Icon;
+import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
 import com.rubynaxela.kyanite.util.Utils;
 import com.rubynaxela.kyanite.util.Vec2;
@@ -28,8 +29,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Provides a window that can serve as a target for 2D drawing. The window is already
- * initialized with an empty scene to which {@link Drawable} objects can be added.
+ * Provides a window that can serve as a target for 2D drawing. The window
+ * is already initialized with an empty scene to which {@link Drawable}
+ * objects can be added. The game window should not be stored in static
+ * fields because after the game restarts, the window is a new object.
  */
 public class Window extends RenderWindow {
 
@@ -47,6 +50,7 @@ public class Window extends RenderWindow {
 
     private boolean running = false, resizable = false;
     private int framerateLimit = 60;
+    private String title;
     private Vector2i lastSetSize;
     private Scene scene = new Scene() {
         @Override
@@ -74,6 +78,7 @@ public class Window extends RenderWindow {
     public Window(@NotNull VideoMode videoMode, @NotNull String title,
                   @MagicConstant(flagsFromClass = WindowStyle.class) int style, @NotNull ContextSettings contextSettings) {
         super(videoMode, title, style, contextSettings);
+        this.title = title;
         lastSetSize = Vec2.i(videoMode.width, videoMode.height);
         try {
             setIcon(new Icon(Objects.requireNonNull(getClass().getResourceAsStream("/res/kyanite.png"))));
@@ -507,6 +512,13 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * @return title of this window
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
      * @param <T> the current render scene class
      * @return reference to the current render scene of this window.
      */
@@ -554,7 +566,7 @@ public class Window extends RenderWindow {
                 clear(scene.getBackgroundColor());
                 handleEvents();
                 scene.fullLoop(this);
-                hud.draw(this);
+                hud.refresh(this);
                 display();
             }
         } else throw new IllegalStateException("The window loop is already running");
@@ -574,18 +586,43 @@ public class Window extends RenderWindow {
                         setPosition(position);
                         scene.refreshBackgroundTexture();
                         hud.refreshBackgroundTexture();
-                        resizeListeners.forEach(action -> action.resized(new ResizeEvent(Vec2.i(size))));
+                        new ArrayList<>(resizeListeners).forEach(action -> action.resized(new ResizeEvent(Vec2.i(size))));
                     } else setSize(lastSetSize);
                 }
-                case LOST_FOCUS -> focusListeners.forEach(FocusListener::focusLost);
-                case GAINED_FOCUS -> focusListeners.forEach(FocusListener::focusGained);
-                case TEXT_ENTERED -> textListeners.forEach(l -> l.textEntered((TextEvent) ev));
-                case KEY_PRESSED -> keyListeners.forEach(l -> l.keyPressed((KeyEvent) ev));
-                case KEY_RELEASED -> keyListeners.forEach(l -> l.keyReleased((KeyEvent) ev));
-                case MOUSE_WHEEL_MOVED -> mouseWheelListeners.forEach(l -> l.mouseWheelMoved((MouseWheelEvent) ev));
+                case LOST_FOCUS -> new ArrayList<>(focusListeners).forEach(FocusListener::focusLost);
+                case GAINED_FOCUS -> new ArrayList<>(focusListeners).forEach(FocusListener::focusGained);
+                case TEXT_ENTERED -> new ArrayList<>(textListeners).forEach(l -> l.textEntered((TextEvent) ev));
+                case KEY_PRESSED -> new ArrayList<>(keyListeners).forEach(l -> l.keyPressed((KeyEvent) ev));
+                case KEY_RELEASED -> new ArrayList<>(keyListeners).forEach(l -> l.keyReleased((KeyEvent) ev));
+                case MOUSE_WHEEL_MOVED -> new ArrayList<>(mouseWheelListeners).forEach(l -> l.mouseWheelMoved((MouseWheelEvent) ev));
                 case MOUSE_BUTTON_PRESSED -> {
-                    mouseButtonListeners.forEach(l -> l.mouseButtonPressed((MouseButtonEvent) ev));
-                    for (int i = scene.size() - 1; i >= 0; i--) {
+                    new ArrayList<>(mouseButtonListeners).forEach(l -> l.mouseButtonPressed((MouseButtonEvent) ev));
+                    boolean hudClicked = false;
+                    for (int i = hud.size() - 1; i >= 0; i--) {
+                        if (hud.get(i) instanceof final CompoundEntity compoundEntity) {
+                            // TODO Make this work with unlimited CompoundEntity nesting, and with Scene
+                            for (int j = compoundEntity.getComponents().size() - 1; j >= 0; j--) {
+                                final MouseActionListener listener = Utils.cast(compoundEntity.getComponents().get(j),
+                                                                                MouseActionListener.class);
+                                if (listener != null &&
+                                    listener.isCursorInside(Vec2.add(Vec2.subtract(Mouse.getPosition(this),
+                                                                                   Vec2.i(compoundEntity.getPosition())),
+                                                                     Vec2.i(compoundEntity.getOrigin())))) {
+                                    listener.mouseButtonPressed((MouseButtonEvent) ev);
+                                    hudClicked = true;
+                                    break;
+                                }
+                            }
+                        } else {
+                            final MouseActionListener listener = Utils.cast(hud.get(i), MouseActionListener.class);
+                            if (listener != null && listener.isCursorInside(Mouse.getPosition(this))) {
+                                listener.mouseButtonPressed((MouseButtonEvent) ev);
+                                hudClicked = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!hudClicked) for (int i = scene.size() - 1; i >= 0; i--) {
                         final MouseActionListener listener = Utils.cast(scene.get(i), MouseActionListener.class);
                         if (listener != null && listener.isCursorInside(Mouse.getPosition(this))) {
                             listener.mouseButtonPressed((MouseButtonEvent) ev);
@@ -594,6 +631,7 @@ public class Window extends RenderWindow {
                     }
                 }
                 case MOUSE_BUTTON_RELEASED -> {
+                    new ArrayList<>(mouseButtonListeners).forEach(l -> l.mouseButtonReleased((MouseButtonEvent) ev));
                     for (int i = scene.size() - 1; i >= 0; i--) {
                         final MouseActionListener listener = Utils.cast(scene.get(i), MouseActionListener.class);
                         if (listener != null && listener.isCursorInside(Mouse.getPosition(this))) {
@@ -602,17 +640,17 @@ public class Window extends RenderWindow {
                         }
                     }
                 }
-                case MOUSE_MOVED -> mouseListeners.forEach(l -> l.mouseMoved((MouseEvent) ev));
-                case MOUSE_ENTERED -> mouseListeners.forEach(l -> l.mouseEntered((MouseEvent) ev));
-                case MOUSE_LEFT -> mouseListeners.forEach(l -> l.mouseLeft((MouseEvent) ev));
-                case JOYSTICK_BUTTON_PRESSED -> joystickButtonListeners.forEach(
+                case MOUSE_MOVED -> new ArrayList<>(mouseListeners).forEach(l -> l.mouseMoved((MouseEvent) ev));
+                case MOUSE_ENTERED -> new ArrayList<>(mouseListeners).forEach(l -> l.mouseEntered((MouseEvent) ev));
+                case MOUSE_LEFT -> new ArrayList<>(mouseListeners).forEach(l -> l.mouseLeft((MouseEvent) ev));
+                case JOYSTICK_BUTTON_PRESSED -> new ArrayList<>(joystickButtonListeners).forEach(
                         l -> l.joystickButtonPressed((JoystickButtonEvent) ev));
-                case JOYSTICK_BUTTON_RELEASED -> joystickButtonListeners.forEach(
+                case JOYSTICK_BUTTON_RELEASED -> new ArrayList<>(joystickButtonListeners).forEach(
                         l -> l.joystickButtonReleased((JoystickButtonEvent) ev));
-                case JOYSTICK_MOVED -> joystickListeners.forEach(l -> l.joystickMoved((JoystickMoveEvent) ev));
-                case JOYSTICK_CONNECETED -> joystickConnectionListeners.forEach(
+                case JOYSTICK_MOVED -> new ArrayList<>(joystickListeners).forEach(l -> l.joystickMoved((JoystickMoveEvent) ev));
+                case JOYSTICK_CONNECETED -> new ArrayList<>(joystickConnectionListeners).forEach(
                         l -> l.joystickConnected((JoystickEvent) ev));
-                case JOYSTICK_DISCONNECTED -> joystickConnectionListeners.forEach(
+                case JOYSTICK_DISCONNECTED -> new ArrayList<>(joystickConnectionListeners).forEach(
                         l -> l.joystickDisconnected((JoystickEvent) ev));
             }
         }

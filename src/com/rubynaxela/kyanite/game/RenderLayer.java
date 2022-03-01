@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  * an element is also its z-index. If two elements overlap each other, the one with the higher index will
  * be displayed over the other one. This class is the base of the {@link Scene} and {@link HUD} classes.
  */
-abstract class RenderLayer implements Iterable<Drawable> {
+public abstract class RenderLayer implements Iterable<Drawable> {
 
     /**
      * The game context.
@@ -29,6 +29,7 @@ abstract class RenderLayer implements Iterable<Drawable> {
      * The list of objects on this render layer.
      */
     protected final List<Drawable> drawables = new LinkedList<>();
+    private final Queue<Consumer<? super RenderLayer>> scheduledActions = new LinkedList<>();
     /**
      * The background color of this render layer.
      */
@@ -42,6 +43,9 @@ abstract class RenderLayer implements Iterable<Drawable> {
      */
     protected boolean ready = false;
     private Texture backgroundTexture;
+
+    RenderLayer() {
+    }
 
     /**
      * This method is executed when this render layer is assigned to a window.
@@ -215,6 +219,16 @@ abstract class RenderLayer implements Iterable<Drawable> {
     }
 
     /**
+     * Schedules an object to add to this render layer. All scheduled
+     * objects will be added before the nearest loop/draw iteration.
+     *
+     * @param object an object to add to this scene
+     */
+    public void scheduleToAdd(@NotNull Drawable object) {
+        scheduledActions.add(layer -> layer.add(object));
+    }
+
+    /**
      * Removes the first occurrence of the specified element from this render layer, if it is present.
      *
      * @param object the object to be removed from this render layer, if present
@@ -233,6 +247,16 @@ abstract class RenderLayer implements Iterable<Drawable> {
      */
     public Drawable remove(int index) {
         return drawables.remove(index);
+    }
+
+    /**
+     * Schedules an object to remove from this render layer. All scheduled
+     * objects will be removed before the nearest loop/draw iteration.
+     *
+     * @param object an object to add to this scene
+     */
+    public void scheduleToRemove(@NotNull Drawable object) {
+        scheduledActions.add(layer -> layer.remove(object));
     }
 
     /**
@@ -261,6 +285,16 @@ abstract class RenderLayer implements Iterable<Drawable> {
      */
     public void clear() {
         drawables.clear();
+    }
+
+    /**
+     * Schedules a consumer action to be executed with this render layer as the parameter.
+     * All scheduled actions will be executed before the nearest loop/draw iteration.
+     *
+     * @param action an action to be scheduled
+     */
+    public void schedule(@NotNull Consumer<? super RenderLayer> action) {
+        scheduledActions.add(action);
     }
 
     /**
@@ -365,5 +399,14 @@ abstract class RenderLayer implements Iterable<Drawable> {
      */
     public List<Drawable> asList() {
         return Collections.unmodifiableList(drawables);
+    }
+
+    /**
+     * This method is called automatically before every loop/draw iteration of a render layer. Calling it
+     * manually might cause a {@link ConcurrentModificationException} to be thrown and thus is not recommended.
+     */
+    protected void runScheduledActions() {
+        scheduledActions.forEach(change -> change.accept(this));
+        scheduledActions.clear();
     }
 }

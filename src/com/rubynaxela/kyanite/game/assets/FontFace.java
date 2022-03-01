@@ -1,8 +1,12 @@
 package com.rubynaxela.kyanite.game.assets;
 
 import com.rubynaxela.kyanite.game.gui.Font;
+import com.rubynaxela.kyanite.game.gui.Text;
 import com.rubynaxela.kyanite.system.IOException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jsfml.graphics.ConstFont;
+import org.jsfml.graphics.Texture;
 
 import java.io.File;
 import java.io.InputStream;
@@ -26,6 +30,10 @@ public class FontFace implements Asset {
             Objects.requireNonNull(FontFace.class.getResourceAsStream("/res/jetbrains_mono.ttf")));
 
     private final org.jsfml.graphics.Font font;
+
+    private FontFace(@NotNull org.jsfml.graphics.Font font) {
+        this.font = font;
+    }
 
     /**
      * Creates a new font from the source specified by the path.
@@ -74,11 +82,30 @@ public class FontFace implements Asset {
     }
 
     /**
+     * @param text a {@link Text} object
+     * @return the font that has been applied to the specified text object
+     */
+    @Nullable
+    public static FontFace of(@NotNull Text text) {
+        final ConstFont font = text.getFont();
+        return font != null ? new FontFace((org.jsfml.graphics.Font) font) : null;
+    }
+
+    /**
      * Applies this font on the {@link org.jsfml.graphics.Text}.
      *
      * @param text a {@link org.jsfml.graphics.Text} to apply this font on
      */
     public void apply(@NotNull org.jsfml.graphics.Text text) {
         text.setFont(font);
+    }
+
+    /**
+     * Disables anti-aliasing for the specified character size. Useful when pixel-style fonts appear blurry.
+     *
+     * @param characterSize the character size for which anti-aliasing of this font will be disabled
+     */
+    public void disableAntialiasing(int characterSize) {
+        ((Texture) font.getTexture(characterSize)).setSmooth(false);
     }
 }

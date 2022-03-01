@@ -68,7 +68,10 @@ public class Dictionary {
      */
     public double getDouble(@NotNull String key) throws JSONParseException {
         try {
-            return ((BigDecimal) data.get(key)).doubleValue();
+            final Object value = data.get(key);
+            if (value instanceof final Float floatValue) return floatValue.doubleValue();
+            if (value instanceof final Double doubleValue) return doubleValue;
+            return ((BigDecimal) value).doubleValue();
         } catch (JSONException | ClassCastException e) {
             throw new JSONParseException("\"" + key + "\" is not is not (and cannot be converted to) a double");
         }
@@ -82,7 +85,10 @@ public class Dictionary {
      */
     public float getFloat(@NotNull String key) throws JSONParseException {
         try {
-            return ((BigDecimal) data.get(key)).floatValue();
+            final Object value = data.get(key);
+            if (value instanceof final Float floatValue) return floatValue;
+            if (value instanceof final Double doubleValue) return doubleValue.floatValue();
+            return ((BigDecimal) value).floatValue();
         } catch (JSONException | ClassCastException e) {
             throw new JSONParseException("\"" + key + "\" is not is not (and cannot be converted to) a float");
         }
@@ -96,7 +102,9 @@ public class Dictionary {
      */
     public int getInt(@NotNull String key) throws JSONParseException {
         try {
-            return ((BigInteger) data.get(key)).intValue();
+            final Object value = data.get(key);
+            if (value instanceof final Integer intValue) return intValue;
+            return ((BigInteger) value).intValue();
         } catch (JSONException | ClassCastException e) {
             throw new JSONParseException("\"" + key + "\" is not is not (and cannot be converted to) an int");
         }

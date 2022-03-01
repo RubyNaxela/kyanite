@@ -15,12 +15,14 @@ import org.jsfml.window.VideoMode;
  */
 public final class GameContext {
 
-    private static final GameContext instance = new GameContext();
+    static GameContext instance;
+    private final Game gameInstance;
     private final AssetsBundle assetsBundle;
     private final Clock clock;
     private Window window;
 
-    private GameContext() {
+    GameContext(@NotNull Game gameInstance) {
+        this.gameInstance = gameInstance;
         assetsBundle = new AssetsBundle();
         clock = new Clock(false);
     }
@@ -102,5 +104,20 @@ public final class GameContext {
     @NotNull
     public Clock getClock() {
         return clock;
+    }
+
+    /**
+     * Restarts the game clock and re-creates the game window. Does not stop any actions
+     * that are not handled by the game loop, e.g. playing sounds or running threads.
+     */
+    public void restartGame() {
+        final Window oldWindow = window;
+        final Vector2i oldWindowSize = oldWindow.getSize();
+        window = new Window(new VideoMode(oldWindowSize.x, oldWindowSize.y), oldWindow.getTitle());
+        window.setPosition(oldWindow.getPosition());
+        oldWindow.close();
+        gameInstance.init();
+        clock.restart();
+        window.startLoop();
     }
 }

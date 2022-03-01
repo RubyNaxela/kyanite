@@ -1,11 +1,14 @@
 package com.rubynaxela.kyanite.game;
 
+import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
+import com.rubynaxela.kyanite.util.Colors;
 import com.rubynaxela.kyanite.util.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RectangleShape;
+
+import java.util.ConcurrentModificationException;
 
 /**
  * Provides an overlay designed for being displayed on a {@link Window} over a {@link Scene}.
@@ -15,11 +18,10 @@ public abstract class HUD extends RenderLayer {
     private final RectangleShape solidBackground = new RectangleShape();
 
     /**
-     * Creates an empty HUD. Overriding this constructor is possible
-     * but not recommended. Use the {@link #init} method instead.
+     * Creates an empty HUD.
      */
     public HUD() {
-        backgroundColor = new Color(0, 0, 0, 0);
+        backgroundColor = Colors.TRANSPARENT;
     }
 
     /**
@@ -34,16 +36,28 @@ public abstract class HUD extends RenderLayer {
     }
 
     /**
-     * Draws every object on the window. This method is automatically executed
-     * every frame by the window it belongs to and should not be invoked manually.
+     * Draws every object on the window. This method is automatically executed every frame by the window it belongs
+     * to and should not be invoked manually. If this HUD contains {@link AnimatedEntity}s, their {@code animate()}
+     * method will be called with the currently set {@link Scene}'s {@code getDeltaTime()} method.
      *
      * @param window the window that the scene has to be displayed on
      */
-    public void draw(@NotNull Window window) {
+    public void refresh(@NotNull Window window) {
         solidBackground.setSize(Vec2.f(window.getSize()));
         solidBackground.setFillColor(backgroundColor);
         if (background != null) window.draw(background);
         else window.draw(solidBackground);
-        forEach(window::draw);
+        runScheduledActions();
+        try {
+            forEach(object -> {
+                if (object instanceof AnimatedEntity)
+                    ((AnimatedEntity) object).animate(window.getScene().getDeltaTime(), getContext().getClock().getTime());
+                window.draw(object);
+            });
+        } catch (ConcurrentModificationException e) {
+            throw new ConcurrentModificationException("HUD contents cannot be modified during a draw iteration." +
+                                                      " In order to add or remove an object, use the" +
+                                                      " scheduleToAdd(), scheduleToRemove() or schedule() method");
+        }
     }
 }

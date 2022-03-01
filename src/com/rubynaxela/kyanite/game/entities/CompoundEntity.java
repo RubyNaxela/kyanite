@@ -19,7 +19,7 @@ import java.util.Objects;
  * If two elements overlap each other, the one with the higher index will be displayed over the other one. This class
  * can be used, for instance, to create complex structures out of primitive shapes or to compose spannable texts.
  */
-public class CompoundEntity implements Transformable, Drawable {
+public class CompoundEntity implements Drawable, Transformable {
 
     private final List<Drawable> components = new ArrayList<>();
     private float rotation = 0;
@@ -119,6 +119,13 @@ public class CompoundEntity implements Transformable, Drawable {
                                                            Transform.combine(states.transform, getTransform()),
                                                            states.texture, states.shader);
         components.forEach(component -> target.draw(component, renderStates));
+    }
+
+    /**
+     * @return a list of objects that this compound entity consists of
+     */
+    public List<Drawable> getComponents() {
+        return new ArrayList<>(components);
     }
 
     /**

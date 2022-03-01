@@ -18,6 +18,7 @@ public class Marker extends CircleShape {
      */
     public Marker(@NotNull Vector2f position) {
         super(4);
+        setPosition(position);
         setOrigin(2, 2);
         setFillColor(Colors.RED);
     }

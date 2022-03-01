@@ -1,12 +1,16 @@
 package com.rubynaxela.kyanite.game.assets;
 
 import com.rubynaxela.kyanite.system.IOException;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Shape;
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Vector2i;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -33,10 +37,18 @@ public class Texture implements Asset {
      *
      * @param path path to the source image file
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public Texture(@NotNull Path path) {
         texture = new org.jsfml.graphics.Texture();
         try {
-            texture.loadFromFile(path);
+            final File imageFile = path.toFile();
+            if (ImageIO.getImageReaders(ImageIO.createImageInputStream(imageFile)).next().getFormatName().equals("JPEG")) {
+                final File tmpImageFile = new File(imageFile.getParentFile(), "." + imageFile.getName() + ".png");
+                final BufferedImage bufferedImage = ImageIO.read(imageFile);
+                ImageIO.write(bufferedImage, "png", tmpImageFile);
+                texture.loadFromFile(tmpImageFile.toPath());
+                tmpImageFile.delete();
+            } else texture.loadFromFile(path);
         } catch (java.io.IOException e) {
             e.printStackTrace();
             missingTexture();
@@ -105,6 +117,7 @@ public class Texture implements Asset {
     /**
      * @return whether texture repeating is enabled for this texture
      */
+    @Contract(pure = true)
     public boolean isTileable() {
         return texture.isRepeated();
     }
@@ -121,6 +134,7 @@ public class Texture implements Asset {
     /**
      * @return whether texture smooth filter is enabled for this texture
      */
+    @Contract(pure = true)
     public boolean isSmooth() {
         return texture.isSmooth();
     }
@@ -132,6 +146,17 @@ public class Texture implements Asset {
      */
     public void setSmooth(boolean smooth) {
         texture.setSmooth(smooth);
+    }
+
+    /**
+     * Gets the dimensions of this texture.
+     *
+     * @return the dimensions of this texture
+     */
+    @Contract(pure = true)
+    @NotNull
+    public Vector2i getSize() {
+        return texture.getSize();
     }
 
     private void missingTexture() {

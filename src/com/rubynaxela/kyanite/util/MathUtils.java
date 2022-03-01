@@ -9,10 +9,38 @@ import org.jsfml.graphics.Transform;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
+import java.util.Random;
+
 /**
- * A set of mathematical functions and algorithms.
+ * A set of mathematical constants, functions and algorithms.
  */
 public final class MathUtils {
+
+    private static final Random random = new Random();
+    /**
+     * The value of &Sqrt;2
+     */
+    public static float SQRT2 = (float) Math.sqrt(2);
+    /**
+     * The value of &Sqrt;2/2
+     */
+    public static float SQRT2_2 = (float) Math.sqrt(2) / 2;
+    /**
+     * The value of 1/&Sqrt;2
+     */
+    public static float INV_SQRT2 = 1 / (float) Math.sqrt(2);
+    /**
+     * The value of &Sqrt;3
+     */
+    public static float SQRT3 = (float) Math.sqrt(3);
+    /**
+     * The value of &Sqrt;3/3
+     */
+    public static float SQRT3_3 = (float) Math.sqrt(3) / 3;
+    /**
+     * The value of 1/&Sqrt;3
+     */
+    public static float INV_SQRT3 = 1 / (float) Math.sqrt(3);
 
     private MathUtils() {
     }
@@ -40,8 +68,8 @@ public final class MathUtils {
      * is the other argument, whereas if both values are {@code null}, then the result is also {@code null}.
      *
      * @param <T> the number class
-     * @param a first operand
-     * @param b second operand
+     * @param a   first operand
+     * @param b   second operand
      * @return the bigger of {@code a} and {@code b}
      */
     @Contract(pure = true, value = "_, _ -> new")
@@ -49,6 +77,30 @@ public final class MathUtils {
         final Pair<Boolean, T> checkNullAndNaNResult = checkNullAndNaN(a, b);
         if (checkNullAndNaNResult.value1()) return checkNullAndNaNResult.value2();
         else return a.doubleValue() >= b.doubleValue() ? a : b;
+    }
+
+    /**
+     * Performs a power operation by iterative multiplication. This method, unlike {@link Math#pow},
+     * is guaranteed to yield a mathematically correct result. However, if result is too big or too small
+     * to be stored in a {@code long} variable, {@code Long.MAX_VALUE} or {@code Long.MIN_VALUE} is returned.
+     *
+     * @param x the base
+     * @param n the exponent, must be positive or zero
+     * @return {@code x^n}; the {@code n}th power of {@code x}
+     */
+    @Contract(pure = true)
+    public static long pow(long x, int n) {
+        if (n < 0) throw new ArithmeticException("The exponent in integer exponentiation cannot be negative");
+        if (x > 1 && n > 62 || x < -1 && n > 64 && n % 2 == 0) return Long.MAX_VALUE;
+        if (x < -1 && n > 63 && n % 2 == 1) return Long.MIN_VALUE;
+        long result = 1;
+        while (true) {
+            if ((n & 1) == 1) result *= x;
+            n >>= 1;
+            if (n == 0) break;
+            x *= x;
+        }
+        return result;
     }
 
     /**
@@ -87,6 +139,30 @@ public final class MathUtils {
     }
 
     /**
+     * Returns a pseudorandomly chosen {@code int} from the specified range.
+     *
+     * @param lowerBound the range lower bound (inclusive)
+     * @param upperBound the range upper bound (exclusive)
+     * @return a pseudorandom integer from the specified range
+     */
+    @Contract(pure = true)
+    public static int randomInt(int lowerBound, int upperBound) {
+        return random.nextInt(upperBound - lowerBound) + lowerBound;
+    }
+
+    /**
+     * Returns a pseudorandomly chosen {@code float} from the specified range.
+     *
+     * @param lowerBound the range lower bound (inclusive)
+     * @param upperBound the range upper bound (exclusive)
+     * @return a pseudorandom float from the specified range
+     */
+    @Contract(pure = true)
+    public static float randomFloat(float lowerBound, float upperBound) {
+        return random.nextFloat() * (upperBound - lowerBound) + lowerBound;
+    }
+
+    /**
      * Combines transformation matrices by multiplying them.
      *
      * @param transforms the transformation matrices
@@ -107,8 +183,37 @@ public final class MathUtils {
      * @param b second point
      * @return the taxicab distance between the points
      */
+    @Contract(pure = true)
     public static int taxicabDistance(Vector2i a, Vector2i b) {
         return Math.abs(a.x - b.x) + Math.abs(a.x - b.y);
+    }
+
+    /**
+     * Returns the specified number formatted in "kmbtqp" notation with one decimal place,
+     * rounded down (if the number is positive) or down (if the number is negative). Examples:
+     * <ul>
+     *     <li>{@code shortNotation(72457) // "72.4k"}</li>
+     *     <li>{@code shortNotation(2489697245700) // "2.4q"}</li>
+     *     <li>{@code shortNotation(198345134672) // "198.3b"}</li>
+     *     <li>{@code shortNotation(129) // "129"}</li>
+     *     <li>{@code shortNotation(724000619032) // "724b"}</li>
+     *     <li>{@code shortNotation(82745824) // "-82.7m"}</li>
+     *     <li>{@code shortNotation(1892722390) // "-1.8t"}</li>
+     * </ul>
+     *
+     * @param number a number
+     * @return the specified number formatted in "kmbtqp" notation with one decimal place
+     */
+    @Contract(pure = true)
+    public static String shortNotation(long number) {
+        if (number < 0) return "-" + shortNotation(-number);
+        if (number < 1000) return "" + number;
+        final String[] suffixes = {"k", "m", "b", "t", "q", "p"};
+        final int powerOf1000 = (("" + number).length() - 1) / 3;
+        final String shortNotation = "" + number / pow(10, powerOf1000 * 3 - 1);
+        final char decimalPlace = shortNotation.charAt(shortNotation.length() - 1);
+        return shortNotation.substring(0, shortNotation.length() - 1) +
+               (decimalPlace != '0' ? "." + decimalPlace : "") + suffixes[powerOf1000 - 1];
     }
 
     /**
@@ -170,6 +275,77 @@ public final class MathUtils {
             if (aDouble != aDouble) return new Pair<>(true, a);
             else if (bDouble != bDouble) return new Pair<>(true, b);
             else return new Pair<>(false, null);
+        }
+    }
+
+    /**
+     * Elementary transformations of the identity matrix.
+     */
+    public static final class ElementaryTransform {
+
+        private ElementaryTransform() {
+        }
+
+        /**
+         * The rotation transformation.
+         *
+         * @param angle the rotation angle
+         * @return the identity matrix after the rotation transformation
+         */
+        public static Transform rotation(float angle) {
+            return Transform.rotate(Transform.IDENTITY, angle);
+        }
+
+        /**
+         * The scale transformation.
+         *
+         * @param factor the x and y scale factor
+         * @return the identity matrix after the scale transformation
+         */
+        public static Transform scale(float factor) {
+            return Transform.scale(Transform.IDENTITY, factor, factor);
+        }
+
+        /**
+         * The scale transformation.
+         *
+         * @param xFactor the x scale factor
+         * @param yFactor the y scale factor
+         * @return the identity matrix after the scale transformation
+         */
+        public static Transform scale(float xFactor, float yFactor) {
+            return Transform.scale(Transform.IDENTITY, xFactor, yFactor);
+        }
+
+        /**
+         * The scale transformation.
+         *
+         * @param factors the scale factors vector
+         * @return the identity matrix after the scale transformation
+         */
+        public static Transform scale(@NotNull Vector2f factors) {
+            return Transform.scale(Transform.IDENTITY, factors);
+        }
+
+        /**
+         * The translation transformation.
+         *
+         * @param xOffset the x translation offset
+         * @param yOffset the y translation offset
+         * @return the identity matrix after the translation transformation
+         */
+        public static Transform translation(float xOffset, float yOffset) {
+            return Transform.translate(Transform.IDENTITY, xOffset, yOffset);
+        }
+
+        /**
+         * The translation transformation.
+         *
+         * @param offset the translation vector
+         * @return the identity matrix after the translation transformation
+         */
+        public static Transform translation(@NotNull Vector2f offset) {
+            return Transform.translate(Transform.IDENTITY, offset);
         }
     }
 }
