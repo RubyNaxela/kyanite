@@ -752,7 +752,7 @@ public class Colors {
     public static final Color YELLOW_GREEN = new Color(154, 205, 50);
 
     /**
-     * Returns the color specified in the first parameter with the specified alpha (opacity) value
+     * Returns the specified color with the specified alpha (opacity) value.
      *
      * @param color   a color
      * @param opacity the color's opacity value ranging between {@code 0.0f}

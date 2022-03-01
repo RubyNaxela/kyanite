@@ -14,8 +14,8 @@ import java.util.function.Consumer;
 /**
  * An {@link Iterable} of integer 2D coordinates. Useful for iterating over images or coordinate-based scenes. Example usage:
  * <pre>Vec2iIterable.rectangle(1, 1, 16, 3).forEach((x, y) -> world.spawn(new Knight(), x, y));</pre>
- * The behavior of the above code will be the same as the following:
- * <pre> for (int i = 1; i < 17; i++) {
+ * The behavior of the above code will be the same as the following:<pre>
+ * for (int i = 1; i < 17; i++) {
  *     for (int j = 1; j < 4; j++) {
  *         world.spawn(new Knight(), i, j);
  *     }

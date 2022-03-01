@@ -16,7 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is designed to load many textures stored in a single image file
+ * This class is designed to create many textures from a single image file. Sample usage:
+ * <pre>new TextureAtlas("chocolate_stages.png").get(32, 0, 16, 16)</pre>
+ * The above code will create from the specified file a 16px by 16px {@code Texture},
+ * of which the top left corner will correspond to the (32,0) point in the image.
  */
 public class TextureAtlas implements Asset {
 
