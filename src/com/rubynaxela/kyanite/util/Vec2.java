@@ -16,14 +16,13 @@ public final class Vec2 {
     /**
      * Constructs a new {@link Vector2f} with given values.
      *
-     * @param <T> a number class
-     * @param x   the X component of this vector
-     * @param y   the Y component of this vector
+     * @param x the X component of this vector
+     * @param y the Y component of this vector
      * @return a new {@link Vector2f}
      */
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2f f(@NotNull T x, @NotNull T y) {
+    public static Vector2f f(@NotNull Number x, @NotNull Number y) {
         return new Vector2f(x.floatValue(), y.floatValue());
     }
 
@@ -42,14 +41,13 @@ public final class Vec2 {
     /**
      * Constructs a new {@link Vector2i} with given values.
      *
-     * @param <T> a number class
-     * @param x   the X component of this vector
-     * @param y   the Y component of this vector
+     * @param x the X component of this vector
+     * @param y the Y component of this vector
      * @return a new {@link Vector2i}
      */
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2i i(@NotNull T x, @NotNull T y) {
+    public static Vector2i i(@NotNull Number x, @NotNull Number y) {
         return new Vector2i(x.intValue(), y.intValue());
     }
 
@@ -164,52 +162,48 @@ public final class Vec2 {
     /**
      * Multiplies a vector by a scalar.
      *
-     * @param <T>    the number class of the scalar parameter
      * @param vector the vector
      * @param scalar the scalar to multiply by
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2f multiply(@NotNull Vector2f vector, @NotNull T scalar) {
+    public static Vector2f multiply(@NotNull Vector2f vector, @NotNull Number scalar) {
         return Vector2f.mul(vector, scalar.floatValue());
     }
 
     /**
      * Multiplies a scalar by a vector.
      *
-     * @param <T>    the number class of the scalar parameter
      * @param scalar the scalar to multiply by
      * @param vector the vector
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2f multiply(@NotNull T scalar, @NotNull Vector2f vector) {
+    public static Vector2f multiply(@NotNull Number scalar, @NotNull Vector2f vector) {
         return Vector2f.mul(vector, scalar.floatValue());
     }
 
     /**
      * Multiplies a vector by a scalar.
      *
-     * @param <T>    the number class of the scalar parameter
      * @param vector the vector
      * @param scalar the scalar to multiply by
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2i multiply(@NotNull Vector2i vector, @NotNull T scalar) {
+    public static Vector2i multiply(@NotNull Vector2i vector, @NotNull Number scalar) {
         return Vector2i.mul(vector, scalar.intValue());
     }
 
     /**
      * Multiplies a scalar by a vector.
      *
-     * @param <T>    the number class of the scalar parameter
      * @param scalar the scalar to multiply by
      * @param vector the vector
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2i multiply(@NotNull T scalar, @NotNull Vector2i vector) {
+    public static Vector2i multiply(@NotNull Number scalar, @NotNull Vector2i vector) {
         return Vector2i.mul(vector, scalar.intValue());
     }
 
@@ -335,26 +329,24 @@ public final class Vec2 {
     /**
      * Multiplies a vector by the inverse of a scalar.
      *
-     * @param <T>    the number class of the scalar parameter
      * @param vector the vector
      * @param scalar the scalar to divide by
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2f divide(@NotNull Vector2f vector, @NotNull T scalar) {
+    public static Vector2f divide(@NotNull Vector2f vector, @NotNull Number scalar) {
         return Vector2f.div(vector, scalar.floatValue());
     }
 
     /**
      * Multiplies a vector by the inverse of a scalar.
      *
-     * @param <T>    the number class of the scalar parameter
      * @param vector the vector
      * @param scalar the scalar to divide by
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> Vector2i divide(@NotNull Vector2i vector, @NotNull T scalar) {
+    public static Vector2i divide(@NotNull Vector2i vector, @NotNull Number scalar) {
         return Vector2i.div(vector, scalar.intValue());
     }
 
