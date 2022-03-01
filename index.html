@@ -103,7 +103,7 @@
     <div class="padding-container fade-in">
         <div class="subtitle-container">
             <div class="subtitle">
-                <span class="initial">T</span>
+                <span class="initial">P</span>
                 Pobieranie
                 <hr>
             </div>
@@ -115,17 +115,19 @@
                 </a>
                 <p style="text-align: center;">wersja: 1.7.1</p>
             </div>
-            <!--            <div>-->
-            <!--                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.7.0-rc.3.jar">-->
-            <!--                    <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>-->
-            <!--                </a>-->
-            <!--                <p style="text-align: center;">wersja: 1.7.0-rc.3</p>-->
-            <!--                <ul>-->
-            <!--                    <li>potencjalnie niestabilna wersja</li>-->
-            <!--                    <li>może zawierać błędy</li>-->
-            <!--                    <li>część wspomnianych zmian<br>może nie być wdrożona</li>-->
-            <!--                </ul>-->
-            <!--            </div>-->
+            <!--<BETA>-->
+            <div>
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.0-beta.1.jar">
+                    <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>
+                </a>
+                <p style="text-align: center;">wersja: 1.8.0-beta.1</p>
+                <ul>
+                    <li>potencjalnie niestabilna wersja</li>
+                    <li>może zawierać błędy</li>
+                    <li>część zmian<br>może nie być w pełni wdrożona</li>
+                </ul>
+            </div>
+            <!--</BETA>-->
         </div>
     </div>
 
@@ -137,6 +139,52 @@
                 <hr>
             </div>
         </div>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.8.0</p>
+        <!--<BETA>-->
+        <div style="display: inline-block;">
+            <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
+        </div>
+        <!--</BETA>-->
+        <p class="small">1 marca 2022</p>
+        <ul>
+            <li>Dodano planowane modyfikacje obiektów <span class="monospace">Scene</span> i <span class="monospace">HUD</span>
+                - metody: <span class="monospace">scheduleToAdd(Drawable)</span>, <span
+                        class="monospace">scheduleToRemove(Drawable)</span> i <span
+                        class="monospace">schedule(Consumer&lt;?&nbsp;super&nbsp;RenderLayer&gt;)</span></li>
+            <li>Dodano wsparcie dla reinicjalizacji początkowego stanu gry (który teraz można ustawić poprzez przeciążenie nowej
+                metody <span class="monospace">Game#init</span>) poprzez metodę <span
+                        class="monospace">GameContext#restartGame</span></li>
+            <li>Dodano możliwość zawieszenia i wznowienia pętli sceny (metody: <span class="monospace">Scene#suspend</span>,
+                <span class="monospace">Scene#resume</span> i <span class="monospace">Scene#isSuspended</span>)
+            </li>
+            <li>Dodano wsparcie dla plików JPEG jako źródeł dla tekstur</li>
+            <li>Dodano klasę <span class="monospace">Vec2iIterable</span> do ułatwienia dwuwymiarowych iteracji</li>
+            <li>Dodano metodę <span class="monospace">FontFace#of</span> do otrzymania obiektu <span
+                    class="monospace">FontFace</span> użytego do ustawienia czcionki obiektu <span class="monospace">Text</span>
+            </li>
+            <li>Dodano metodę <span class="monospace">FontFace#of</span> zaprojektowaną dla pikselowych czcionek</li>
+            <li>Dodano metodę <span class="monospace">Texture#getSize</span></li>
+            <li>Dodano metodę <span class="monospace">CompoundEntity#getComponents</span></li>
+            <li>Dodano metodę <span class="monospace">Window#getTitle</span></li>
+            <li>Naprawiono błąd, w którym <span class="monospace">Marker</span> nie pojawiał się w zadanym miejscu na scenie
+            </li>
+            <li>
+                <!--<BETA>-->
+                <div style="display: flex; align-items: center;">
+                    <div>
+                        Dodano wsparcie dla obiektów <span class="monospace">MouseActionListener</span> wewnątrz obiektów <span
+                            class="monospace">CompoundEntity</span>
+                    </div>
+                    <div style="display: inline-block; margin-left: 0.5ch">
+                        <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
+                    </div>
+                </div>
+                <!--</BETA>-->
+            </li>
+        </ul>
     </div>
 
     <div class="horizontal-padding-container fade-in-early bottom-margin">
@@ -168,21 +216,9 @@
 
     <div class="horizontal-padding-container fade-in-early bottom-margin">
         <p class="big" style="display: inline-block;">1.7.0</p>
-        <!--        <div style="display: inline-block;">-->
-        <!--            <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>-->
-        <!--        </div>-->
         <p class="small">22 listopada 2021</p>
         <ul>
-            <li>
-                <!--                <div style="display: flex; align-items: center;">-->
-                <!--                    <div>-->
-                Przebudowano wewnętrzne działanie klasy <span class="monospace">CompoundEntity</span>
-                <!--                    </div>-->
-                <!--                    <div style="display: inline-block; margin-left: 0.5ch">-->
-                <!--                        <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-            </li>
+            <li>Przebudowano wewnętrzne działanie klasy <span class="monospace">CompoundEntity</span></li>
             <li>
                 Metoda <span class="monospace">CompoundEntity#getGlobalRect</span> została przemianowana na
                 <span class="monospace">getGlobalBounds</span>
