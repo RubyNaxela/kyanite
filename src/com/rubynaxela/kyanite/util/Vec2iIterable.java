@@ -16,8 +16,8 @@ import java.util.stream.Stream;
  * An {@link Iterable} of integer 2D coordinates. Useful for iterating over images or coordinate-based scenes. Example usage:
  * <pre>Vec2iIterable.rectangle(1, 1, 16, 3).forEach((x, y) -> world.spawn(new Knight(), x, y));</pre>
  * The behavior of the above code will be the same as the following:<pre>
- * for (int i = 1; i < 17; i++) {
- *     for (int j = 1; j < 4; j++) {
+ * for (int i = 1; i &lt; 17; i++) {
+ *     for (int j = 1; j &lt; 4; j++) {
  *         world.spawn(new Knight(), i, j);
  *     }
  * }</pre>
@@ -45,6 +45,7 @@ public class Vec2iIterable implements Iterable<Vector2i> {
      * size. The iteration range is {@code [0;size-1]} on both axes.
      *
      * @param size the number of rows and columns in this {@code Vec2iIterable}
+     * @return a square {@code Vec2iIterable} with the specified size
      */
     @NotNull
     @Contract(pure = true, value = "_ -> new")
@@ -58,6 +59,7 @@ public class Vec2iIterable implements Iterable<Vector2i> {
      *
      * @param offset the shift of the points on both axes
      * @param size   the number of rows and columns in this {@code Vec2iIterable}
+     * @return a square {@code Vec2iIterable} with the specified size and offset
      */
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
@@ -71,6 +73,7 @@ public class Vec2iIterable implements Iterable<Vector2i> {
      *
      * @param rows    the number of rows in this {@code Vec2iIterable}
      * @param columns the number of columns in this {@code Vec2iIterable}
+     * @return a rectangle {@code Vec2iIterable} with the specified size
      */
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
@@ -86,6 +89,7 @@ public class Vec2iIterable implements Iterable<Vector2i> {
      * @param yOffset the shift of the points on the Y axis
      * @param rows    the number of rows in this {@code Vec2iIterable}
      * @param columns the number of columns in this {@code Vec2iIterable}
+     * @return a rectangle {@code Vec2iIterable} with the specified size and offset
      */
     @NotNull
     @Contract(pure = true, value = "_, _, _, _ -> new")
@@ -98,6 +102,7 @@ public class Vec2iIterable implements Iterable<Vector2i> {
      * range is {@code [0;size.x-1]} on the X axis and {@code [0;size.y-1]} on the Y axis.
      *
      * @param size the size of this {@code Vec2iIterable}
+     * @return a rectangle {@code Vec2iIterable} with the specified size
      */
     @NotNull
     @Contract(pure = true, value = "_ -> new")
@@ -111,6 +116,7 @@ public class Vec2iIterable implements Iterable<Vector2i> {
      *
      * @param offset the shift of the points on both axes
      * @param size   the size of this {@code Vec2iIterable}
+     * @return a rectangle {@code Vec2iIterable} with the specified size and offset
      */
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
@@ -123,6 +129,7 @@ public class Vec2iIterable implements Iterable<Vector2i> {
      * {@code [rect.left;rect.width+rect.left-1]} on the X axis and {@code [rect.top;rect.height+rect.top-1]} on the Y axis.
      *
      * @param rect the {@code IntRect} to iterate over
+     * @return a rectangle {@code Vec2iIterable} over the specified rectangle
      */
     @NotNull
     @Contract(pure = true, value = "_ -> new")

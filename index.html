@@ -117,10 +117,10 @@
             </div>
             <!--<BETA>-->
             <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.0-beta.1.jar">
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.0-beta.2.jar">
                     <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>
                 </a>
-                <p style="text-align: center;">wersja: 1.8.0-beta.1</p>
+                <p style="text-align: center;">wersja: 1.8.0-beta.2</p>
                 <ul>
                     <li>potencjalnie niestabilna wersja</li>
                     <li>może zawierać błędy</li>
@@ -171,6 +171,17 @@
             <li>Dodano metodę <span class="monospace">Window#getTitle</span></li>
             <li>Naprawiono błąd, w którym <span class="monospace">Marker</span> nie pojawiał się w zadanym miejscu na scenie
             </li>
+            <li>Dodano metodę <span class="monospace">TextureAtlas#get(Vector2i, Vector2i)</span></li>
+            <li>Dodano metody <span class="monospace">Vec2#divideFloat(Vector2f, Number)</span> i <span
+                    class="monospace">Vec2#divideFloat(Vector2f, Number)</span></li>
+            <li>Dodano metodę <span class="monospace">Texture#createRectangleShape</span></li>
+            <li>Dodano metodę <span class="monospace">TextureAtlas#getMarix</span> umożliwiającą dostęp do pojedynczych tekstur
+                za pomocą dwuwymiarowej tablicy
+            </li>
+            <li>Dodano metodę <span class="monospace">TextureAtlas#getRect</span>, która przyjmuje prostokąt o danym początku i
+                wymiarze (w przeciwieństwie do metody <span class="monospace">TextureAtlas#get</span>, która przyjmuje
+                współrzędne dwóch punktów)
+            </li>
             <li>
                 <!--<BETA>-->
                 <div style="display: flex; align-items: center;">
@@ -183,43 +194,6 @@
                     </div>
                 </div>
                 <!--</BETA>-->
-            </li>
-            <li>
-                <!--<PLANNED>-->
-                <div style="display: flex; align-items: center;">
-                    <div>
-                        Dodano metodę <span class="monospace">TextureAtlas#get(Vector2i, Vector2i)</span>
-                    </div>
-                    <div style="display: inline-block; margin-left: 0.5ch">
-                        <div class="inline ghost-label"><span class="ghost-label-text">planned</span></div>
-                    </div>
-                </div>
-                <!--</PLANNED>-->
-            </li>
-            <li>
-                <!--<PLANNED>-->
-                <div style="display: flex; align-items: center;">
-                    <div>
-                        Dodano metody <span class="monospace">Vec2#divideFloat(Vector2f, Number)</span> i <span
-                            class="monospace">Vec2#divideFloat(Vector2f, Number)</span>
-                    </div>
-                    <div style="display: inline-block; margin-left: 0.5ch">
-                        <div class="inline ghost-label"><span class="ghost-label-text">planned</span></div>
-                    </div>
-                </div>
-                <!--</PLANNED>-->
-            </li>
-            <li>
-                <!--<PLANNED>-->
-                <div style="display: flex; align-items: center;">
-                    <div>
-                        Dodano metodę <span class="monospace">Texture#createRectangleShape</span>
-                    </div>
-                    <div style="display: inline-block; margin-left: 0.5ch">
-                        <div class="inline ghost-label"><span class="ghost-label-text">planned</span></div>
-                    </div>
-                </div>
-                <!--</PLANNED>-->
             </li>
         </ul>
     </div>
