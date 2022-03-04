@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
  * An {@link Iterable} of integer 2D coordinates. Useful for iterating over images or coordinate-based scenes. Example usage:
@@ -190,6 +191,13 @@ public class Vec2iIterable implements Iterable<Vector2i> {
         for (int x = xOffset; x < rows + xOffset; x++)
             for (int y = yOffset; y < columns + yOffset; y++)
                 action.accept(x, y);
+    }
+
+    /**
+     * @return a sequential {@link Stream} from this iterable
+     */
+    public Stream<Vector2i> stream() {
+        return points.stream();
     }
 
     private void createList() {

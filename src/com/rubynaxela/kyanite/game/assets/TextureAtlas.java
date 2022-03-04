@@ -5,7 +5,6 @@ import com.rubynaxela.kyanite.util.Vec2;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.Image;
 import org.jsfml.graphics.IntRect;
-import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.TextureCreationException;
 import org.jsfml.system.Vector2i;
 
@@ -15,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * This class is designed to create many textures from a single image file. Sample usage:
@@ -109,5 +109,63 @@ public class TextureAtlas implements Asset {
      */
     public Texture get(@NotNull Vector2i start, @NotNull Vector2i end) {
         return get(start.x, start.y, end.x, end.y);
+    }
+
+    /**
+     * Creates a {@link Texture} containing the image within the bounds of a
+     * rectangle of the specified origin coordinates (the top-left corner) and size.
+     *
+     * @param x      the X-coordinate of the start point
+     * @param y      the Y-coordinate of the start point
+     * @param width  the width of the texture
+     * @param height the height of the texture
+     * @return a {@link Texture} containing image within the bounds of a rectangle of the specified origin and size
+     */
+    public Texture getRect(int x, int y, int width, int height) {
+        return get(x * width, y * height, (x + 1) * width, (y + 1) * height);
+    }
+
+    /**
+     * Creates a {@link Texture} containing the image within the bounds of a
+     * rectangle of the specified origin coordinates (the top-left corner) and size.
+     *
+     * @param start the start point
+     * @param size  the size of the texture
+     * @return a {@link Texture} containing image within the bounds of a rectangle of the specified origin and size
+     */
+    public Texture getRect(@NotNull Vector2i start, @NotNull Vector2i size) {
+        return get(start, Vec2.add(start, size));
+    }
+
+    /**
+     * Creates a {@link Texture} containing the image within the bounds of the specified rectangle
+     *
+     * @param bounds the texture rectangle bounds
+     * @return a {@link Texture} containing image within the bounds of the specified bounds
+     */
+    public Texture getRect(@NotNull IntRect bounds) {
+        return getRect(bounds.left, bounds.top, bounds.width, bounds.height);
+    }
+
+    /**
+     * Creates a 2D array of textures from this atlas, starting from the top-left
+     * corner of the image file. All textures are the same size. Example usage:<pre>
+     * Texture[][] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
+     *                           .getMatrix(16, 16, 8, 2);
+     * smoke[3][1].apply(this);</pre>
+     * The above code will create an 8 columns by 2 rows 2D array of 16x16 textures and
+     * apply the fourth texture from the second row to the object that ran this code.
+     *
+     * @param width  a single texture width
+     * @param height a single texture height
+     * @param countX the number of textures in a row
+     * @param countY the number of textures in a column
+     * @return a 2D array of textures from this atlas
+     */
+    public Texture[][] getMatrix(int width, int height, int countX, int countY) {
+        return IntStream.range(0, countX)
+                        .mapToObj(x -> IntStream.range(0, countY).mapToObj(y -> getRect(x, y, width, height))
+                                                .toArray(Texture[]::new))
+                        .toArray(Texture[][]::new);
     }
 }
