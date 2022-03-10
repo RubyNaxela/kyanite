@@ -16,7 +16,6 @@ import java.util.Scanner;
  * This class is designed to store data loaded from an external file as an asset. The source must be
  * the path or an {@link InputStream} to an data file. Currently the only supported format is JSON.
  */
-@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class DataAsset extends Dictionary implements Asset {
 
     private final File dataFile;
