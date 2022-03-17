@@ -1,22 +1,20 @@
 package com.rubynaxela.kyanite.game.assets;
 
-import com.rubynaxela.kyanite.system.IOException;
-import com.rubynaxela.kyanite.util.Dictionary;
+import com.rubynaxela.kyanite.util.JSONDictonary;
+import com.rubynaxela.kyanite.util.data.DataFile;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * This class is designed to store data loaded from an external file as an asset. The source must be
  * the path or an {@link InputStream} to an data file. Currently the only supported format is JSON.
  */
-public class DataAsset extends Dictionary implements Asset {
+public class DataAsset extends JSONDictonary implements Asset {
 
     private final File dataFile;
     private final InputStream inputStream;
@@ -33,7 +31,7 @@ public class DataAsset extends Dictionary implements Asset {
      * @param file the data source file
      */
     public DataAsset(@NotNull File file) {
-        super(new JSONObject(new ReadFile(file).toString()).toMap());
+        super(new JSONObject(new DataFile(file).read()).toMap());
         this.dataFile = file;
         this.inputStream = null;
     }
@@ -78,24 +76,5 @@ public class DataAsset extends Dictionary implements Asset {
     public <T> T convertTo(@NotNull Class<T> type) {
         if (dataFile != null) return new JSONParser(dataFile).as(type);
         else return new JSONParser(inputStream).as(type);
-    }
-
-    private static class ReadFile extends File {
-
-        public ReadFile(@NotNull File file) {
-            super(file.getAbsolutePath());
-        }
-
-        @Override
-        public String toString() {
-            try {
-                final Scanner scanner = new Scanner(this);
-                final StringBuilder fileContents = new StringBuilder();
-                while (scanner.hasNextLine()) fileContents.append(scanner.nextLine());
-                return fileContents.toString();
-            } catch (FileNotFoundException e) {
-                throw new IOException(e);
-            }
-        }
     }
 }
