@@ -21,6 +21,21 @@ public abstract class Scene extends RenderLayer {
     private boolean suspended = false;
 
     /**
+     * Creates a "null" scene with empty {@link Scene#init} and {@link Scene#loop} methods.
+     */
+    public static Scene empty() {
+        return new Scene() {
+            @Override
+            protected void init() {
+            }
+
+            @Override
+            protected void loop() {
+            }
+        };
+    }
+
+    /**
      * Performs the full scene initialization, i.a. starts the global clock and calls
      * the {@link #init} method. This method should not be invoked manually.
      */

@@ -25,6 +25,17 @@ public abstract class HUD extends RenderLayer {
     }
 
     /**
+     * Creates a "null" HUD with empty {@link HUD#init} method.
+     */
+    public static HUD empty() {
+        return new HUD() {
+            @Override
+            protected void init() {
+            }
+        };
+    }
+
+    /**
      * Performs the full HUD initialization, i.a. calls the {@link #init} method. This method should not be invoked manually.
      */
     @Contract(value = "-> fail")
