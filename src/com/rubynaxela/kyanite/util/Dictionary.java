@@ -12,7 +12,6 @@ import java.util.Map;
  */
 public interface Dictionary extends Map<String, Object> {
 
-
     boolean getBoolean(@NotNull String key);
 
     void setBoolean(@NotNull String key, boolean value);

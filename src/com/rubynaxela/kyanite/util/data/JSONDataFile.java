@@ -3,6 +3,7 @@ package com.rubynaxela.kyanite.util.data;
 import com.rubynaxela.kyanite.system.IOException;
 import com.rubynaxela.kyanite.util.Dictionary;
 import com.rubynaxela.kyanite.util.JSONDictonary;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Representation of a physical JSON=formatted file at the specified path.
+ * Representation of a physical JSON-formatted file at the specified path.
  * Provides methods for reading and writing the values as values of specific Java types.
  */
 public class JSONDataFile extends DataFile implements Dictionary {
@@ -27,7 +28,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
      *
      * @param pathname the pathname string
      * @throws IOException if the specified file does not exist
-     * @see File(String)
+     * @see File#File(String)
      */
     public JSONDataFile(@NotNull String pathname) {
         super(pathname);
@@ -39,7 +40,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
      *
      * @param file the abstract pathname
      * @throws IOException if the specified file does not exist
-     * @see File(String)
+     * @see File#File(String)
      */
     public JSONDataFile(@NotNull File file) {
         super(file);
@@ -52,7 +53,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
      * @param parent the parent pathname string
      * @param child  the child pathname string
      * @throws IOException if the specified file does not exist
-     * @see File(String, String)
+     * @see File#File(String, String)
      */
     public JSONDataFile(String parent, @NotNull String child) {
         super(parent, child);
@@ -65,7 +66,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
      * @param parent the parent abstract pathname
      * @param child  the child pathname string
      * @throws IOException if the specified file does not exist
-     * @see File(File, String)
+     * @see File#File(File, String)
      */
     public JSONDataFile(File parent, @NotNull String child) {
         super(parent, child);
@@ -77,7 +78,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
      *
      * @param uri the pathname string
      * @throws IOException if the specified file does not exist
-     * @see File(URI)
+     * @see File#File(URI)
      */
     public JSONDataFile(@NotNull URI uri) {
         super(uri);

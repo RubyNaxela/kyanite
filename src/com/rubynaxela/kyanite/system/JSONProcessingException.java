@@ -4,9 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 /**
- * This exception is thrown when a JSON parsing operation has failed.
+ * This exception is thrown when a JSON parsing or serializaion operation has failed.
  */
-public class JSONParseException extends JSONException {
+public class JSONProcessingException extends org.json.JSONException {
 
     /**
      * Constructs a new {@code JSONParseException} with the specified detail message. The cause is
@@ -14,7 +14,7 @@ public class JSONParseException extends JSONException {
      *
      * @param message the detail message. The detail message is saved for later retrieval by the {@link #getMessage()} method.
      */
-    public JSONParseException(@NotNull String message) {
+    public JSONProcessingException(@NotNull String message) {
         super(message);
     }
 }

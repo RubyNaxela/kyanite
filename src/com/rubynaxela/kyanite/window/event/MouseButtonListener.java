@@ -1,6 +1,5 @@
 package com.rubynaxela.kyanite.window.event;
 
-import org.jsfml.window.event.KeyEvent;
 import org.jsfml.window.event.MouseButtonEvent;
 
 import java.util.EventListener;

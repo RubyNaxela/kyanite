@@ -1,12 +1,12 @@
 package com.rubynaxela.kyanite.util;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.rubynaxela.kyanite.system.JSONParseException;
+import com.rubynaxela.kyanite.system.JSONProcessingException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -36,15 +36,15 @@ public class JSONDictonary implements Dictionary {
     /**
      * @param key a JSON key
      * @return the {@code boolean} value associated with the key
-     * @throws JSONParseException if the value is not a boolean or the
-     *                            {@code "true"} or {@code "false"} string.
+     * @throws JSONProcessingException if the value is not a boolean or the
+     *                       {@code "true"} or {@code "false"} string.
      */
     @Override
-    public boolean getBoolean(@NotNull String key) throws JSONParseException {
+    public boolean getBoolean(@NotNull String key) throws JSONProcessingException {
         try {
             return (Boolean) data.get(key);
-        } catch (JSONException | ClassCastException e) {
-            throw new JSONParseException("\"" + key + "\" is not is not (and cannot be converted to) a boolean");
+        } catch (org.json.JSONException | ClassCastException e) {
+            throw new JSONProcessingException("\"" + key + "\" is not is not (and cannot be converted to) a boolean");
         }
     }
 
@@ -72,8 +72,8 @@ public class JSONDictonary implements Dictionary {
     public Dictionary getDictionary(@NotNull String key) {
         try {
             return new JSONDictonary((Map<String, Object>) data.get(key));
-        } catch (JSONException | ClassCastException e) {
-            throw new JSONParseException("\"" + key + "\" is not is not a dictionary object");
+        } catch (org.json.JSONException | ClassCastException e) {
+            throw new JSONProcessingException("\"" + key + "\" is not is not a dictionary object");
         }
     }
 
@@ -94,18 +94,18 @@ public class JSONDictonary implements Dictionary {
     /**
      * @param key a JSON key
      * @return the {@code double} value associated with the key
-     * @throws JSONParseException if the value is not a double and cannot be converted
-     *                            to one by {@link Double#parseDouble(String)}
+     * @throws JSONProcessingException if the value is not a double and cannot be converted
+     *                       to one by {@link Double#parseDouble(String)}
      */
     @Override
-    public double getDouble(@NotNull String key) throws JSONParseException {
+    public double getDouble(@NotNull String key) throws JSONProcessingException {
         try {
             final Object value = data.get(key);
             if (value instanceof final Float floatValue) return floatValue.doubleValue();
             if (value instanceof final Double doubleValue) return doubleValue;
             return ((BigDecimal) value).doubleValue();
-        } catch (JSONException | ClassCastException e) {
-            throw new JSONParseException("\"" + key + "\" is not is not (and cannot be converted to) a double");
+        } catch (org.json.JSONException | ClassCastException e) {
+            throw new JSONProcessingException("\"" + key + "\" is not is not (and cannot be converted to) a double");
         }
     }
 
@@ -124,18 +124,18 @@ public class JSONDictonary implements Dictionary {
     /**
      * @param key a JSON key
      * @return the {@code float} value associated with the key
-     * @throws JSONParseException if the value is not a float and cannot be converted
-     *                            to one by {@link Float#parseFloat(String)}
+     * @throws JSONProcessingException if the value is not a float and cannot be converted
+     *                       to one by {@link Float#parseFloat(String)}
      */
     @Override
-    public float getFloat(@NotNull String key) throws JSONParseException {
+    public float getFloat(@NotNull String key) throws JSONProcessingException {
         try {
             final Object value = data.get(key);
             if (value instanceof final Float floatValue) return floatValue;
             if (value instanceof final Double doubleValue) return doubleValue.floatValue();
             return ((BigDecimal) value).floatValue();
-        } catch (JSONException | ClassCastException e) {
-            throw new JSONParseException("\"" + key + "\" is not is not (and cannot be converted to) a float");
+        } catch (org.json.JSONException | ClassCastException e) {
+            throw new JSONProcessingException("\"" + key + "\" is not is not (and cannot be converted to) a float");
         }
     }
 
@@ -154,17 +154,17 @@ public class JSONDictonary implements Dictionary {
     /**
      * @param key a JSON key
      * @return the {@code int} value associated with the key
-     * @throws JSONParseException if the value is not an integer and cannot be converted
-     *                            to one by {@link Integer#parseInt(String)}
+     * @throws JSONProcessingException if the value is not an integer and cannot be converted
+     *                       to one by {@link Integer#parseInt(String)}
      */
     @Override
-    public int getInt(@NotNull String key) throws JSONParseException {
+    public int getInt(@NotNull String key) throws JSONProcessingException {
         try {
             final Object value = data.get(key);
             if (value instanceof final Integer intValue) return intValue;
             return ((BigInteger) value).intValue();
-        } catch (JSONException | ClassCastException e) {
-            throw new JSONParseException("\"" + key + "\" is not is not (and cannot be converted to) an int");
+        } catch (org.json.JSONException | ClassCastException e) {
+            throw new JSONProcessingException("\"" + key + "\" is not is not (and cannot be converted to) an int");
         }
     }
 
@@ -186,7 +186,7 @@ public class JSONDictonary implements Dictionary {
      *
      * @param key a JSON key
      * @return the {@code List} associated with the key
-     * @throws JSONParseException if the value is not a list
+     * @throws JSONProcessingException if the value is not a list
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -199,8 +199,8 @@ public class JSONDictonary implements Dictionary {
                 else result.add(value);
             });
             return result;
-        } catch (JSONException | ClassCastException e) {
-            throw new JSONParseException("\"" + key + "\" is not is not a list");
+        } catch (org.json.JSONException | ClassCastException e) {
+            throw new JSONProcessingException("\"" + key + "\" is not is not a list");
         }
     }
 
@@ -223,15 +223,15 @@ public class JSONDictonary implements Dictionary {
     /**
      * @param key a JSON key
      * @return the {@code long} value associated with the key
-     * @throws JSONParseException if the value is not a long and cannot be converted
-     *                            to one by {@link Long#parseLong(String)}
+     * @throws JSONProcessingException if the value is not a long and cannot be converted
+     *                       to one by {@link Long#parseLong(String)}
      */
     @Override
-    public long getLong(@NotNull String key) throws JSONParseException {
+    public long getLong(@NotNull String key) throws JSONProcessingException {
         try {
             return ((BigInteger) data.get(key)).longValue();
-        } catch (JSONException | ClassCastException e) {
-            throw new JSONParseException("\"" + key + "\" is not is not (and cannot be converted to) a long");
+        } catch (org.json.JSONException | ClassCastException e) {
+            throw new JSONProcessingException("\"" + key + "\" is not is not (and cannot be converted to) a long");
         }
     }
 
@@ -250,14 +250,14 @@ public class JSONDictonary implements Dictionary {
     /**
      * @param key a JSON key
      * @return the {@code String} value associated with the key
-     * @throws JSONParseException if the value is not a string
+     * @throws JSONProcessingException if the value is not a string
      */
     @Override
-    public String getString(@NotNull String key) throws JSONParseException {
+    public String getString(@NotNull String key) throws JSONProcessingException {
         try {
             return (String) data.get(key);
-        } catch (JSONException | ClassCastException e) {
-            throw new JSONParseException("\"" + key + "\" is not is not a string");
+        } catch (org.json.JSONException | ClassCastException e) {
+            throw new JSONProcessingException("\"" + key + "\" is not is not a string");
         }
     }
 

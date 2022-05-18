@@ -101,7 +101,7 @@ public class FontFace implements Asset {
     }
 
     /**
-     * Disables anti-aliasing for the specified character size. Useful when pixel-style fonts appear blurry.
+     * Disables anti-aliasing for the specified character size. Useful when a font appears blurry.
      *
      * @param characterSize the character size for which anti-aliasing of this font will be disabled
      */

@@ -121,7 +121,8 @@ public class Texture implements Asset {
     }
 
     /**
-     * Enables or disables texture repeating. Texture repeating is disabled by default.
+     * Enables or disables texture repeating. Texture repeating is disabled by default. Note that this option will be applied
+     * only
      *
      * @param tileable true to enable, false to disable
      */
