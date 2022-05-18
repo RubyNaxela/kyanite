@@ -148,6 +148,30 @@ public class TextureAtlas implements Asset {
     }
 
     /**
+     * Creates a 2D array of textures from this atlas, starting from the specified
+     * coordinates of the image file. All textures are the same size. Example usage:<pre>
+     * Texture[][] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
+     *                           .getMatrix(16, 16, 8, 2);
+     * smoke[3][1].apply(this);</pre>
+     * The above code will create an 8 columns by 2 rows 2D array of 16x16 textures and
+     * apply the fourth texture from the second row to the object that ran this code.
+     *
+     * @param startX x-coordindate of the texture atlas starting point
+     * @param startY y-coordindate of the texture atlas starting point
+     * @param width  a single texture width
+     * @param height a single texture height
+     * @param countX the number of textures in a row
+     * @param countY the number of textures in a column
+     * @return a 2D array of textures from this atlas
+     */
+    public Texture[][] getMatrix(int startX, int startY, int width, int height, int countX, int countY) {
+        return IntStream.range(0, countX)
+                        .mapToObj(x -> IntStream.range(0, countY).mapToObj(y -> getRect(x + startX, y + startY, width, height))
+                                                .toArray(Texture[]::new))
+                        .toArray(Texture[][]::new);
+    }
+
+    /**
      * Creates a 2D array of textures from this atlas, starting from the top-left
      * corner of the image file. All textures are the same size. Example usage:<pre>
      * Texture[][] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
@@ -163,9 +187,74 @@ public class TextureAtlas implements Asset {
      * @return a 2D array of textures from this atlas
      */
     public Texture[][] getMatrix(int width, int height, int countX, int countY) {
-        return IntStream.range(0, countX)
-                        .mapToObj(x -> IntStream.range(0, countY).mapToObj(y -> getRect(x, y, width, height))
-                                                .toArray(Texture[]::new))
-                        .toArray(Texture[][]::new);
+        return getMatrix(0, 0, width, height, countX, countY);
+    }
+
+    /**
+     * Creates a row of textures from this atlas, starting from the specified
+     * coordinates of the image file. All textures are the same size. Example usage:<pre>
+     * Texture[] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
+     *                         .getRow(16, 16, 8);
+     * smoke[3].apply(this);</pre>
+     * The above code will create an array of 8 16x16 textures and apply the fourth one to the object that ran this code.
+     *
+     * @param width  a single texture width
+     * @param height a single texture height
+     * @param count  the number of textures
+     * @return an array of textures from this atlas
+     */
+    public Texture[] getRow(int startX, int startY, int width, int height, int count) {
+        return IntStream.range(0, count).mapToObj(x -> getRect(startX + x, startY, width, height)).toArray(Texture[]::new);
+    }
+
+    /**
+     * Creates a row of textures from this atlas, starting from the top-left
+     * corner of the image file. All textures are the same size. Example usage:<pre>
+     * Texture[] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
+     *                         .getRow(16, 16, 8);
+     * smoke[3].apply(this);</pre>
+     * The above code will create an array of 8 16x16 textures and apply the fourth one to the object that ran this code.
+     *
+     * @param width  a single texture width
+     * @param height a single texture height
+     * @param count  the number of textures
+     * @return an array of textures from this atlas
+     */
+    public Texture[] getRow(int width, int height, int count) {
+        return getRow(0, 0, width, height, count);
+    }
+
+    /**
+     * Creates a column of textures from this atlas, starting from the specified
+     * coordinates of the image file. All textures are the same size. Example usage:<pre>
+     * Texture[] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
+     *                         .getRow(16, 16, 8);
+     * smoke[3].apply(this);</pre>
+     * The above code will create an array of 8 16x16 textures and apply the fourth one to the object that ran this code.
+     *
+     * @param width  a single texture width
+     * @param height a single texture height
+     * @param count  the number of textures
+     * @return an array of textures from this atlas
+     */
+    public Texture[] getColumn(int startX, int startY, int width, int height, int count) {
+        return IntStream.range(0, count).mapToObj(y -> getRect(startX, startY + y, width, height)).toArray(Texture[]::new);
+    }
+
+    /**
+     * Creates a column of textures from this atlas, starting from the top-left
+     * corner of the image file. All textures are the same size. Example usage:<pre>
+     * Texture[] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
+     *                         .getRow(16, 16, 8);
+     * smoke[3].apply(this);</pre>
+     * The above code will create an array of 8 16x16 textures and apply the fourth one to the object that ran this code.
+     *
+     * @param width  a single texture width
+     * @param height a single texture height
+     * @param count  the number of textures
+     * @return an array of textures from this atlas
+     */
+    public Texture[] getColumn(int width, int height, int count) {
+        return getColumn(0, 0, width, height, count);
     }
 }
