@@ -6,8 +6,12 @@ import com.rubynaxela.kyanite.util.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.VideoMode;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides a set of references to the basic objects used by the game. The instance of this class can be accessed via the
@@ -19,12 +23,14 @@ public final class GameContext {
     private final Game gameInstance;
     private final AssetsBundle assetsBundle;
     private final Clock clock;
+    private final Map<String, Object> resources;
     private Window window;
 
     GameContext(@NotNull Game gameInstance) {
         this.gameInstance = gameInstance;
         assetsBundle = new AssetsBundle();
         clock = new Clock(false);
+        resources = new HashMap<>();
     }
 
     /**
@@ -119,5 +125,29 @@ public final class GameContext {
         gameInstance.init();
         clock.restart();
         window.startLoop();
+    }
+
+    /**
+     * Stores a resource in the game context storage which can be later retrieved using the specified key. The resource
+     * can be any object that will be used in multiple places throughout the game, for instance, game progress data.
+     *
+     * @param key   the resource key
+     * @param value the resource to be stored
+     */
+    public void putResource(@NotNull String key, @Nullable Object value) {
+        resources.put(key, value);
+    }
+
+    /**
+     * Returns the resource associated with the specified key.
+     *
+     * @param key a resource key
+     * @param <T> the type of the resource
+     * @return the resource associated with the specified key
+     * @throws ClassCastException if the generic type doesn't match the type of the resource
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T getResource(@NotNull String key) {
+        return (T) resources.get(key);
     }
 }
