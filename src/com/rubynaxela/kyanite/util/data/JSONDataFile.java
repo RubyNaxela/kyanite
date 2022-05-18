@@ -85,6 +85,10 @@ public class JSONDataFile extends DataFile implements Dictionary {
         data = new JSONDictonary(new JSONObject(read()).toMap());
     }
 
+    private void updateFile() {
+        write(data.toString());
+    }
+
     @Override
     public boolean getBoolean(@NotNull String key) {
         return data.getBoolean(key);
@@ -93,6 +97,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
     @Override
     public void setBoolean(@NotNull String key, boolean value) {
         data.setBoolean(key, value);
+        updateFile();
     }
 
     @Override
@@ -103,6 +108,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
     @Override
     public void setDictionary(@NotNull String key, @Nullable Dictionary value) {
         data.setDictionary(key, value);
+        updateFile();
     }
 
     @Override
@@ -113,6 +119,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
     @Override
     public void setDouble(@NotNull String key, double value) {
         data.setDouble(key, value);
+        updateFile();
     }
 
     @Override
@@ -123,6 +130,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
     @Override
     public void setFloat(@NotNull String key, float value) {
         data.setFloat(key, value);
+        updateFile();
     }
 
     @Override
@@ -133,6 +141,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
     @Override
     public void setInt(@NotNull String key, int value) {
         data.setInt(key, value);
+        updateFile();
     }
 
     @Override
@@ -143,6 +152,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
     @Override
     public void setList(@NotNull String key, @Nullable List<Object> value) {
         data.setList(key, value);
+        updateFile();
     }
 
     @Override
@@ -153,6 +163,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
     @Override
     public void setLong(@NotNull String key, long value) {
         data.setLong(key, value);
+        updateFile();
     }
 
     @Override
@@ -163,6 +174,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
     @Override
     public void setString(@NotNull String key, @Nullable String value) {
         data.setString(key, value);
+        updateFile();
     }
 
     @Override
@@ -172,6 +184,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
 
     @Override
     public Object remove(@NotNull String key) {
+        updateFile();
         return data.remove(key);
     }
 
@@ -211,6 +224,7 @@ public class JSONDataFile extends DataFile implements Dictionary {
     @Override
     public void clear() {
         data.clear();
+        updateFile();
     }
 
     @NotNull
