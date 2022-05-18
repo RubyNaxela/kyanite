@@ -24,10 +24,17 @@ import java.util.Objects;
 public class Texture implements Asset {
 
     private final org.jsfml.graphics.Texture texture;
-    private boolean missing = false;
+    private final String path;
+    private boolean missing = false, suppressWarning = false;
+
+    private Texture(@NotNull org.jsfml.graphics.Texture texture, boolean suppressWarning) {
+        this.texture = texture;
+        this.path = this + " (created with the copy constructor)";
+        this.suppressWarning = suppressWarning;
+    }
 
     Texture(@NotNull org.jsfml.graphics.Texture texture) {
-        this.texture = texture;
+        this(texture, false);
     }
 
     /**
@@ -37,7 +44,8 @@ public class Texture implements Asset {
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public Texture(@NotNull Path path) {
-        texture = new org.jsfml.graphics.Texture();
+        this.texture = new org.jsfml.graphics.Texture();
+        this.path = path.toString();
         try {
             final File imageFile = path.toFile();
             if (ImageIO.getImageReaders(ImageIO.createImageInputStream(imageFile)).next().getFormatName().equals("JPEG")) {
@@ -47,8 +55,8 @@ public class Texture implements Asset {
                 texture.loadFromFile(tmpImageFile.toPath());
                 tmpImageFile.delete();
             } else texture.loadFromFile(path);
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
+        } catch (java.io.IOException | IllegalArgumentException e) {
+            if (!suppressWarning) e.printStackTrace();
             missingTexture();
         }
     }
@@ -78,37 +86,65 @@ public class Texture implements Asset {
      */
     public Texture(@NotNull InputStream stream) {
         texture = new org.jsfml.graphics.Texture();
+        path = this + " (created with the Texture(InputStream) constructor constructor)";
         try {
             texture.loadFromStream(stream);
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
+        } catch (java.io.IOException | IllegalArgumentException e) {
+            if (!suppressWarning) e.printStackTrace();
             missingTexture();
         }
     }
 
     /**
-     * Applies this texture on the {@link Shape}. Does not affect the texture rectangle, unless the texture is missing.
+     * @return a tileable magenta-black checkboard texture typically used to indicate a texture loading error
+     */
+    public static Texture missing() {
+        final Texture texture = new Texture(new org.jsfml.graphics.Texture(), true);
+        texture.missingTexture();
+        return texture;
+    }
+
+    /**
+     * Applies this texture on the {@link Shape}. Does not affect the
+     * texture rectangle, unless the texture is set to be tileable.
      *
      * @param shape the {@link Shape} to apply this texture on
      */
     public void apply(@NotNull Shape shape) {
         shape.setTexture(texture);
-        if (missing) {
-            final FloatRect bounds = shape.getLocalBounds();
+        final FloatRect bounds = shape.getGlobalBounds();
+        if (isTileable()) {
+            if (bounds.width == 0 || bounds.height == 0)
+                throw new ArithmeticException("Indeterminate number of texture repetitions for shape size: [width=" +
+                                              bounds.width + ";height=" + bounds.height + "]. Please set a size that " +
+                                              "is non-zero on both axes before applying a tileable texture.");
             shape.setTextureRect(new IntRect(0, 0, (int) bounds.width, (int) bounds.height));
+        }
+        if (missing) {
+            shape.setTextureRect(new IntRect(0, 0, (int) bounds.width, (int) bounds.height));
+            if (!suppressWarning) new IOException("Missing texture: " + path).printStackTrace();
         }
     }
 
     /**
-     * Applies this texture on the {@link Sprite}. Does not affect the texture rectangle, unless the texture is missing.
+     * Applies this texture on the {@link Sprite}. Does not affect the
+     * texture rectangle, unless the texture is set to be tileable.
      *
      * @param sprite the {@link Sprite} to apply this texture on
      */
     public void apply(@NotNull Sprite sprite) {
         sprite.setTexture(texture);
-        if (missing) {
-            final FloatRect bounds = sprite.getLocalBounds();
+        final FloatRect bounds = sprite.getGlobalBounds();
+        if (isTileable()) {
+            if (bounds.width == 0 || bounds.height == 0)
+                throw new ArithmeticException("Indeterminate number of texture repetitions for sprite size: [width=" +
+                                              bounds.width + ";height=" + bounds.height + "]. Please set a size that " +
+                                              "is non-zero on both axes before applying a tileable texture.");
             sprite.setTextureRect(new IntRect(0, 0, (int) bounds.width, (int) bounds.height));
+        }
+        if (missing) {
+            sprite.setTextureRect(new IntRect(0, 0, (int) bounds.width, (int) bounds.height));
+            if (!suppressWarning) new IOException("Missing texture: " + path).printStackTrace();
         }
     }
 
