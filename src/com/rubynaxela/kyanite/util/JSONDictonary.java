@@ -307,6 +307,24 @@ public class JSONDictonary implements Dictionary {
         return new JSONParser(new JSONObject(data).toString()).as(type);
     }
 
+    /**
+     * Updates this dictionary to match the structure and data of
+     * the specified object, overwriting all data it contained before.
+     *
+     * @param object an object to update this dictionary with
+     * @param <T>    the object type
+     */
+    @Override
+    public <T> void updateFrom(@NotNull T object) {
+        try {
+            final Map<String, Object> newData = new JSONObject(new ObjectMapper().writeValueAsString(object)).toMap();
+            data.clear();
+            data.putAll(newData);
+        } catch (JsonProcessingException e) {
+            throw new JSONProcessingException("Update failed: " + e.getMessage());
+        }
+    }
+
     @Override
     @NotNull
     public Map<String, Object> toMap() {

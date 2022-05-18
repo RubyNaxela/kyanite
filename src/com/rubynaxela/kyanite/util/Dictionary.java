@@ -51,6 +51,8 @@ public interface Dictionary extends Map<String, Object> {
 
     <T> T convertTo(@NotNull Class<T> type);
 
+    <T> void updateFrom(@NotNull T object);
+
     @NotNull
     Map<String, Object> toMap();
 

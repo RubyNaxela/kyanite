@@ -180,7 +180,15 @@ public class JSONDataFile extends DataFile implements Dictionary {
     }
 
     @Override
-    public @NotNull Map<String, Object> toMap() {
+    @Contract(mutates = "this")
+    public <T> void updateFrom(@NotNull T object) {
+        data.updateFrom(object);
+        updateFile();
+    }
+
+    @Override
+    @NotNull
+    public Map<String, Object> toMap() {
         return data.toMap();
     }
 
