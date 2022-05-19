@@ -190,7 +190,7 @@ public final class MathUtils {
 
     /**
      * Returns the specified number formatted in "kmbtqp" notation with one decimal place,
-     * rounded down (if the number is positive) or down (if the number is negative). Examples:
+     * rounded down (if the number is positive) or up (if the number is negative). Examples:
      * <ul>
      *     <li>{@code shortNotation(72457) // "72.4k"}</li>
      *     <li>{@code shortNotation(2489697245700) // "2.4q"}</li>

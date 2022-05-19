@@ -3,19 +3,17 @@ package com.rubynaxela.kyanite.game.assets;
 import com.rubynaxela.kyanite.util.AssetId;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * Provides a handy assets storage. Assets are registered and retrieved with {@code String} identifiers.
- *
- * @implNote An identifier can be any text, however it is good to keep the identifiers
- * organized, compliant with a consistent convention. For instance, {@code kyanite:texture.flowers.purple}
- * makes up a good identifier, however {@code txt_flower_13} does not.
+ * Provides a handy {@link TreeMap}-based assets storage. Assets are registered and retrieved with {@code String} identifiers.
+ * An identifier can be any text, however it is good to keep the identifiers organized, compliant with a consistent convention.
+ * For instance, {@code kyanite:texture.flowers.purple} makes up a good identifier, however {@code txt_flower_13} does not.
  */
 public final class AssetsBundle {
 
-    private final Map<String, Asset> assets = new HashMap<>();
+    private final Map<String, Asset> assets = new TreeMap<>();
 
     /**
      * Registers an {@link Asset} in the bundle.
@@ -36,6 +34,7 @@ public final class AssetsBundle {
      * @return an {@link Asset} object
      * @throws NullPointerException when an asset of the specified id does not exist
      *                              or was attempted to be used before being registered
+     * @throws ClassCastException   when the actual asset type is different than requested
      */
     @SuppressWarnings("unchecked")
     public <T extends Asset> T get(@NotNull @AssetId String id) {
