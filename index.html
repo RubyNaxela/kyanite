@@ -110,23 +110,23 @@
         </div>
         <div style="display: flex; width: 100%; align-items: flex-start; justify-content: space-evenly;">
             <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/release/kyanite-1.7.1.jar">
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/release/kyanite-1.8.0.jar">
                     <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite</span></div>
                 </a>
-                <p style="text-align: center;">wersja: 1.7.1</p>
+                <p style="text-align: center;">wersja: 1.8.0</p>
             </div>
             <!--<BETA>-->
-            <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.0-beta.2.jar">
-                    <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>
-                </a>
-                <p style="text-align: center;">wersja: 1.8.0-beta.2</p>
-                <ul>
-                    <li>potencjalnie niestabilna wersja</li>
-                    <li>może zawierać błędy</li>
-                    <li>część zmian<br>może nie być w pełni wdrożona</li>
-                </ul>
-            </div>
+<!--            <div>-->
+<!--                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.0-beta.2.jar">-->
+<!--                    <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>-->
+<!--                </a>-->
+<!--                <p style="text-align: center;">wersja: 1.8.0-beta.2</p>-->
+<!--                <ul>-->
+<!--                    <li>potencjalnie niestabilna wersja</li>-->
+<!--                    <li>może zawierać błędy</li>-->
+<!--                    <li>część zmian<br>może nie być w pełni wdrożona</li>-->
+<!--                </ul>-->
+<!--            </div>-->
             <!--</BETA>-->
         </div>
     </div>
@@ -144,9 +144,9 @@
     <div class="horizontal-padding-container fade-in-early bottom-margin">
         <p class="big" style="display: inline-block;">1.8.0</p>
         <!--<BETA>-->
-        <!--        <div style="display: inline-block;">-->
-        <!--            <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>-->
-        <!--        </div>-->
+<!--        <div style="display: inline-block;">-->
+<!--            <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>-->
+<!--        </div>-->
         <!--</BETA>-->
         <p class="small">18 maja 2022</p>
         <ul>
@@ -165,32 +165,23 @@
             <li>Dodano metodę <span class="monospace">FontFace#of</span> do otrzymania obiektu <span
                     class="monospace">FontFace</span> użytego do ustawienia czcionki obiektu <span class="monospace">Text</span>
             </li>
-            <li>Dodano metodę <span class="monospace">FontFace#disableAntialiasing</span> zaprojektowaną dla pikselowych
-                czcionek
-            </li>
+            <li>Dodano metodę <span class="monospace">FontFace#disableAntialiasing</span> zaprojektowaną dla pikselowych czcionek</li>
             <li>Dodano metodę <span class="monospace">Texture#getSize</span></li>
             <li>Dodano metodę <span class="monospace">CompoundEntity#getComponents</span></li>
             <li>Dodano metodę <span class="monospace">Window#getTitle</span></li>
+            <li>Naprawiono błąd, w którym <span class="monospace">Marker</span> nie pojawiał się w zadanym miejscu na scenie
+            </li>
             <li>Dodano metodę <span class="monospace">TextureAtlas#get(Vector2i, Vector2i)</span></li>
             <li>Dodano metody <span class="monospace">Vec2#divideFloat(Vector2f, Number)</span> i <span
                     class="monospace">Vec2#divideFloat(Vector2f, Number)</span></li>
             <li>Dodano metodę <span class="monospace">Texture#createRectangleShape</span></li>
-            <li>Dodano metody <span class="monospace">TextureAtlas#getMatrix</span>, <span
-                    class="monospace">TextureAtlas#getRow</span> i <span class="monospace">TextureAtlas#getColumn</span>
-                umożliwiające dostęp do pojedynczych tekstur za pomocą dwu- lub jednowymiarowej tablicy
+            <li>Dodano metodę <span class="monospace">TextureAtlas#getMarix</span> umożliwiającą dostęp do pojedynczych tekstur
+                za pomocą dwuwymiarowej tablicy
             </li>
             <li>Dodano metodę <span class="monospace">TextureAtlas#getRect</span>, która przyjmuje prostokąt o danym początku i
                 wymiarze (w przeciwieństwie do metody <span class="monospace">TextureAtlas#get</span>, która przyjmuje
                 współrzędne dwóch punktów)
             </li>
-            <li>Dodano metodę <span class="monospace">Texture#createRectangleShape</span></li>
-            <li>Dodano metodę <span class="monospace">Dictonary#updateFrom</span></li>
-            <li>Dodano teksturę szachownicy jako zastępczą dla niepoprawnie wczytanej tekstury</li>
-            <li>Dodano globalny słownik zasobów realizowany przez metody <span class="monospace">GameContext#putResource</span>
-                i <span class="monospace">GameContext#getResource</span></li>
-            <li>Naprawiono błąd, w którym <span class="monospace">Marker</span> nie pojawiał się w zadanym miejscu na scenie
-            </li>
-            <li>Naprawiono błąd w działaniu aktualizowania stanu obiektu JSONDataFile</li>
             <li>
                 <!--<BETA>-->
                 <div style="display: flex; align-items: center;">
