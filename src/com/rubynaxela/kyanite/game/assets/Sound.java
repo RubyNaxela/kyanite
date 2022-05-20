@@ -1,6 +1,8 @@
 package com.rubynaxela.kyanite.game.assets;
 
+import com.rubynaxela.kyanite.game.GameContext;
 import com.rubynaxela.kyanite.system.IOException;
+import com.rubynaxela.kyanite.util.MathUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.audio.SoundBuffer;
 import org.jsfml.audio.SoundSource;
@@ -17,7 +19,9 @@ import java.nio.file.Paths;
  */
 public class Sound implements Asset {
 
-    private final org.jsfml.audio.Sound sound;
+    private static final AudioHandler handler = GameContext.getInstance().getAudioHandler();
+    final org.jsfml.audio.Sound sound;
+    float volumeFactor, pitchFactor;
 
     /**
      * Creates a new sound from the source specified by the path.
@@ -25,13 +29,10 @@ public class Sound implements Asset {
      * @param path path to source audio file
      */
     public Sound(@NotNull Path path) {
-        final SoundBuffer buffer = new SoundBuffer();
-        try {
-            buffer.loadFromFile(path);
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
-        }
-        sound = new org.jsfml.audio.Sound(buffer);
+        sound = new org.jsfml.audio.Sound(load(path));
+        volumeFactor = sound.getVolume();
+        pitchFactor = sound.getPitch();
+        setVolume(volumeFactor);
     }
 
     /**
@@ -58,17 +59,26 @@ public class Sound implements Asset {
      * @param stream the audio data input stream
      */
     public Sound(@NotNull InputStream stream) {
+        sound = new org.jsfml.audio.Sound(load(stream));
+        volumeFactor = sound.getVolume();
+        pitchFactor = sound.getPitch();
+        setVolume(volumeFactor);
+    }
+
+    private <T> SoundBuffer load(@NotNull T source) {
         final SoundBuffer buffer = new SoundBuffer();
         try {
-            buffer.loadFromStream(stream);
+            if (source instanceof final Path path) buffer.loadFromFile(path);
+            else if (source instanceof final InputStream stream) buffer.loadFromStream(stream);
         } catch (java.io.IOException e) {
             throw new IOException(e);
         }
-        sound = new org.jsfml.audio.Sound(buffer);
+        return buffer;
     }
 
     /**
-     * Starts playing the sound or resumes it if it is currently paused.
+     * Starts playing the sound or resumes it if it is currently paused. Volume
+     * of the sound depends on the {@link AudioHandler}'s master volume setting.
      */
     public void play() {
         sound.play();
@@ -86,6 +96,13 @@ public class Sound implements Asset {
      */
     public void pause() {
         sound.pause();
+    }
+
+    /**
+     * @return whether this sound is currently paused
+     */
+    public boolean isPaused() {
+        return sound.getStatus().equals(SoundSource.Status.PAUSED);
     }
 
     /**
@@ -108,30 +125,56 @@ public class Sound implements Asset {
     /**
      * Sets the playing offset from where to play the underlying audio data.
      *
-     * @param time the playing offset in the underlaying audio data.
+     * @param time the playing offset in the underlaying audio data
      */
     public void setSkip(@NotNull Time time) {
         sound.setPlayingOffset(time);
     }
 
     /**
-     * Sets the pitch factor of the sound. This factor is used to scale the sound's original pitch.
+     * Gets the sound's current pitch factor. A value of 1 means that the sound is not pitched, a value between
+     * 0 and 1 means that the sound is pitched down, a value greater than 1 means that the sound is pitched up.
      *
-     * @param pitchFactor the new pitch factor of the sound
-     * @apiNote The default value of 1 will not affect the pitch at all. Values between
-     * 0 and 1 will pitch down the sound, while values greater than 1 will pitch it up.
+     * @return the sound's current pitch factor
      */
-    public void setPitch(float pitchFactor) {
-        sound.setPitch(pitchFactor);
+    public float getPitch() {
+        return pitchFactor;
     }
 
     /**
-     * Sets the volume of the sound. The sound volume is a percentages and ranges between 0 (silence) and 100 (full volume).
-     * The default volume of a sound is 100.
+     * Sets the pitch factor of the sound. This factor is used to scale the sound's original
+     * pitch. The default value of 1 will not affect the pitch at all. Values between
+     * 0 and 1 will pitch down the sound, while values greater than 1 will pitch it up.
      *
-     * @param volumeFactor the new volume of the sound, ranging between 0 and 100.
+     * @param pitchFactor the new pitch factor of the sound
+     */
+    public void setPitch(float pitchFactor) {
+        sound.setPitch(pitchFactor);
+        this.pitchFactor = pitchFactor;
+    }
+
+    /**
+     * Gets the sound's current volume. The volume level ranges between 0 (silence) and 100 (full volume).
+     *
+     * @return the sound's current volume, ranging between 0 (silence) and 100 (full volume)
+     */
+    public float getVolume() {
+        return volumeFactor;
+    }
+
+    /**
+     * Sets the volume of the sound. The sound volume is a percentage and ranges
+     * between 0 (silence) and 100 (full volume). The default volume of a sound is 100.
+     *
+     * @param volumeFactor the new volume of the sound, ranging between 0 and 100
      */
     public void setVolume(float volumeFactor) {
-        sound.setVolume(volumeFactor);
+        volumeFactor = MathUtils.clamp(volumeFactor, 0f, 100f);
+        sound.setVolume(handler.masterVolume * volumeFactor / 100f);
+        this.volumeFactor = volumeFactor;
+    }
+
+    org.jsfml.audio.Sound raw() {
+        return sound;
     }
 }

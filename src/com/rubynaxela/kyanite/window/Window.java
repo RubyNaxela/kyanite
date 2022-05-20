@@ -2,6 +2,7 @@ package com.rubynaxela.kyanite.window;
 
 import com.rubynaxela.kyanite.game.HUD;
 import com.rubynaxela.kyanite.game.Scene;
+import com.rubynaxela.kyanite.game.assets.AudioHandler;
 import com.rubynaxela.kyanite.game.assets.Icon;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
@@ -35,6 +36,8 @@ import java.util.Objects;
  * fields because after the game restarts, the window is a new object.
  */
 public class Window extends RenderWindow {
+
+    private final AudioHandler audioHandler;
 
     private final List<ResizeListener> resizeListeners = new ArrayList<>();
     private final List<FocusListener> focusListeners = new ArrayList<>();
@@ -76,8 +79,10 @@ public class Window extends RenderWindow {
      * @param contextSettings the settings for the OpenGL context
      */
     public Window(@NotNull VideoMode videoMode, @NotNull String title,
-                  @MagicConstant(flagsFromClass = WindowStyle.class) int style, @NotNull ContextSettings contextSettings) {
+                  @MagicConstant(flagsFromClass = WindowStyle.class) int style, @NotNull ContextSettings contextSettings,
+                  @NotNull AudioHandler audioHandler) {
         super(videoMode, title, style, contextSettings);
+        this.audioHandler = audioHandler;
         this.title = title;
         lastSetSize = Vec2.i(videoMode.width, videoMode.height);
         try {
@@ -94,8 +99,8 @@ public class Window extends RenderWindow {
      * @param style     the window style
      */
     public Window(@NotNull VideoMode videoMode, @NotNull String title,
-                  @MagicConstant(flagsFromClass = WindowStyle.class) int style) {
-        this(videoMode, title, style, new ContextSettings());
+                  @MagicConstant(flagsFromClass = WindowStyle.class) int style, @NotNull AudioHandler audioHandler) {
+        this(videoMode, title, style, new ContextSettings(), audioHandler);
     }
 
     /**
@@ -104,15 +109,8 @@ public class Window extends RenderWindow {
      * @param videoMode the video mode to use for rendering
      * @param title     the window title
      */
-    public Window(@NotNull VideoMode videoMode, @NotNull String title) {
-        this(videoMode, title, WindowStyle.DEFAULT);
-    }
-
-    /**
-     * Constructs a new render window without actually creating (opening) it.
-     */
-    public Window() {
-        super();
+    public Window(@NotNull VideoMode videoMode, @NotNull String title, @NotNull AudioHandler audioHandler) {
+        this(videoMode, title, WindowStyle.DEFAULT, audioHandler);
     }
 
     /**
@@ -568,6 +566,7 @@ public class Window extends RenderWindow {
                 scene.fullLoop(this);
                 hud.refresh(this);
                 display();
+                audioHandler.gc();
             }
         } else throw new IllegalStateException("The window loop is already running");
     }

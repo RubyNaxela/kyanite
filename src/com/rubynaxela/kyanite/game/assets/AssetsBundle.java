@@ -1,5 +1,6 @@
 package com.rubynaxela.kyanite.game.assets;
 
+import com.rubynaxela.kyanite.game.GameContext;
 import com.rubynaxela.kyanite.util.AssetId;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,6 +25,7 @@ public final class AssetsBundle {
      */
     public <T extends Asset> void register(@NotNull @AssetId String id, T asset) {
         assets.put(id, asset);
+        if (asset instanceof final Sound sound) GameContext.getInstance().getAudioHandler().globalSounds.add(sound);
     }
 
     /**
