@@ -5,5 +5,6 @@ com.rubynaxela.kyanite.game.entities
 com.rubynaxela.kyanite.game.gui
 com.rubynaxela.kyanite.system
 com.rubynaxela.kyanite.util
+com.rubynaxela.kyanite.util.data
 com.rubynaxela.kyanite.window
 com.rubynaxela.kyanite.window.event
