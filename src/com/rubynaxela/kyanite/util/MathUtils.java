@@ -46,37 +46,63 @@ public final class MathUtils {
     }
 
     /**
-     * Returns the smaller of two numeric values. If the arguments have the same value, the result is that same value.
-     * If either value is NaN, then the result is also NaN. If exactly one of the arguments is {@code null}, the result
-     * is the other argument, whereas if both values are {@code null}, then the result is also {@code null}.
+     * Returns the smaller of two numeric values. Both operands must be of the same type. If the
+     * arguments have the same value, the result is that same value. If either value is NaN, then
+     * the result is also NaN. If exactly one of the arguments is {@code null}, the result is the
+     * other argument, whereas if both values are {@code null}, then the result is also {@code null}.
      *
-     * @param <T> the number class
+     * @param <T> the numbers type
      * @param a   first operand
      * @param b   second operand
      * @return the smaller of {@code a} and {@code b}
      */
-    @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> T min(T a, T b) {
+    @Contract(pure = true, value = "!null, !null -> !null; !null, null -> param1; null, !null -> param2; null, null -> null")
+    public static <T extends Number & Comparable<T>> T min(T a, T b) {
         final Pair<Boolean, T> checkNullAndNaNResult = checkNullAndNaN(a, b);
         if (checkNullAndNaNResult.value1()) return checkNullAndNaNResult.value2();
-        else return a.doubleValue() <= b.doubleValue() ? a : b;
+        else return a.compareTo(b) <= 0 ? a : b;
     }
 
     /**
-     * Returns the bigger of two numeric values. If the arguments have the same value, the result is that same value.
-     * If either value is NaN, then the result is also NaN. If exactly one of the arguments is {@code null}, the result
-     * is the other argument, whereas if both values are {@code null}, then the result is also {@code null}.
+     * Returns the bigger of two numeric values. Both operands must be of the same type. If the
+     * arguments have the same value, the result is that same value. If either value is NaN, then
+     * the result is also NaN. If exactly one of the arguments is {@code null}, the result is the
+     * other argument, whereas if both values are {@code null}, then the result is also {@code null}.
      *
-     * @param <T> the number class
+     * @param <T> the numbers type
      * @param a   first operand
      * @param b   second operand
      * @return the bigger of {@code a} and {@code b}
      */
-    @Contract(pure = true, value = "_, _ -> new")
-    public static <T extends Number> T max(T a, T b) {
+    @Contract(pure = true, value = "!null, !null -> !null; !null, null -> param1; null, !null -> param2; null, null -> null")
+    public static <T extends Number & Comparable<T>> T max(T a, T b) {
         final Pair<Boolean, T> checkNullAndNaNResult = checkNullAndNaN(a, b);
         if (checkNullAndNaNResult.value1()) return checkNullAndNaNResult.value2();
-        else return a.doubleValue() >= b.doubleValue() ? a : b;
+        else return a.compareTo(b) >= 0 ? a : b;
+    }
+
+    /**
+     * Constraints the specified value to the specified bounds. If {@code value} is less than {@code lowerBound}, then
+     * {@code lowerBound} is returned. If {@code value} is greater than {@code upperBound}, then {@code upperBound} is returned.
+     * All arguments must be of the same type. If any argument is NaN, then the result is also NaN. If either bound is
+     * {@code null}, it is ignored. If {@code value} is {@code null}, {@code lowerBound} is returned. If {@code value} and
+     * {@code lowerBound} is {@code null}, {@code upperBound} is returned. If all three parameters are {@code null}, then the
+     * result is also {@code null}.
+     *
+     * @param <T>        the numbers type
+     * @param value      the value to be constrained
+     * @param lowerBound the lower bound (inclusive)
+     * @param upperBound the upper bound (inclusive)
+     * @return the specified value, unless it is outside the specified bounds, in which case the closer bound is returned
+     * @throws IllegalArgumentException when {@code lowerBound} is greater than {@code upperBound}
+     */
+    @Contract(pure = true, value = "!null, !null, !null -> !null; !null, !null, null -> !null; !null, null, !null -> !null; " +
+                                   "!null, null, null -> param1; null, !null, !null -> !null; null, !null, null -> param2; " +
+                                   "null, null, !null -> param3; null, null, null -> null;")
+    public static <T extends Number & Comparable<T>> T clamp(T value, T lowerBound, T upperBound) {
+        if (lowerBound != null && upperBound != null && lowerBound.compareTo(upperBound) > 0)
+            throw new IllegalArgumentException("lowerBound cannot be greater than upperBound");
+        return min(max(value, lowerBound), upperBound);
     }
 
     /**
