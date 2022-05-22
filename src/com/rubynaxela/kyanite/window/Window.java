@@ -5,6 +5,7 @@ import com.rubynaxela.kyanite.game.Scene;
 import com.rubynaxela.kyanite.game.assets.AudioHandler;
 import com.rubynaxela.kyanite.game.assets.Icon;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
+import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
 import com.rubynaxela.kyanite.util.Utils;
 import com.rubynaxela.kyanite.util.Vec2;
@@ -12,9 +13,7 @@ import com.rubynaxela.kyanite.window.event.*;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Drawable;
-import org.jsfml.graphics.RenderWindow;
-import org.jsfml.graphics.View;
+import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.ContextSettings;
@@ -138,6 +137,35 @@ public class Window extends RenderWindow {
     @Override
     public void setVerticalSyncEnabled(boolean enable) {
         throw new UnsupportedOperationException("Use setFramerateLimit(Window.Framerate.VSYNC) instead");
+    }
+
+    /**
+     * @return a {@code GlobalRect} covering the entire window
+     */
+    @Contract(pure = true)
+    public GlobalRect getBounds() {
+        final Vector2f size = Vec2.f(getSize());
+        return new GlobalRect(0, size.x, size.y, 0);
+    }
+
+    /**
+     * Checks if any portion of the specified {@link Shape} object bounding rectangle is inside the window bounds.
+     *
+     * @param object a {@link Shape} object
+     * @return whether any portion of the object bounding rectangle is inside the window
+     */
+    public boolean isInside(@NotNull Shape object) {
+        return getBounds().intersects(GlobalRect.from(object.getGlobalBounds()));
+    }
+
+    /**
+     * Checks if any portion of the specified {@link Sprite} object bounding rectangle is inside the window bounds.
+     *
+     * @param object a {@link Sprite} object
+     * @return whether any portion of the object bounding rectangle is inside the window
+     */
+    public boolean isInside(@NotNull Sprite object) {
+        return getBounds().intersects(GlobalRect.from(object.getGlobalBounds()));
     }
 
     /**
@@ -514,6 +542,16 @@ public class Window extends RenderWindow {
      */
     public String getTitle() {
         return title;
+    }
+
+    /**
+     * Sets the window's title.
+     *
+     * @param title the window's new title.
+     */
+    public void setTitle(@NotNull String title) {
+        super.setTitle(title);
+        this.title = title;
     }
 
     /**

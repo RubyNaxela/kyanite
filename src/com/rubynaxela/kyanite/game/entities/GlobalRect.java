@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jsfml.graphics.FloatRect;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
@@ -60,6 +61,18 @@ public class GlobalRect {
      */
     @Contract(pure = true, value = "_ -> new")
     public static GlobalRect from(@NotNull FloatRect boundingBox) {
+        return new GlobalRect(boundingBox.top, boundingBox.left + boundingBox.width,
+                              boundingBox.top + boundingBox.height, boundingBox.left);
+    }
+
+    /**
+     * Converts a {@link FloatRect} object to a {@code GlobalBounds} object with corresponding coordinates.
+     *
+     * @param boundingBox global bounds stored as a {@link FloatRect}
+     * @return a new {@code GlobalBounds} object
+     */
+    @Contract(pure = true, value = "_ -> new")
+    public static GlobalRect from(@NotNull IntRect boundingBox) {
         return new GlobalRect(boundingBox.top, boundingBox.left + boundingBox.width,
                               boundingBox.top + boundingBox.height, boundingBox.left);
     }
