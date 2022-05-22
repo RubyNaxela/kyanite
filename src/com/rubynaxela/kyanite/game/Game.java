@@ -1,5 +1,10 @@
 package com.rubynaxela.kyanite.game;
 
+import com.rubynaxela.kyanite.system.FirstThreadTool;
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * The game root class. Provides a {@link GameContext} object, which
  * provides a set of references to the basic objects used by the game.
@@ -9,23 +14,42 @@ public abstract class Game {
     private final GameContext context = GameContext.instance = new GameContext(this);
 
     /**
-     * Starts the game clock and the window loop.
+     * Starts the game by executing the {@code init()} method and then starting the clock and the window loop.
+     *
+     * @param gameClass the main game class
+     * @param args      the {@code args} argument from the application {@code main()} method
      */
-    public final void start() {
-        init();
-        context.getClock().tryStart();
-        context.getWindow().startLoop();
+    public static void run(@NotNull Class<? extends Game> gameClass, @NotNull String[] args) {
+        FirstThreadTool.restartIfNecessary(args);
+        try {
+            final Game game = gameClass.getConstructor().newInstance();
+            game.preInit();
+            if (game.context.getWindow() != null)
+                throw new IllegalStateException("A game window should not be created by the preInit() method. " +
+                                                "Please run getContext().setupWindow in the init() method");
+            game.init();
+            if (game.context.getWindow() == null)
+                throw new NullPointerException("A game window has not been created. Please run " +
+                                               "getContext().setupWindow in the init() method of the game class");
+            game.context.getClock().tryStart();
+            game.context.getWindow().startLoop();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * This method is called when the game is started or restarted. This is a proper place to put actions that
-     * set the initial state of the game. However, global actions, like asset registration, should be executed
-     * inside the game's constructor. Note that if this method uses the game window, it should not rely on
-     * the value returned by {@code GameContext.setupWindow()}. Instead, the window should be retrieved using
-     * the {@code getContext().getWindow()} method because after a restart, the game window is a new object.
+     * This method is called only when the game is launched. This is the proper place to register assets and execute
+     * any other actions that do not need to be executed when the {@link GameContext#restartGame} method is invoked.
      */
-    protected void init() {
-    }
+    protected abstract void preInit();
+
+    /**
+     * This method is called when the game is launched and after every {@link GameContext#restartGame}
+     * method call. This is  the proper place to put actions that set the initial state of the game,
+     * for instance, creating a scene/HUD and assigning it to the window or setting up global objects.
+     */
+    protected abstract void init();
 
     /**
      * @return the reference to the game context
