@@ -59,8 +59,9 @@ public class GlobalRect {
      * @param boundingBox global bounds stored as a {@link FloatRect}
      * @return a new {@code GlobalBounds} object
      */
-    @Contract(pure = true, value = "_ -> new")
-    public static GlobalRect from(@NotNull FloatRect boundingBox) {
+    @Contract(pure = true, value = "null -> null; !null -> !null")
+    public static GlobalRect from(@Nullable FloatRect boundingBox) {
+        if (boundingBox == null) return null;
         return new GlobalRect(boundingBox.top, boundingBox.left + boundingBox.width,
                               boundingBox.top + boundingBox.height, boundingBox.left);
     }
@@ -71,8 +72,9 @@ public class GlobalRect {
      * @param boundingBox global bounds stored as a {@link FloatRect}
      * @return a new {@code GlobalBounds} object
      */
-    @Contract(pure = true, value = "_ -> new")
-    public static GlobalRect from(@NotNull IntRect boundingBox) {
+    @Contract(pure = true, value = "null -> null; !null -> !null")
+    public static GlobalRect from(@Nullable IntRect boundingBox) {
+        if (boundingBox == null) return null;
         return new GlobalRect(boundingBox.top, boundingBox.left + boundingBox.width,
                               boundingBox.top + boundingBox.height, boundingBox.left);
     }
@@ -80,7 +82,7 @@ public class GlobalRect {
     /**
      * @return a {@link FloatRect} object with corresponding coordinates
      */
-    @Contract(pure = true, value = "-> new")
+    @Contract(pure = true)
     public FloatRect toFloatRect() {
         return floatRect;
     }
