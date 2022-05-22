@@ -243,10 +243,12 @@ public final class MathUtils {
     }
 
     /**
+     * Computes the direction unit vector (normalzed) from the origin to the target
+     * point, or {@link Vector2f#ZERO} if the specified points have the same coordinates
+     *
      * @param origin the origin point
      * @param target the target point
-     * @return the direction unit vector (normalzed) from the origin to the target
-     * point, or {@link Vector2f#ZERO} if the specified points have the same coordinates
+     * @return normalzed direction vector from the origin to the target
      */
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
@@ -258,6 +260,9 @@ public final class MathUtils {
     }
 
     /**
+     * Computes the direction vector of a {@link CircleShape} moving in the specified direction after it collides with a
+     * {@link RectangleShape}. If {@code circle} and {@code rectangle} are not colliding, {@code circleDirection} is returned.
+     *
      * @param circle          a circle shape
      * @param circleDirection the circle shape's moving direction
      * @param rectangle       a rectangle shape

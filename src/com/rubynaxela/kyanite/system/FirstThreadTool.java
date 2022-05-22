@@ -18,6 +18,7 @@ public final class FirstThreadTool {
 
     /**
      * Reboots the JVM on Mac OS X with VM option -XstartOnFirstThread if the VM wasn't started with it already.
+     *
      * @param args arguments for the new instance of the application
      */
     public static void restartIfNecessary(String[] args) {
