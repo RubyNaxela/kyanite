@@ -1,8 +1,11 @@
 package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
+import com.rubynaxela.kyanite.game.entities.MovingEntity;
+import com.rubynaxela.kyanite.physics.GravityAffected;
 import com.rubynaxela.kyanite.system.Clock;
 import com.rubynaxela.kyanite.util.Utils;
+import com.rubynaxela.kyanite.util.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -55,8 +58,8 @@ public abstract class Scene extends RenderLayer {
     protected abstract void loop();
 
     /**
-     * Calls the {@link #loop} method and then every entity is animated (if it implements
-     * {@link AnimatedEntity}) and drawn on the game window. This method is automatically
+     * Calls the {@link #loop} method, then every entity is animated (if it implements {@link AnimatedEntity}
+     * or {@link MovingEntity}) and drawn on the game window. This method is automatically
      * executed every frame by the window it belongs to and should not be invoked manually.
      *
      * @param window the window that the scene has to be displayed on
@@ -64,18 +67,24 @@ public abstract class Scene extends RenderLayer {
     public final void fullLoop(@NotNull Window window) {
         if (!suspended) {
             runScheduledActions();
-            loop();
-            if (background != null) window.draw(background);
-            try {
-                forEach(object -> {
-                    if (object instanceof AnimatedEntity) ((AnimatedEntity) object).animate(getDeltaTime(), clock.getTime());
-                    window.draw(object);
-                });
-            } catch (ConcurrentModificationException e) {
-                throw new ConcurrentModificationException("Scene contents cannot be modified during a loop iteration." +
-                                                          " In order to add or remove an object, use the" +
-                                                          " scheduleToAdd(), scheduleToRemove() or schedule() method");
+            if (getDeltaTime().asSeconds() <= maxSceneDuration) {
+                loop();
+                if (background != null) window.draw(background);
+                try {
+                    forEach(object -> {
+                        final float dt = getDeltaTime().asSeconds();
+                        if (object instanceof final GravityAffected entity)
+                            entity.setVelocity(Vec2.add(entity.getVelocity(), Vec2.f(0, entity.getGravity() * dt)));
+                        if (object instanceof final AnimatedEntity entity) entity.animate(getDeltaTime(), clock.getTime());
+                        if (object instanceof final MovingEntity entity) entity.move(Vec2.multiply(entity.getVelocity(), dt));
+                    });
+                } catch (ConcurrentModificationException e) {
+                    throw new ConcurrentModificationException("Scene contents cannot be modified during a loop iteration." +
+                                                              " In order to add or remove an object, use the" +
+                                                              " scheduleToAdd(), scheduleToRemove() or schedule() method");
+                }
             }
+            forEach(window::draw);
             previousFrameTime = currentFrameTime;
             currentFrameTime = clock.getTime();
         }

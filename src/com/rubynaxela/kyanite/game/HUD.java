@@ -1,6 +1,8 @@
 package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
+import com.rubynaxela.kyanite.game.entities.MovingEntity;
+import com.rubynaxela.kyanite.physics.GravityAffected;
 import com.rubynaxela.kyanite.util.Colors;
 import com.rubynaxela.kyanite.util.Vec2;
 import com.rubynaxela.kyanite.window.Window;
@@ -48,8 +50,8 @@ public abstract class HUD extends RenderLayer {
 
     /**
      * Draws every object on the window. This method is automatically executed every frame by the window it belongs
-     * to and should not be invoked manually. If this HUD contains {@link AnimatedEntity}s, their {@code animate()}
-     * method will be called with the currently set {@link Scene}'s {@code getDeltaTime()} method.
+     * to and should not be invoked manually. If this HUD contains {@link AnimatedEntity}s or {@link AnimatedEntity}s,
+     * their animation methods will be called with the currently set {@link Scene}'s {@code getDeltaTime()} method.
      *
      * @param window the window that the scene has to be displayed on
      */
@@ -61,8 +63,12 @@ public abstract class HUD extends RenderLayer {
         runScheduledActions();
         try {
             forEach(object -> {
-                if (object instanceof AnimatedEntity)
-                    ((AnimatedEntity) object).animate(window.getScene().getDeltaTime(), getContext().getClock().getTime());
+                final float dt = window.getScene().getDeltaTime().asSeconds();
+                if (object instanceof final GravityAffected entity)
+                    entity.setVelocity(Vec2.add(entity.getVelocity(), Vec2.f(0, entity.getGravity() * dt)));
+                if (object instanceof final AnimatedEntity entity)
+                    entity.animate(window.getScene().getDeltaTime(), getContext().getClock().getTime());
+                if (object instanceof final MovingEntity entity) entity.move(Vec2.multiply(entity.getVelocity(), dt));
                 window.draw(object);
             });
         } catch (ConcurrentModificationException e) {
