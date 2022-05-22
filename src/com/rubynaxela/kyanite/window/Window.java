@@ -567,10 +567,12 @@ public class Window extends RenderWindow {
      * Changes the current scene of this window and initializes it (calls its {@code init()} method).
      *
      * @param scene the new scene to be displayed on this window
+     * @return the reference to this window
      */
-    public void setScene(@NotNull Scene scene) {
+    public Window setScene(@NotNull Scene scene) {
         this.scene = scene;
         scene.fullInit();
+        return this;
     }
 
     /**
@@ -586,10 +588,12 @@ public class Window extends RenderWindow {
      * Changes the current HUD of this window and initializes it (calls its {@code init()} method).
      *
      * @param hud the new HUD to be displayed on this window
+     * @return the reference to this window
      */
-    public void setHUD(@NotNull HUD hud) {
+    public Window setHUD(@NotNull HUD hud) {
         this.hud = hud;
         hud.fullInit();
+        return this;
     }
 
     /**
