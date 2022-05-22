@@ -10,6 +10,10 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 
+/**
+ * Objects that implement {@code MovingEntity} are being moved automatically by the scene loop.
+ * This interface also provides the ability to limit available movement area through barriers.
+ */
 public interface MovingEntity {
 
     /**

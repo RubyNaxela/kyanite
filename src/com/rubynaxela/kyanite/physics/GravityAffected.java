@@ -13,6 +13,9 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
 
+/**
+ * An extension of the {@link MovingEntity} interface, providing additional functionality related to gravity.
+ */
 public interface GravityAffected extends MovingEntity {
 
     /**
