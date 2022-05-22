@@ -148,12 +148,36 @@
             <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
         </div>
         <!--</BETA>-->
-        <p class="small">20 maja 2022</p>
+        <p class="small">22 maja 2022</p>
         <ul>
+            <li>Dodano interfejs <span class="monospace">MovingEntity</span> ułatwiający obsługę ruchu obiektów na scenie</li>
+            <li>Dodano interfejs <span class="monospace">GravityAffected</span> ułatwiający obsługę grawitacji</li>
+            <li>Rozszerzono enum <span class="monospace">Direction</span> o enum wewnętrzny <span class="monospace">Axis</span>
+                oznaczający osie kartezjańskiego układu współrzędnych
+            </li>
+            <li>Dodano klasę <span class="monospace">AudioHandler</span> ułatwiającą operacje na dźwiękach</li>
+            <li>Dodano metodę abstrakcyjną <span class="monospace">Game#preInit</span>, w której można umieścić operacje
+                wykonywane tylko podczas uruchamiania gry
+            </li>
             <li>Dodano metodę <span class="monospace">MathUtils#clamp</span> służącą do ograniczenia wartości w ramach ustalonej
                 granicy
             </li>
-            <li>Dodano klasę <span class="monospace">AudioHandler</span> ułatwiającą operacje na dźwiękach</li>
+            <li>Dodano metody <span class="monospace">Window#getBounds</span> i <span class="monospace">Window#isInside</span>
+                dla uproszczenia sprawdzania widoczności obiektów w oknie
+            </li>
+            <li>Zamieniono metodę <span class="monospace">Game#start</span> na <span class="monospace">Game#run</span>,
+                z nową składnią (<span class="monospace">Game.run(KlasaGry.class, args)</span> zamiast
+                <span class="monospace">new KlasaGry().start()</span>)
+            </li>
+            <li>Metoda <span class="monospace">Game#init</span> jest teraz metodą abstrakcyjną</li>
+            <li>Metody <span class="monospace">Window#setScene</span> i <span class="monospace">Window#setHUD</span> od teraz
+                zwracają referencję do okna, dzięki czemu możliwe jest krótsze ustawienie parametrów okna wraz z aktywną sceną
+                i/lub HUBem
+            </li>
+            <li>Naprawiono działanie metody <span class="monospace">Window#getTitle</span></li>
+            <li>Poprawiono błędy dotyczące ilości klatek na sekundę; zmieniono domyślną wartość limitu na 60FPS</li>
+            <li>Naprawiono błąd <span class="monospace">NullPointerException</span> zgłaszany przez metodę <span
+                    class="monospace">GlobalRect#from</span></li>
             <li>
                 <!--<BETA>-->
                 <div style="display: flex; align-items: center;">
