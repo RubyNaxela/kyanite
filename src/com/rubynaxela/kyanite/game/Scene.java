@@ -2,13 +2,12 @@ package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.system.Clock;
+import com.rubynaxela.kyanite.util.Utils;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.system.Time;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ConcurrentModificationException;
 
 /**
@@ -19,6 +18,7 @@ public abstract class Scene extends RenderLayer {
     private final Clock clock = context.getClock();
     private Time previousFrameTime, currentFrameTime;
     private boolean suspended = false;
+    private float maxLagFactor = 5f, maxSceneDuration = 5f / 60;
 
     /**
      * Creates a "null" scene with empty {@link Scene#init} and {@link Scene#loop} methods.
@@ -119,12 +119,31 @@ public abstract class Scene extends RenderLayer {
         currentFrameTime = previousFrameTime = clock.getTime();
     }
 
-    private Time estimatedTime() {
-        try {
-            final Constructor<Time> constructor = Time.class.getDeclaredConstructor(long.class);
-            return constructor.newInstance((long) (1000000.0f / GameContext.getInstance().getWindow().getFramerateLimit()));
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ignored) {
+    /**
+     * @return current max lag factor for this scene
+     */
+    public float getMaxLagFactor() {
+        return maxLagFactor;
+    }
+
+    /**
+     * Sets the max lag factor for this scene. This determines how many times the time of a frame can be longer than
+     * it would result from the set limit of frames per second. The default value is 5. If a frame lasted longer than
+     * {@code maxLagFactor / getContext().getWindow().getFramerateLimit()}, the scene iteration for the next frame
+     * is not performed. This is to prevent {@code deltaTime} value passed to animation methods from being too high.
+     *
+     * @param maxLagFactor new max lag factor for this scene
+     */
+    public void setMaxLagFactor(float maxLagFactor) {
+        this.maxLagFactor = maxLagFactor;
+        if (getContext().getWindow() != null) {
+            final int framerate = getContext().getWindow().getFramerateLimit();
+            this.maxSceneDuration = framerate > 0 ? maxLagFactor / framerate : Float.MAX_VALUE;
         }
-        return Time.ZERO;
+    }
+
+    private Time estimatedTime() {
+        final int framerate = getContext().getWindow().getFramerateLimit();
+        return Utils.timeOf((long) (1000000.0f / (framerate > 0 ? framerate : 60)));
     }
 }

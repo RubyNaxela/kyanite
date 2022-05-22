@@ -88,6 +88,7 @@ public class Window extends RenderWindow {
             setIcon(new Icon(Objects.requireNonNull(getClass().getResourceAsStream("/res/kyanite.png"))));
         } catch (NullPointerException ignored) {
         }
+        setFramerateLimit(60);
     }
 
     /**
@@ -189,13 +190,10 @@ public class Window extends RenderWindow {
     @Override
     public void setFramerateLimit(int framerateLimit) {
         this.framerateLimit = framerateLimit;
-        if (framerateLimit != Framerate.VSYNC) {
-            super.setVerticalSyncEnabled(false);
-            super.setFramerateLimit(framerateLimit);
-        } else {
-            super.setVerticalSyncEnabled(true);
-            super.setFramerateLimit(Framerate.UNLIMITED);
-        }
+        super.setVerticalSyncEnabled(framerateLimit == Framerate.VSYNC);
+        if (framerateLimit <= 0) super.setFramerateLimit(Framerate.UNLIMITED);
+        else super.setFramerateLimit(framerateLimit);
+        scene.setMaxLagFactor(scene.getMaxLagFactor());
     }
 
     /**
@@ -572,6 +570,7 @@ public class Window extends RenderWindow {
     public Window setScene(@NotNull Scene scene) {
         this.scene = scene;
         scene.fullInit();
+        scene.setMaxLagFactor(scene.getMaxLagFactor());
         return this;
     }
 
