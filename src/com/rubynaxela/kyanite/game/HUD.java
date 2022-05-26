@@ -1,5 +1,6 @@
 package com.rubynaxela.kyanite.game;
 
+import com.rubynaxela.kyanite.game.assets.AnimatedTexture;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
 import com.rubynaxela.kyanite.physics.GravityAffected;
@@ -9,6 +10,7 @@ import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.RectangleShape;
+import org.jsfml.system.Time;
 
 import java.util.ConcurrentModificationException;
 
@@ -61,13 +63,15 @@ public abstract class HUD extends RenderLayer {
         if (background != null) window.draw(background);
         else window.draw(solidBackground);
         runScheduledActions();
+        final Time deltaTime = window.getScene().getDeltaTime(), elapsedTime = getContext().getClock().getTime();
+        final float dt = deltaTime.asSeconds();
         try {
             forEach(object -> {
-                final float dt = window.getScene().getDeltaTime().asSeconds();
                 if (object instanceof final GravityAffected entity)
                     entity.setVelocity(Vec2.add(entity.getVelocity(), Vec2.f(0, entity.getGravity() * dt)));
-                if (object instanceof final AnimatedEntity entity)
-                    entity.animate(window.getScene().getDeltaTime(), getContext().getClock().getTime());
+                if (object instanceof final AnimatedEntity entity) entity.animate(deltaTime, elapsedTime);
+                if (AnimatedTexture.animatedObjects.containsKey(object))
+                    AnimatedTexture.animatedObjects.get(object).update(object, elapsedTime);
                 if (object instanceof final MovingEntity entity) entity.move(Vec2.multiply(entity.getVelocity(), dt));
                 window.draw(object);
             });

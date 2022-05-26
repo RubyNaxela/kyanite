@@ -105,12 +105,13 @@ public class Texture implements Asset {
     }
 
     /**
-     * Applies this texture on the {@link Shape}. Does not affect the
-     * texture rectangle, unless the texture is set to be tileable.
+     * Applies this texture on the specified {@link Shape}. Does not affect the texture rectangle, unless the
+     * texture is set to be tileable. If {@code shape} has this texture already applied, this method does nothing.
      *
      * @param shape the {@link Shape} to apply this texture on
      */
     public void apply(@NotNull Shape shape) {
+        if (shape.getTexture() == texture) return;
         shape.setTexture(texture);
         final FloatRect bounds = shape.getGlobalBounds();
         if (isTileable()) {
@@ -127,12 +128,13 @@ public class Texture implements Asset {
     }
 
     /**
-     * Applies this texture on the {@link Sprite}. Does not affect the
-     * texture rectangle, unless the texture is set to be tileable.
+     * Applies this texture on the specified {@link Sprite}. Does not affect the texture rectangle, unless the
+     * texture is set to be tileable. If {@code sprite} has this texture already applied, this method does nothing.1.8.
      *
      * @param sprite the {@link Sprite} to apply this texture on
      */
     public void apply(@NotNull Sprite sprite) {
+        if (sprite.getTexture() == texture) return;
         sprite.setTexture(texture);
         final FloatRect bounds = sprite.getGlobalBounds();
         if (isTileable()) {

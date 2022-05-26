@@ -7,9 +7,13 @@ import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.system.Time;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -93,5 +97,22 @@ public class Utils {
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ignored) {
         }
         return Time.ZERO;
+    }
+
+    /**
+     * Flattens a 2D array into a 1D array. For instance, {@code [[1, 2], [3, 4], [5, 6]]} becomes {@code [1, 2, 3, 4, 5, 6]}.
+     *
+     * @param array2D a 2D array
+     * @param type    the array elements type
+     * @param <T>     the array elements type
+     * @return an array of all values from the specified 2D array
+     */
+    @SuppressWarnings("unchecked")
+    @Contract(pure = true)
+    public static <T> T[] flatten2DArray(@NotNull Class<T> type, @NotNull T[][] array2D) {
+        final int size = array2D.length * array2D[0].length;
+        List<T> list = new ArrayList<>(array2D.length * array2D[0].length);
+        for (T[] array : array2D) Collections.addAll(list, array);
+        return list.toArray((T[]) Array.newInstance(type, size));
     }
 }

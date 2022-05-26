@@ -1,5 +1,6 @@
 package com.rubynaxela.kyanite.game;
 
+import com.rubynaxela.kyanite.game.assets.AnimatedTexture;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
 import com.rubynaxela.kyanite.physics.GravityAffected;
@@ -76,6 +77,8 @@ public abstract class Scene extends RenderLayer {
                         if (object instanceof final GravityAffected entity)
                             entity.setVelocity(Vec2.add(entity.getVelocity(), Vec2.f(0, entity.getGravity() * dt)));
                         if (object instanceof final AnimatedEntity entity) entity.animate(getDeltaTime(), clock.getTime());
+                        if (AnimatedTexture.animatedObjects.containsKey(object))
+                            AnimatedTexture.animatedObjects.get(object).update(object, clock.getTime());
                         if (object instanceof final MovingEntity entity) entity.move(Vec2.multiply(entity.getVelocity(), dt));
                     });
                 } catch (ConcurrentModificationException e) {
