@@ -2,6 +2,7 @@ package com.rubynaxela.kyanite.game.assets;
 
 import com.rubynaxela.kyanite.util.Utils;
 import org.jetbrains.annotations.NotNull;
+import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.Shape;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Time;
@@ -9,9 +10,18 @@ import org.jsfml.system.Time;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * An animated texture that can be created from an array of {@link Texture}s with a fixed frame duration. Once applied on
+ * a {@link Shape} or a {@link Sprite}, it is automatically updated using the current scene's clock as the time reference.
+ */
 public class AnimatedTexture implements Asset {
 
-    public static final Map<Object, AnimatedTexture> animatedObjects = new HashMap<>();
+    /**
+     * Stores bindings between {@code Drawable} objects and {@code AnimatedTexture}s. Since native JSFML
+     * classes are not modified, this is the only way to assign an {@code AnimatedTexture} to an object.
+     * This map does not need to be accessed and should not be modified from outside of the Kyanite framework.
+     */
+    public static final Map<Drawable, AnimatedTexture> animatedObjects = new HashMap<>();
 
     private final Texture[] frames;
     private final float frameDuration;

@@ -117,10 +117,10 @@
             </div>
             <!--<BETA>-->
             <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.1-beta.2.jar">
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.1-beta.3.jar">
                     <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>
                 </a>
-                <p style="text-align: center;">wersja: 1.8.1-beta.2</p>
+                <p style="text-align: center;">wersja: 1.8.1-beta.3</p>
                 <ul>
                     <li>potencjalnie niestabilna wersja</li>
                     <li>może zawierać błędy</li>
@@ -148,8 +148,9 @@
             <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
         </div>
         <!--</BETA>-->
-        <p class="small">22 maja 2022</p>
+        <p class="small">26 maja 2022</p>
         <ul>
+            <li>Dodano nowy typ zasobu: <span class="monospace">AnimatedTexture</span></li>
             <li>Dodano interfejs <span class="monospace">MovingEntity</span> ułatwiający obsługę ruchu obiektów na scenie</li>
             <li>Dodano interfejs <span class="monospace">GravityAffected</span> ułatwiający obsługę grawitacji</li>
             <li>Rozszerzono enum <span class="monospace">Direction</span> o enum wewnętrzny <span class="monospace">Axis</span>
@@ -165,6 +166,8 @@
             <li>Dodano metody <span class="monospace">Window#getBounds</span> i <span class="monospace">Window#isInside</span>
                 dla uproszczenia sprawdzania widoczności obiektów w oknie
             </li>
+            <li>Dodano interfejs <span class="monospace">Context</span> w celu uproszczenia dostępu do instancji <span
+                    class="monospace">GameContext</span></li>
             <li>Zamieniono metodę <span class="monospace">Game#start</span> na <span class="monospace">Game#run</span>,
                 z nową składnią (<span class="monospace">Game.run(KlasaGry.class, args)</span> zamiast
                 <span class="monospace">new KlasaGry().start()</span>)

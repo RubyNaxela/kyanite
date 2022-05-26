@@ -3,6 +3,7 @@ com.rubynaxela.kyanite.game.assets
 com.rubynaxela.kyanite.game.debug
 com.rubynaxela.kyanite.game.entities
 com.rubynaxela.kyanite.game.gui
+com.rubynaxela.kyanite.physics
 com.rubynaxela.kyanite.system
 com.rubynaxela.kyanite.util
 com.rubynaxela.kyanite.util.data
