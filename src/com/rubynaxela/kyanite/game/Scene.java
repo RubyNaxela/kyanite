@@ -101,7 +101,7 @@ public abstract class Scene extends RenderLayer {
      * @return time between the current and the previous frame
      */
     public Time getDeltaTime() {
-        if (previousFrameTime.equals(currentFrameTime)) return estimatedTime();
+        if (previousFrameTime == null || previousFrameTime.equals(currentFrameTime)) return estimatedTime();
         return Time.sub(currentFrameTime, previousFrameTime);
     }
 
