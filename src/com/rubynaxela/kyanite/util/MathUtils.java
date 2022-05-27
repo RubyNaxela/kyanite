@@ -215,6 +215,20 @@ public final class MathUtils {
     }
 
     /**
+     * Detects whether or not the specified point is contained within a circle of the specified middle point and radius.
+     *
+     * @param point          a point
+     * @param circlePosition the middle point of the circle
+     * @param circleRadius   the radius of the circle
+     * @return whether the specified point is contained within the specified circle
+     */
+    public static boolean isInsideCircle(@NotNull Vector2f point, @NotNull Vector2f circlePosition, float circleRadius) {
+        final float deltaX = point.x - circlePosition.x;
+        final float deltaY = point.y - circlePosition.y;
+        return deltaX * deltaX + deltaY * deltaY <= circleRadius * circleRadius;
+    }
+
+    /**
      * Returns the specified number formatted in "kmbtqp" notation with one decimal place,
      * rounded down (if the number is positive) or up (if the number is negative). Examples:
      * <ul>

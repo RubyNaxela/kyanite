@@ -167,10 +167,18 @@ public class GlobalRect {
     }
 
     /**
+     * @return the middle point of this rectangle
+     */
+    @Contract(pure = true, value = "-> new")
+    public Vector2f getCenter() {
+        return Vec2.f(left + floatRect.width / 2, top + floatRect.height / 2);
+    }
+
+    /**
      * @param point a 2D point
      * @return this rectangle's corner that is the closest to the specified point
      */
-    @Contract(pure = true)
+    @Contract(pure = true, value = "_ -> new")
     public Vector2f getNearestCorner(@NotNull Vector2f point) {
         return Vec2.f(point.x - left < right - point.x ? left : right, point.y - bottom < top - point.y ? top : bottom);
     }
