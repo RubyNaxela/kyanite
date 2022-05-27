@@ -117,10 +117,10 @@
             </div>
             <!--<BETA>-->
             <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.1-beta.3.jar">
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.1-beta.4.jar">
                     <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>
                 </a>
-                <p style="text-align: center;">wersja: 1.8.1-beta.3</p>
+                <p style="text-align: center;">wersja: 1.8.1-beta.4</p>
                 <ul>
                     <li>potencjalnie niestabilna wersja</li>
                     <li>może zawierać błędy</li>
@@ -148,7 +148,7 @@
             <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
         </div>
         <!--</BETA>-->
-        <p class="small">26 maja 2022</p>
+        <p class="small">27 maja 2022</p>
         <ul>
             <li>Dodano nowy typ zasobu: <span class="monospace">AnimatedTexture</span></li>
             <li>Dodano interfejs <span class="monospace">MovingEntity</span> ułatwiający obsługę ruchu obiektów na scenie</li>
@@ -157,6 +157,9 @@
                 oznaczający osie kartezjańskiego układu współrzędnych
             </li>
             <li>Dodano klasę <span class="monospace">AudioHandler</span> ułatwiającą operacje na dźwiękach</li>
+            <li>Dodano klasy <span class="monospace">RectangleButton</span> i <span class="monospace">RectangleButton</span>
+                ułatwiające tworzenie przycisków
+            </li>
             <li>Dodano metodę abstrakcyjną <span class="monospace">Game#preInit</span>, w której można umieścić operacje
                 wykonywane tylko podczas uruchamiania gry
             </li>
@@ -165,6 +168,9 @@
             </li>
             <li>Dodano metody <span class="monospace">Window#getBounds</span> i <span class="monospace">Window#isInside</span>
                 dla uproszczenia sprawdzania widoczności obiektów w oknie
+            </li>
+            <li>Dodano metody <span class="monospace">GlobalRect#getCenter</span> i <span class="monospace">
+                MathUtils#isInsideCircle</span>
             </li>
             <li>Dodano interfejs <span class="monospace">Context</span> w celu uproszczenia dostępu do instancji <span
                     class="monospace">GameContext</span></li>
