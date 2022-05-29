@@ -2,6 +2,7 @@ package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.game.assets.AnimatedTexture;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
+import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
 import com.rubynaxela.kyanite.physics.GravityAffected;
 import com.rubynaxela.kyanite.util.Colors;
@@ -9,6 +10,7 @@ import com.rubynaxela.kyanite.util.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.RectangleShape;
 import org.jsfml.system.Time;
 
@@ -72,6 +74,10 @@ public abstract class HUD extends RenderLayer {
                 if (object instanceof final AnimatedEntity entity) entity.animate(deltaTime, elapsedTime);
                 if (AnimatedTexture.animatedObjects.containsKey(object))
                     AnimatedTexture.animatedObjects.get(object).update(object, elapsedTime);
+                if (object instanceof final CompoundEntity entity)
+                    for (final Drawable component : entity.getComponents())
+                        if (AnimatedTexture.animatedObjects.containsKey(component))
+                            AnimatedTexture.animatedObjects.get(component).update(component, elapsedTime);
                 if (object instanceof final MovingEntity entity) entity.move(Vec2.multiply(entity.getVelocity(), dt));
                 window.draw(object);
             });
