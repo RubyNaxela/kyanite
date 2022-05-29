@@ -2,6 +2,7 @@ package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.game.assets.AnimatedTexture;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
+import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
 import com.rubynaxela.kyanite.physics.GravityAffected;
 import com.rubynaxela.kyanite.system.Clock;
@@ -10,6 +11,7 @@ import com.rubynaxela.kyanite.util.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jsfml.graphics.Drawable;
 import org.jsfml.system.Time;
 
 import java.util.ConcurrentModificationException;
@@ -79,6 +81,10 @@ public abstract class Scene extends RenderLayer {
                         if (object instanceof final AnimatedEntity entity) entity.animate(getDeltaTime(), clock.getTime());
                         if (AnimatedTexture.animatedObjects.containsKey(object))
                             AnimatedTexture.animatedObjects.get(object).update(object, clock.getTime());
+                        if (object instanceof final CompoundEntity entity)
+                            for (final Drawable component : entity.getComponents())
+                                if (AnimatedTexture.animatedObjects.containsKey(component))
+                                    AnimatedTexture.animatedObjects.get(component).update(component, clock.getTime());
                         if (object instanceof final MovingEntity entity) entity.move(Vec2.multiply(entity.getVelocity(), dt));
                     });
                 } catch (ConcurrentModificationException e) {
@@ -87,10 +93,10 @@ public abstract class Scene extends RenderLayer {
                                                               " scheduleToAdd(), scheduleToRemove() or schedule() method");
                 }
             }
-            forEach(window::draw);
-            previousFrameTime = currentFrameTime;
-            currentFrameTime = clock.getTime();
         }
+        forEach(window::draw);
+        previousFrameTime = currentFrameTime;
+        currentFrameTime = clock.getTime();
     }
 
     /**
