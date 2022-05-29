@@ -67,6 +67,24 @@ public class AnimatedTexture implements Asset {
     }
 
     /**
+     * Removes this texture from the {@link Shape}.
+     *
+     * @param shape the {@link Shape} to remove this texture from
+     */
+    public void remove(@NotNull Shape shape) {
+        animatedObjects.remove(shape);
+    }
+
+    /**
+     * Removes this texture from the {@link Sprite}.
+     *
+     * @param sprite the {@link Sprite} to remove this texture from
+     */
+    public void remove(@NotNull Sprite sprite) {
+        animatedObjects.remove(sprite);
+    }
+
+    /**
      * Updates this texture for the specified object. This method is
      * run by the scene loop and does not need to be invoked manualy.
      */

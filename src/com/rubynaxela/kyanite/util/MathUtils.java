@@ -202,6 +202,19 @@ public final class MathUtils {
     }
 
     /**
+     * Computes the distance between the specified points using Pythagorean theorem.
+     *
+     * @param origin the target point
+     * @param target the origin point
+     * @return the distance between the two points
+     */
+    @Contract(pure = true)
+    public static float distance(@NotNull Vector2f origin, @NotNull Vector2f target) {
+        final float deltaX = target.x - origin.x, deltaY = target.y - origin.y;
+        return (float) Math.hypot(deltaX, deltaY);
+    }
+
+    /**
      * Returns the taxicab (Manhattan geometry) distance between two points, which is the result of the following expression:
      * <code>Math.abs(a.x - b.x) + Math.abs(a.x - b.y)</code>
      *
@@ -257,18 +270,31 @@ public final class MathUtils {
     }
 
     /**
+     * Computes the direction unit vector (normalzed) for going in the direction of the specified
+     * angle (in degrees; 0 means upward and the direction of increasing the angle is clockwise).
+     *
+     * @param angle the angle relative to the Y axis
+     * @return normalzed direction for going in the direction of the specified angle
+     */
+    @NotNull
+    @Contract(pure = true, value = "_ -> new")
+    public static Vector2f direction(float angle) {
+        return Vec2.f((float) Math.sin(degToRad(angle)), (float) -Math.cos(degToRad(angle)));
+    }
+
+    /**
      * Computes the direction unit vector (normalzed) from the origin to the target
      * point, or {@link Vector2f#ZERO} if the specified points have the same coordinates
      *
-     * @param origin the origin point
-     * @param target the target point
+     * @param origin the target point
+     * @param target the origin point
      * @return normalzed direction vector from the origin to the target
      */
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
     public static Vector2f direction(@NotNull Vector2f origin, @NotNull Vector2f target) {
-        if (origin.equals(target)) return Vector2f.ZERO;
-        final float delta_x = origin.x - target.x, delta_y = origin.y - target.y,
+        if (target.equals(origin)) return Vector2f.ZERO;
+        final float delta_x = target.x - origin.x, delta_y = target.y - origin.y,
                 distance = (float) Math.sqrt(delta_x * delta_x + delta_y * delta_y);
         return Vec2.f(delta_x / distance, delta_y / distance);
     }

@@ -13,6 +13,7 @@ import org.jsfml.window.VideoMode;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Provides a set of references to the basic objects used by the game. The instance of this class can be accessed via the
@@ -166,10 +167,13 @@ public final class GameContext {
      * @param key a resource key
      * @param <T> the type of the resource
      * @return the resource associated with the specified key
-     * @throws ClassCastException if the generic type doesn't match the type of the resource
+     * @throws ClassCastException     if the generic type doesn't match the type of the resource
+     * @throws NoSuchElementException if the specified key has no associated resource
      */
     @SuppressWarnings("unchecked")
     public <T> T getResource(@NotNull String key) {
-        return (T) resources.get(key);
+        if (resources.containsKey(key)) return (T) resources.get(key);
+        else throw new NoSuchElementException("Resource of ID " + key + " either does not exist or " +
+                                              "was attempted to be used before being registered");
     }
 }
