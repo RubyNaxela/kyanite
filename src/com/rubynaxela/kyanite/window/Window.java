@@ -252,18 +252,6 @@ public class Window extends RenderWindow {
     }
 
     /**
-     * Sets the specified resize listener to receive resize events from this window and removes the previously added ones.
-     *
-     * @param listener the resize event listener
-     * @deprecated Please use {@link Window#addResizeListener}
-     */
-    @Deprecated
-    public void setResizeListener(@NotNull ResizeListener listener) {
-        resizeListeners.clear();
-        resizeListeners.add(listener);
-    }
-
-    /**
      * Adds the specified resize listener to receive resize events from this window.
      *
      * @param listener the resize event listener
@@ -273,22 +261,19 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * Removes the specified resize listener from this window.
+     *
+     * @param listener the resize event listener
+     */
+    public void removeResizeListener(@NotNull ResizeListener listener) {
+        resizeListeners.remove(listener);
+    }
+
+    /**
      * Removes all previously added resize listeners of this window.
      */
     public void clearResizeListeners() {
         resizeListeners.clear();
-    }
-
-    /**
-     * Sets the specified focus listener to receive focus events from this window and removes the previously added ones.
-     *
-     * @param listener the focus event listener
-     * @deprecated Please use {@link Window#addFocusListener}
-     */
-    @Deprecated
-    public void setFocusListener(@NotNull FocusListener listener) {
-        focusListeners.clear();
-        focusListeners.add(listener);
     }
 
     /**
@@ -301,22 +286,19 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * Removes the specified focus listener from this window.
+     *
+     * @param listener the resize event listener
+     */
+    public void removeFocusListener(@NotNull FocusListener listener) {
+        focusListeners.remove(listener);
+    }
+
+    /**
      * Removes all previously added focus listeners of this window.
      */
     public void clearFocusListeners() {
         focusListeners.clear();
-    }
-
-    /**
-     * Sets the specified text listener to receive text input events from this window and removes the previously added ones.
-     *
-     * @param listener the text input event listener
-     * @deprecated Please use {@link Window#addTextListener}
-     */
-    @Deprecated
-    public void setTextListener(@NotNull TextListener listener) {
-        textListeners.clear();
-        textListeners.add(listener);
     }
 
     /**
@@ -329,22 +311,19 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * Removes the specified text listener from this window.
+     *
+     * @param listener the resize event listener
+     */
+    public void removeTextListener(@NotNull TextListener listener) {
+        textListeners.remove(listener);
+    }
+
+    /**
      * Removes all previously added text listeners of this window.
      */
     public void clearTextListeners() {
         textListeners.clear();
-    }
-
-    /**
-     * Sets the specified key listener to receive key events from this window and removes the previously added ones.
-     *
-     * @param listener the key event listener
-     * @deprecated Please use {@link Window#addKeyListener}
-     */
-    @Deprecated
-    public void setKeyListener(@NotNull KeyListener listener) {
-        keyListeners.clear();
-        keyListeners.add(listener);
     }
 
     /**
@@ -357,23 +336,19 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * Removes the specified key listener from this window.
+     *
+     * @param listener the resize event listener
+     */
+    public void removeKeyListener(@NotNull KeyListener listener) {
+        keyListeners.remove(listener);
+    }
+
+    /**
      * Removes all previously added key listeners of this window.
      */
     public void clearKeyListeners() {
         keyListeners.clear();
-    }
-
-    /**
-     * Sets the specified mouse wheel listener to receive mouse wheel
-     * events from this window and removes the previously added ones.
-     *
-     * @param listener the mouse wheel event listener
-     * @deprecated Please use {@link Window#addMouseWheelListener}
-     */
-    @Deprecated
-    public void setMouseWheelListener(@NotNull MouseWheelListener listener) {
-        mouseWheelListeners.clear();
-        mouseWheelListeners.add(listener);
     }
 
     /**
@@ -386,23 +361,19 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * Removes the specified mouse wheel listener from this window.
+     *
+     * @param listener the resize event listener
+     */
+    public void removeMouseWheelListener(@NotNull MouseWheelListener listener) {
+        mouseWheelListeners.remove(listener);
+    }
+
+    /**
      * Removes all previously added mouse wheel listeners of this window.
      */
     public void clearMouseWheelListeners() {
         mouseWheelListeners.clear();
-    }
-
-    /**
-     * Sets the specified mouse button listener to receive mouse button
-     * events from this window and removes the previously added ones.
-     *
-     * @param listener the mouse button event listener
-     * @deprecated Please use {@link Window#addMouseButtonListener}
-     */
-    @Deprecated
-    public void setMouseButtonListener(@NotNull MouseButtonListener listener) {
-        mouseButtonListeners.clear();
-        mouseButtonListeners.add(listener);
     }
 
     /**
@@ -415,22 +386,19 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * Removes the specified mouse button listener from this window.
+     *
+     * @param listener the mouse button event listener
+     */
+    public void removeMouseButtonListener(@NotNull MouseButtonListener listener) {
+        mouseButtonListeners.remove(listener);
+    }
+
+    /**
      * Removes all previously added mouse button listeners of this window.
      */
     public void clearMouseButtonListeners() {
         mouseButtonListeners.clear();
-    }
-
-    /**
-     * Sets the specified mouse listener to receive mouse events from this window and removes the previously added ones.
-     *
-     * @param listener the mouse event listener
-     * @deprecated Please use {@link Window#addMouseListener}
-     */
-    @Deprecated
-    public void setMouseListener(@NotNull MouseListener listener) {
-        mouseListeners.clear();
-        mouseListeners.add(listener);
     }
 
     /**
@@ -443,23 +411,19 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * Removes the specified mouse listener from this window.
+     *
+     * @param listener the mouse button event listener
+     */
+    public void removeMouseListener(@NotNull MouseListener listener) {
+        mouseListeners.remove(listener);
+    }
+
+    /**
      * Removes all previously added mouse listeners of this window.
      */
     public void clearMouseListeners() {
         mouseListeners.clear();
-    }
-
-    /**
-     * Sets the specified joystick button listener to receive joystick
-     * button events from this window and removes the previously added ones.
-     *
-     * @param listener the joystick button event listener
-     * @deprecated Please use {@link Window#addJoystickButtonListener}
-     */
-    @Deprecated
-    public void setJoystickButtonListener(@NotNull JoystickButtonListener listener) {
-        joystickButtonListeners.clear();
-        joystickButtonListeners.add(listener);
     }
 
     /**
@@ -472,23 +436,19 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * Removes the specified joystick button listener from this window.
+     *
+     * @param listener the joystick button event listener
+     */
+    public void removeJoystickButtonListener(@NotNull JoystickButtonListener listener) {
+        joystickButtonListeners.remove(listener);
+    }
+
+    /**
      * Removes all previously added joystick button listeners of this window.
      */
     public void clearJoystickButtonListeners() {
         joystickButtonListeners.clear();
-    }
-
-    /**
-     * Sets the specified joystick listener to receive joystick movement
-     * events from this window and removes the previously added ones.
-     *
-     * @param listener the joystick movement event listener
-     * @deprecated Please use {@link Window#addJoystickListener}
-     */
-    @Deprecated
-    public void setJoystickListener(@NotNull JoystickListener listener) {
-        joystickListeners.clear();
-        joystickListeners.add(listener);
     }
 
     /**
@@ -501,22 +461,19 @@ public class Window extends RenderWindow {
     }
 
     /**
+     * Removes the specified joystick movement listener from this window.
+     *
+     * @param listener the joystick movement event listener
+     */
+    public void removeJoystickListener(@NotNull JoystickListener listener) {
+        joystickListeners.remove(listener);
+    }
+
+    /**
      * Removes all previously added joystick movement listeners of this window.
      */
     public void clearJoystickListeners() {
         joystickListeners.clear();
-    }
-
-    /**
-     * Sets the specified joystick connection listener to receive joystick connection
-     * and disconnection events from this window and removes the previously added ones.
-     *
-     * @param listener the joystick connection event listener
-     */
-    @Deprecated
-    public void setJoystickConnectionListener(@NotNull JoystickConnectionListener listener) {
-        joystickConnectionListeners.clear();
-        joystickConnectionListeners.add(listener);
     }
 
     /**
@@ -526,6 +483,15 @@ public class Window extends RenderWindow {
      */
     public void addJoystickConnectionListener(@NotNull JoystickConnectionListener listener) {
         joystickConnectionListeners.add(listener);
+    }
+
+    /**
+     * Removes the specified joystick connection listener from this window.
+     *
+     * @param listener the joystick connection event listener
+     */
+    public void removeJoystickConnectionListener(@NotNull JoystickConnectionListener listener) {
+        joystickConnectionListeners.remove(listener);
     }
 
     /**
