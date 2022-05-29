@@ -3,3 +3,5 @@
 /out/
 /changelog.txt
 /site/stylesheet.css
+/site/tutorials/
+.DS_Store

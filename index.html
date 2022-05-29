@@ -110,17 +110,17 @@
         </div>
         <div style="display: flex; width: 100%; align-items: flex-start; justify-content: space-evenly;">
             <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/release/kyanite-1.8.0.jar">
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/release/kyanite-1.8.1.jar">
                     <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite</span></div>
                 </a>
-                <p style="text-align: center;">wersja: 1.8.0</p>
+                <p style="text-align: center;">wersja: 1.8.1</p>
             </div>
             <!--<BETA>-->
             <div>
-                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.8.1-beta.4.jar">
+                <a href="https://github.com/RubyNaxela/kyanite/releases/download/beta/kyanite-1.9-beta.1.jar">
                     <div class="ghost-button"><span class="ghost-label-text">Pobierz Kyanite Beta</span></div>
                 </a>
-                <p style="text-align: center;">wersja: 1.8.1-beta.4</p>
+                <p style="text-align: center;">wersja: 1.9-beta.1</p>
                 <ul>
                     <li>potencjalnie niestabilna wersja</li>
                     <li>może zawierać błędy</li>
@@ -142,12 +142,52 @@
     </div>
 
     <div class="horizontal-padding-container fade-in-early bottom-margin">
-        <p class="big" style="display: inline-block;">1.8.1</p>
+        <p class="big" style="display: inline-block;">1.9</p>
         <!--<BETA>-->
         <div style="display: inline-block;">
             <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
         </div>
         <!--</BETA>-->
+        <p class="small">30 maja 2022</p>
+        <ul>
+            <li>Dodano klasę <span class="monospace">Particle</span> do obsługi cząsteczek</li>
+            <li>Dodano klasę <span class="monospace">Pointer</span> wprowadzającą czytelniejszą składnię dla obsługi wskaźników
+            <li>Dodano metodę <span class="monospace">AnimatedTexture#remove</span>, która zatrzymuje animację tekstury na
+                bieżącej klatce
+            </li>
+            <li>Dodano metodę <span class="monospace">MathUtils#distance</span> oblcizającą odległość między dwoma punktami
+            </li>
+            <li>Dodano metodę <span class="monospace">MathUtils#direction(float)</span> oblcizającą wektor kierunku dla
+                wskazanego kąta
+            </li>
+            <li>Dodano metody <span class="monospace">Window#remove[...]Listener</span> dla wszystkich typów zdarzeń</li>
+            <li>Usunięto metody <span class="monospace">Window#set[...]Listener</span> dla wszystkich typów zdarzeń</li>
+            <li>Dodano argumeny <span class="monospace">looping</span> w metodzie
+                <span class="monospace">AudioHandler#playSound</span></li>
+            <li>Dodano odtwarzanie animowanych tekstur <span class="monospace">CompoundEntity</span> znajdujących się w
+                <span class="monospace">HUD</span>ach
+            </li>
+            <li>Poprawiono błąd powodujący niewyświetlanie sceny gdy jest zatrzymana</li>
+            <li>Drobne poprawki w klasach: <span class="monospace">Colors</span> i
+                <span class="monospace">CompoundEntity</span></li>
+            <li>
+                <!--<BETA>-->
+                <div style="display: flex; align-items: center;">
+                    <div>
+                        Dodano wsparcie dla obiektów <span class="monospace">MouseActionListener</span> wewnątrz obiektów <span
+                            class="monospace">CompoundEntity</span>
+                    </div>
+                    <div style="display: inline-block; margin-left: 0.5ch">
+                        <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
+                    </div>
+                </div>
+                <!--</BETA>-->
+            </li>
+        </ul>
+    </div>
+
+    <div class="horizontal-padding-container fade-in-early bottom-margin">
+        <p class="big" style="display: inline-block;">1.8.1</p>
         <p class="small">27 maja 2022</p>
         <ul>
             <li>Dodano nowy typ zasobu: <span class="monospace">AnimatedTexture</span></li>
@@ -187,29 +227,11 @@
             <li>Poprawiono błędy dotyczące ilości klatek na sekundę; zmieniono domyślną wartość limitu na 60FPS</li>
             <li>Naprawiono błąd <span class="monospace">NullPointerException</span> zgłaszany przez metodę <span
                     class="monospace">GlobalRect#from</span></li>
-            <li>
-                <!--<BETA>-->
-                <div style="display: flex; align-items: center;">
-                    <div>
-                        Dodano wsparcie dla obiektów <span class="monospace">MouseActionListener</span> wewnątrz obiektów <span
-                            class="monospace">CompoundEntity</span>
-                    </div>
-                    <div style="display: inline-block; margin-left: 0.5ch">
-                        <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>
-                    </div>
-                </div>
-                <!--</BETA>-->
-            </li>
         </ul>
     </div>
 
     <div class="horizontal-padding-container fade-in-early bottom-margin">
         <p class="big" style="display: inline-block;">1.8.0</p>
-        <!--<BETA>-->
-        <!--        <div style="display: inline-block;">-->
-        <!--            <div class="inline ghost-label"><span class="ghost-label-text">beta</span></div>-->
-        <!--        </div>-->
-        <!--</BETA>-->
         <p class="small">18 maja 2022</p>
         <ul>
             <li>Dodano planowane modyfikacje obiektów <span class="monospace">Scene</span> i <span class="monospace">HUD</span>
