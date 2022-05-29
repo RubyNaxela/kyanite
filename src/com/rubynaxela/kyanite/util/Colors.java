@@ -417,9 +417,9 @@ public class Colors {
     public static final Color LIGHT_STEEL_BLUE = new Color(176, 196, 222);
 
     /**
-     * <span style="background-color:#ffffe0">&nbsp;&nbsp;&nbsp;&nbsp;</span> The {@code lightlightyellow} color.
+     * <span style="background-color:#ffffe0">&nbsp;&nbsp;&nbsp;&nbsp;</span> The {@code lightyellow} color.
      */
-    public static final Color LIGHT_LIGHT_YELLOW = new Color(255, 255, 224);
+    public static final Color LIGHT_YELLOW = new Color(255, 255, 224);
 
     /**
      * <span style="background-color:#00ff00">&nbsp;&nbsp;&nbsp;&nbsp;</span> The {@code lime} color.

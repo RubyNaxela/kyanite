@@ -315,7 +315,7 @@ public class CompoundEntity implements Drawable, Transformable {
         final Vector2f localOrigin = Vec2.add(position, origin);
         return MathUtils.combineTransforms(Transform.rotate(Transform.IDENTITY, rotation, localOrigin),
                                            Transform.scale(Transform.IDENTITY, scale, localOrigin),
-                                           Transform.translate(Transform.IDENTITY, Vec2.subtract(position, origin)));
+                                           Transform.translate(Transform.IDENTITY, localOrigin));
     }
 
     /**
