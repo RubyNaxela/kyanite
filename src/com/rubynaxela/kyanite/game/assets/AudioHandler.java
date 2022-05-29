@@ -153,8 +153,10 @@ public class AudioHandler {
      * @param volume      the volume of the sound, ranging between 0 (silence) and 100 (full volume)
      * @param pitch       the pitch of the sound (values between 0 and 1 will pitch
      *                    down the sound; values greater than 1 will pitch it up)
+     * @return reference to the new sound object
      */
-    public void playSound(@NotNull Sound source, @NotNull String channelName, float volume, float pitch) {
+    public org.jsfml.audio.Sound playSound(@NotNull Sound source, @NotNull String channelName,
+                                           float volume, float pitch, boolean looping) {
         if (context.getWindow() == null)
             throw new IllegalStateException("The playSound method cannot be called before the game window is initialized");
         try {
@@ -163,7 +165,9 @@ public class AudioHandler {
             sound.setVolume(volume * channel.volume / 100f);
             sound.setPitch(pitch);
             sound.play();
+            sound.setLoop(looping);
             channel.sounds.add(sound);
+            return sound;
         } catch (NullPointerException ignored) {
             throw new NullPointerException("Channel " + channelName + " either does not exist " +
                                            "or was attempted to be used before being created");
@@ -181,9 +185,10 @@ public class AudioHandler {
      * @param pitch       the pitch of the sound (values between 0 and 1 will pitch
      *                    down the sound; values greater than 1 will pitch it up)
      */
-    public void playSound(@NotNull @AssetId String id, @NotNull String channelName, float volume, float pitch) {
+    public org.jsfml.audio.Sound playSound(@NotNull @AssetId String id, @NotNull String channelName,
+                                           float volume, float pitch, boolean looping) {
         try {
-            playSound((Sound) context.getAssetsBundle().get(id), channelName, volume, pitch);
+            return playSound((Sound) context.getAssetsBundle().get(id), channelName, volume, pitch, looping);
         } catch (NullPointerException | ClassCastException ignored) {
             throw new NullPointerException("Sound of ID " + id + " either does not exist or " +
                                            "was attempted to be used before being registered");
@@ -195,7 +200,7 @@ public class AudioHandler {
      * stopped playing. It is automatically called by the window loop.
      */
     public void gc() {
-        channels.forEach((n, ch) -> ch.sounds.removeIf(s->s.getStatus().equals(Status.STOPPED)));
+        channels.forEach((n, ch) -> ch.sounds.removeIf(s -> s.getStatus() == Status.STOPPED));
     }
 
     private static class Channel {
