@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Shape;
 import org.jsfml.graphics.Sprite;
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.core.system.Vector2f;
 
 import java.util.Collections;

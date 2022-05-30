@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.core.audio;
 
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.system.IOException;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.internal.IntercomHelper;
@@ -173,7 +173,7 @@ public class SoundBuffer extends org.jsfml.audio.SoundBuffer {
             sampleCount = ints.get(0);
             sampleRate = ints.get(1);
             channelCount = ints.get(2);
-            duration = Time.getMicroseconds(longs.get(2));
+            duration = Time.us(longs.get(2));
 
             needsSync = false;
         }

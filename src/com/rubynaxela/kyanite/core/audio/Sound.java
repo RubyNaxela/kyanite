@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.core.audio;
 
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.internal.IntercomHelper;
 import org.jsfml.internal.UnsafeOperations;
@@ -47,7 +47,7 @@ public class Sound extends org.jsfml.audio.Sound {
         nativeGetData(buffer);
 
         this.loop = (buffer.get(0) == 1);
-        this.playingOffset = Time.getMicroseconds(buffer.asLongBuffer().get(1));
+        this.playingOffset = Time.us(buffer.asLongBuffer().get(1));
     }
 
     /**

@@ -5,11 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.IntRect;
-import com.rubynaxela.kyanite.core.system.Time;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -79,24 +76,6 @@ public class Utils {
     @NotNull
     public static IntRect toIntRect(@NotNull FloatRect rect) {
         return new IntRect((int) rect.left, (int) rect.top, (int) rect.width, (int) rect.height);
-    }
-
-    /**
-     * Calls the {@code Time(long)} constructor of the {@link Time} class.
-     *
-     * @param microseconds the duration in microseconds
-     * @return a {@link Time} object with the specified duration
-     */
-    @NotNull
-    @Contract(pure = true, value = "_ -> new")
-    public static Time timeOf(long microseconds) {
-        try {
-            final Constructor<Time> constructor = Time.class.getDeclaredConstructor(long.class);
-            constructor.setAccessible(true);
-            return constructor.newInstance(microseconds);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ignored) {
-        }
-        return Time.ZERO;
     }
 
     /**

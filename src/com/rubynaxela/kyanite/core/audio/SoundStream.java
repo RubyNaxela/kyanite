@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.core.audio;
 
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 import org.jsfml.internal.Intercom;
 
 import java.nio.Buffer;
@@ -159,7 +159,7 @@ public abstract class SoundStream extends org.jsfml.audio.SoundStream {
     @Override
     @Intercom
     protected final void onSeekInternal(long time) {
-        onSeek(Time.getMicroseconds(time));
+        onSeek(Time.us(time));
     }
 
     /**

@@ -171,7 +171,8 @@ loadScripts(document, 'script');</script>
 <dd><code>moving</code> - a moving object</dd>
 <dd><code>stationary</code> - a stationary object (<a href="../game/entities/GlobalRect.html" title="class in com.rubynaxela.kyanite.game.entities"><code>GlobalRect</code></a>, <a href="../../../../org/jsfml/graphics/FloatRect.html" title="class in org.jsfml.graphics"><code>FloatRect</code></a>, <a href="../../../../org/jsfml/graphics/Shape.html" title="class in org.jsfml.graphics"><code>Shape</code></a>, or <a href="../../../../org/jsfml/graphics/Sprite.html" title="class in org.jsfml.graphics"><code>Sprite</code></a>)</dd>
 <dd><code>deltaTime</code> - the time difference between the last two scene frames
-                   (typically from the <a href="../game/entities/AnimatedEntity.html#animate(com.rubynaxela.kyanite.core.system.Time,com.rubynaxela.kyanite.core.system.Time)"><code>AnimatedEntity.animate(com.rubynaxela.kyanite.core.system.Time, com.rubynaxela.kyanite.core.system.Time)</code></a> method)</dd>
+                   (typically from the <a href="../game/entities/AnimatedEntity.html#animate(com.rubynaxela.kyanite.core.system.Time,com.rubynaxela.kyanite.core.system.Time)"><code>AnimatedEntity.animate(com.rubynaxela.kyanite.util.Time,
+        com.rubynaxela.kyanite.core.system.Time)</code></a> method)</dd>
 <dt>Returns:</dt>
 <dd>axis perpendicular to the sides that would collide with each other (the direction of ground reaction force),
  <code>null</code> if the objects would not collide, or <a href="../util/Direction.Axis.html#BOTH"><code>Direction.Axis.BOTH</code></a> if the objects are already intersecting</dd>

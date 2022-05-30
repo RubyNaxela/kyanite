@@ -1,13 +1,13 @@
 package com.rubynaxela.kyanite.system;
 
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 
 /**
  * Provides functionality for time measurement.
  */
 public final class Clock {
 
-    private final com.rubynaxela.kyanite.core.system.Clock clock;
+    private long timeStarted;
     private boolean started;
 
     /**
@@ -17,7 +17,7 @@ public final class Clock {
      *                (if {@code false}, requires calling {@link Clock#start} to start it)
      */
     public Clock(boolean started) {
-        clock = new com.rubynaxela.kyanite.core.system.Clock();
+        this.timeStarted = System.nanoTime();
         this.started = started;
     }
 
@@ -35,7 +35,7 @@ public final class Clock {
      */
     public void start() {
         if (!started) {
-            clock.restart();
+            timeStarted = System.nanoTime();
             started = true;
         } else throw new IllegalStateException("The clock has been already started");
     }
@@ -45,7 +45,7 @@ public final class Clock {
      */
     public void tryStart() {
         if (!started) {
-            clock.restart();
+            timeStarted = System.nanoTime();
             started = true;
         }
     }
@@ -53,21 +53,24 @@ public final class Clock {
     /**
      * Gets the elapsed time since the clock was created or last restarted.
      *
-     * @return the elapsed time since the clock was created or last restarted.
+     * @return the elapsed time since the clock was created or last restarted
      */
     public Time getTime() {
-        if (started) return clock.getElapsedTime();
+        if (started) return Time.us((System.nanoTime() - timeStarted) / 1000L);
         else throw new IllegalStateException("The clock has not been started");
     }
 
     /**
      * Yields the elapsed time and restarts the clock.
      *
-     * @return the elapsed time since the clock was created or last restarted.
+     * @return the elapsed time since the clock was created or last restarted
      */
     public Time restart() {
         if (started) {
-            return clock.restart();
+            final Time dt = getTime();
+            timeStarted = System.nanoTime();
+            return dt;
         } else throw new IllegalStateException("The clock has not been started");
     }
+
 }

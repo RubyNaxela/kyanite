@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.core.audio;
 
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 import org.jsfml.internal.Const;
 
 import java.io.IOException;

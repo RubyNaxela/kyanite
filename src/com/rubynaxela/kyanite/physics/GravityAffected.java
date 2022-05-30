@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Shape;
 import org.jsfml.graphics.Sprite;
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.core.system.Vector2f;
 
 /**
@@ -52,7 +52,7 @@ public interface GravityAffected extends MovingEntity {
     default boolean isOnGround(@NotNull Object ground) {
         final Vector2f velocity = getVelocity();
         setVelocity(Vec2.f(velocity.x, 1f));
-        final Direction.Axis collisionAxis = Collisions.checkAABBCollision(this, ground, Utils.timeOf(1000L));
+        final Direction.Axis collisionAxis = Collisions.checkAABBCollision(this, ground, Time.ms(1));
         setVelocity(velocity);
         return collisionAxis == Direction.Axis.Y &&
                Collisions.extractGlobalRect(this).bottom <= Collisions.extractGlobalRect(ground).top;

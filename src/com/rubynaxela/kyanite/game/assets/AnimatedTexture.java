@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.Shape;
 import org.jsfml.graphics.Sprite;
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 
 import java.util.HashMap;
 import java.util.Map;

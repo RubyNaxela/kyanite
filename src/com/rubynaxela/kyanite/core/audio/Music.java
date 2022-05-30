@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.core.audio;
 
 import com.rubynaxela.kyanite.core.NativeImplementation;
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.system.IOException;
 import org.jsfml.internal.IntercomHelper;
 import org.jsfml.internal.SFMLErrorCapture;
@@ -83,7 +83,7 @@ public class Music extends org.jsfml.audio.Music {
     private void sync() {
         final ByteBuffer buffer = IntercomHelper.getBuffer();
         nativeGetData(buffer);
-        this.duration = Time.getMicroseconds(buffer.asLongBuffer().get(0));
+        this.duration = Time.us(buffer.asLongBuffer().get(0));
         final IntBuffer intBuffer = buffer.asIntBuffer();
         setData(intBuffer.get(2), intBuffer.get(3));
     }

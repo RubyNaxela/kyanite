@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.game.assets;
 
 import com.rubynaxela.kyanite.core.audio.SoundBuffer;
-import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.game.GameContext;
 import com.rubynaxela.kyanite.util.MathUtils;
 import org.jetbrains.annotations.NotNull;
