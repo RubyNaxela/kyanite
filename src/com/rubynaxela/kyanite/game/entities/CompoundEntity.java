@@ -4,7 +4,7 @@ import com.rubynaxela.kyanite.util.MathUtils;
 import com.rubynaxela.kyanite.util.Vec2;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.*;
-import org.jsfml.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2f;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

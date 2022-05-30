@@ -1,7 +1,7 @@
 package org.jsfml.graphics;
 
 import org.jsfml.internal.IntercomHelper;
-import org.jsfml.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2f;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;

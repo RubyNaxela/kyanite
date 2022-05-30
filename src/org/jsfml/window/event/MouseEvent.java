@@ -1,6 +1,6 @@
 package org.jsfml.window.event;
 
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 /**
  * Represents generic mouse events.

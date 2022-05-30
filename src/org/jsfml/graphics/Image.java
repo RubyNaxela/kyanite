@@ -4,7 +4,7 @@ import org.jsfml.internal.IntercomHelper;
 import org.jsfml.internal.SFMLErrorCapture;
 import org.jsfml.internal.SFMLNativeObject;
 import org.jsfml.internal.StreamUtil;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

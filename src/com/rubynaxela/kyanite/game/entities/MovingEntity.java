@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Shape;
 import org.jsfml.graphics.Sprite;
-import org.jsfml.system.Time;
-import org.jsfml.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Time;
+import com.rubynaxela.kyanite.core.system.Vector2f;
 
 /**
  * Objects that implement {@code MovingEntity} are being moved automatically by the scene loop.

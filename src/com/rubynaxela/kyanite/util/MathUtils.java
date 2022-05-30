@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.Transform;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 import java.util.Random;
 

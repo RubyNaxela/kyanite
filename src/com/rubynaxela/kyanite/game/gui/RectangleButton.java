@@ -7,8 +7,8 @@ import com.rubynaxela.kyanite.util.Vec2;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RectangleShape;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 /**
  * A {@link RectangleShape} that can be given an action to execute when a mouse

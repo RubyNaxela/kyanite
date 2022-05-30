@@ -3,7 +3,7 @@ package com.rubynaxela.kyanite.util;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.IntRect;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 import java.util.ArrayList;
 import java.util.Iterator;

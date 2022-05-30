@@ -5,7 +5,7 @@ import org.jsfml.internal.IntercomHelper;
 import org.jsfml.internal.JSFMLError;
 import org.jsfml.internal.SFMLNative;
 import org.jsfml.internal.SFMLNativeObject;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 import org.jsfml.window.event.*;
 
 import java.nio.Buffer;

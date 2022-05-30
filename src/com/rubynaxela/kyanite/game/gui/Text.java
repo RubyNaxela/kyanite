@@ -1,7 +1,6 @@
 package com.rubynaxela.kyanite.game.gui;
 
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
-import com.rubynaxela.kyanite.util.Colors;
 import org.jetbrains.annotations.NotNull;
 
 /**

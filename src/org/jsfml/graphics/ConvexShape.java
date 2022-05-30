@@ -1,6 +1,6 @@
 package org.jsfml.graphics;
 
-import org.jsfml.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2f;
 
 import java.util.Objects;
 
@@ -31,7 +31,7 @@ public class ConvexShape extends Shape {
     /**
      * Constructs a new polygon from a given set of points.
      * <p/>
-     * This is equal to calling {@link ConvexShape#setPoints(org.jsfml.system.Vector2f...)}
+     * This is equal to calling {@link ConvexShape#setPoints(com.rubynaxela.kyanite.core.system.Vector2f...)}
      * directly after construction of the polygon.
      *
      * @param points the points of the polygon.
@@ -94,7 +94,7 @@ public class ConvexShape extends Shape {
      * Sets the points of the polygon.
      * <p/>
      * The use of this method equals consecutive calls of {@link ConvexShape#setPointCount(int)}
-     * and {@link ConvexShape#setPoint(int, org.jsfml.system.Vector2f)} for each point
+     * and {@link ConvexShape#setPoint(int, com.rubynaxela.kyanite.core.system.Vector2f)} for each point
      * in the given array.
      *
      * @param points the points of the polygon.

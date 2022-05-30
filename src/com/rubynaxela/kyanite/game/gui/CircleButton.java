@@ -6,7 +6,7 @@ import com.rubynaxela.kyanite.util.MathUtils;
 import com.rubynaxela.kyanite.util.Vec2;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.CircleShape;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 public class CircleButton extends CircleShape implements MouseActionListener {
 

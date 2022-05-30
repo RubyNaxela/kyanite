@@ -2,8 +2,8 @@ package org.jsfml.graphics;
 
 import org.jsfml.internal.IntercomHelper;
 import org.jsfml.internal.UnsafeOperations;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 import org.jsfml.window.ContextSettings;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.Window;

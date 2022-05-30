@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.RectangleShape;
-import org.jsfml.system.Time;
+import com.rubynaxela.kyanite.core.system.Time;
 
 import java.util.ConcurrentModificationException;
 

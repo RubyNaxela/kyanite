@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.IntRect;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 /**
  * Represents an axis-aligned rectangle using floating point coordinates. Useful when the

@@ -1,7 +1,7 @@
 package org.jsfml.graphics;
 
 import org.jsfml.internal.Const;
-import org.jsfml.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2f;
 
 /**
  * Interface for read-only views.

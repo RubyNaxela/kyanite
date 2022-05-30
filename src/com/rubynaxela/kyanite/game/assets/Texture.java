@@ -5,7 +5,7 @@ import com.rubynaxela.kyanite.util.Vec2;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.*;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

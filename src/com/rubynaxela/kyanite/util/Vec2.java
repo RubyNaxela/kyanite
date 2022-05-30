@@ -2,8 +2,8 @@ package com.rubynaxela.kyanite.util;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 /**
  * Provides aliases for {@link Vector2f}'s and {@link Vector2i}'s constructors.

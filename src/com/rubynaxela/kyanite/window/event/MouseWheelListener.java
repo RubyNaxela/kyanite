@@ -1,6 +1,5 @@
 package com.rubynaxela.kyanite.window.event;
 
-import org.jsfml.window.event.JoystickMoveEvent;
 import org.jsfml.window.event.MouseWheelEvent;
 
 import java.util.EventListener;

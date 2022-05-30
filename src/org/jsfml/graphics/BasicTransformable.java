@@ -1,6 +1,6 @@
 package org.jsfml.graphics;
 
-import org.jsfml.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2f;
 
 /**
  * Implementation of the {@link Transformable} interface.

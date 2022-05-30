@@ -4,7 +4,7 @@ import com.rubynaxela.kyanite.util.Colors;
 import com.rubynaxela.kyanite.util.Vec2;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.CircleShape;
-import org.jsfml.system.Vector2f;
+import com.rubynaxela.kyanite.core.system.Vector2f;
 
 /**
  * A small red circle that can be used to mark a position while debugging the game.

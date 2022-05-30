@@ -1,13 +1,13 @@
 package com.rubynaxela.kyanite.system;
 
-import org.jsfml.system.Time;
+import com.rubynaxela.kyanite.core.system.Time;
 
 /**
  * Provides functionality for time measurement.
  */
 public final class Clock {
 
-    private final org.jsfml.system.Clock clock;
+    private final com.rubynaxela.kyanite.core.system.Clock clock;
     private boolean started;
 
     /**
@@ -17,7 +17,7 @@ public final class Clock {
      *                (if {@code false}, requires calling {@link Clock#start} to start it)
      */
     public Clock(boolean started) {
-        clock = new org.jsfml.system.Clock();
+        clock = new com.rubynaxela.kyanite.core.system.Clock();
         this.started = started;
     }
 

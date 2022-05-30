@@ -70,6 +70,7 @@ public abstract class NativeRef<T> {
         return (ptr != 0);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void finalize() throws Throwable {
         release();

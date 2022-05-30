@@ -1,12 +1,11 @@
 package com.rubynaxela.kyanite.game.assets;
 
+import com.rubynaxela.kyanite.core.audio.SoundBuffer;
+import com.rubynaxela.kyanite.core.system.Time;
 import com.rubynaxela.kyanite.game.GameContext;
-import com.rubynaxela.kyanite.system.IOException;
 import com.rubynaxela.kyanite.util.MathUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.audio.SoundBuffer;
-import org.jsfml.audio.SoundSource;
-import org.jsfml.system.Time;
+import com.rubynaxela.kyanite.core.audio.SoundSource.Status;
 
 import java.io.File;
 import java.io.InputStream;
@@ -14,13 +13,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * A wrapper class for JSFML {@link org.jsfml.audio.Sound} objects, representing a sound asset. The source
+ * A wrapper class for JSFML {@link com.rubynaxela.kyanite.core.audio.Sound} objects, representing a sound asset. The source
  * must be the path or an {@link InputStream} to an audio file. Supported formats are: WAV, OGG/Vorbis and FLAC.
  */
 public class Sound implements Asset {
 
     private static final AudioHandler handler = GameContext.getInstance().getAudioHandler();
-    final org.jsfml.audio.Sound sound;
+    final com.rubynaxela.kyanite.core.audio.Sound sound;
     float volumeFactor, pitchFactor;
 
     /**
@@ -29,7 +28,7 @@ public class Sound implements Asset {
      * @param path path to source audio file
      */
     public Sound(@NotNull Path path) {
-        sound = new org.jsfml.audio.Sound(load(path));
+        sound = new com.rubynaxela.kyanite.core.audio.Sound(load(path));
         volumeFactor = sound.getVolume();
         pitchFactor = sound.getPitch();
         setVolume(volumeFactor);
@@ -59,7 +58,7 @@ public class Sound implements Asset {
      * @param stream the audio data input stream
      */
     public Sound(@NotNull InputStream stream) {
-        sound = new org.jsfml.audio.Sound(load(stream));
+        sound = new com.rubynaxela.kyanite.core.audio.Sound(load(stream));
         volumeFactor = sound.getVolume();
         pitchFactor = sound.getPitch();
         setVolume(volumeFactor);
@@ -67,12 +66,8 @@ public class Sound implements Asset {
 
     private <T> SoundBuffer load(@NotNull T source) {
         final SoundBuffer buffer = new SoundBuffer();
-        try {
-            if (source instanceof final Path path) buffer.loadFromFile(path);
-            else if (source instanceof final InputStream stream) buffer.loadFromStream(stream);
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
-        }
+        if (source instanceof final Path path) buffer.loadFromFile(path);
+        else if (source instanceof final InputStream stream) buffer.loadFromStream(stream);
         return buffer;
     }
 
@@ -88,7 +83,7 @@ public class Sound implements Asset {
      * @return whether this sound is being played
      */
     public boolean isPlaying() {
-        return sound.getStatus().equals(SoundSource.Status.PLAYING);
+        return sound.getStatus().equals(Status.PLAYING);
     }
 
     /**
@@ -102,7 +97,7 @@ public class Sound implements Asset {
      * @return whether this sound is currently paused
      */
     public boolean isPaused() {
-        return sound.getStatus().equals(SoundSource.Status.PAUSED);
+        return sound.getStatus().equals(Status.PAUSED);
     }
 
     /**
@@ -174,7 +169,7 @@ public class Sound implements Asset {
         this.volumeFactor = volumeFactor;
     }
 
-    org.jsfml.audio.Sound raw() {
+    com.rubynaxela.kyanite.core.audio.Sound raw() {
         return sound;
     }
 }

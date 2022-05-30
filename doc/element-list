@@ -1,3 +1,6 @@
+com.rubynaxela.kyanite.core
+com.rubynaxela.kyanite.core.audio
+com.rubynaxela.kyanite.core.system
 com.rubynaxela.kyanite.game
 com.rubynaxela.kyanite.game.assets
 com.rubynaxela.kyanite.game.debug
@@ -9,3 +12,8 @@ com.rubynaxela.kyanite.util
 com.rubynaxela.kyanite.util.data
 com.rubynaxela.kyanite.window
 com.rubynaxela.kyanite.window.event
+org.jsfml.audio
+org.jsfml.graphics
+org.jsfml.internal
+org.jsfml.window
+org.jsfml.window.event

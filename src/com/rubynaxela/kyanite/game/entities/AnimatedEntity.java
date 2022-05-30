@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.game.entities;
 
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.system.Time;
+import com.rubynaxela.kyanite.core.system.Time;
 
 /**
  * This interface represents an entity with an animation. The animation method is called every frame.

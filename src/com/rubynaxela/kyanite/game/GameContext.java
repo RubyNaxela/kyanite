@@ -8,7 +8,7 @@ import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 import org.jsfml.window.VideoMode;
 
 import java.util.HashMap;

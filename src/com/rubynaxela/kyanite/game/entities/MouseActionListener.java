@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.game.entities;
 
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 import org.jsfml.window.event.MouseButtonEvent;
 
 /**

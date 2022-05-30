@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.IntRect;
-import org.jsfml.system.Time;
+import com.rubynaxela.kyanite.core.system.Time;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;

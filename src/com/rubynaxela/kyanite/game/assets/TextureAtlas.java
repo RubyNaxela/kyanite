@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.Image;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.TextureCreationException;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.core.system.Vector2i;
 
 import java.io.File;
 import java.io.InputStream;
