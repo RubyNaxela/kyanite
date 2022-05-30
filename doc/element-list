@@ -12,8 +12,6 @@ com.rubynaxela.kyanite.util
 com.rubynaxela.kyanite.util.data
 com.rubynaxela.kyanite.window
 com.rubynaxela.kyanite.window.event
-org.jsfml.audio
 org.jsfml.graphics
-org.jsfml.internal
 org.jsfml.window
 org.jsfml.window.event

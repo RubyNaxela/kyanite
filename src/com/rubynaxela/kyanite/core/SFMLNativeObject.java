@@ -10,14 +10,14 @@ package com.rubynaxela.kyanite.core;
 public abstract class SFMLNativeObject extends org.jsfml.internal.SFMLNativeObject {
 
     /**
-     * If this is {@code true}, the underlying object is merely "wrapped" and not "managed" by JSFML. If an object
-     * is managed by JSFML, it will be deleted using the {@code delete} operator when the Java object is finalized.
+     * If this is {@code true}, the underlying object is merely "wrapped" and not "managed" by Kyanite. If an object
+     * is managed by Kyanite, it will be deleted using the {@code delete} operator when the Java object is finalized.
      * Wrapped objects are expected to be cleaned up by SFML and will simply be abandoned upon finalization.
      */
     private boolean wrapped;
 
     /**
-     * Constructs a JSFML native object by invoking the {@link #nativeCreate()}
+     * Constructs a Kyanite native object by invoking the {@link #nativeCreate()}
      * method and retrieving a pointer to the SFML object in the JVM heap.
      */
     protected SFMLNativeObject() {
@@ -29,7 +29,7 @@ public abstract class SFMLNativeObject extends org.jsfml.internal.SFMLNativeObje
     }
 
     /**
-     * Wraps an JSFML native object around an already existing native SFML object.
+     * Wraps an Kyanite native object around an already existing native SFML object.
      *
      * @param wrap the pointer to the native SFML object in the JNI heap
      * @deprecated Use of this constructor may cause undefined behaviour and is not supported.
