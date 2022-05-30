@@ -1,8 +1,8 @@
 package org.jsfml.window;
 
-import org.jsfml.internal.Intercom;
-import org.jsfml.internal.IntercomHelper;
-import org.jsfml.internal.SFMLNative;
+import com.rubynaxela.kyanite.core.Intercom;
+import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.core.SFMLNative;
 
 import java.io.Serializable;
 import java.nio.Buffer;

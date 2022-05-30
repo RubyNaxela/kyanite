@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.audio;
 
-import org.jsfml.internal.SFMLNative;
+import com.rubynaxela.kyanite.core.SFMLNative;
 
 /**
  * Abstract base class for sound recorders, which provide functionality to capture audio data.

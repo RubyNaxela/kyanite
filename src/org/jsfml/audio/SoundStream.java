@@ -3,7 +3,7 @@ package org.jsfml.audio;
 import com.rubynaxela.kyanite.audio.SoundSource;
 import com.rubynaxela.kyanite.audio.SoundStream.Chunk;
 import com.rubynaxela.kyanite.util.Time;
-import org.jsfml.internal.Intercom;
+import com.rubynaxela.kyanite.core.Intercom;
 
 import java.nio.Buffer;
 

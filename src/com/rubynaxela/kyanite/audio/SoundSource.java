@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.math.Vector3f;
-import org.jsfml.internal.IntercomHelper;
+import com.rubynaxela.kyanite.core.IntercomHelper;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;

@@ -1,6 +1,6 @@
 package org.jsfml.window;
 
-import org.jsfml.internal.SFMLNative;
+import com.rubynaxela.kyanite.core.SFMLNative;
 
 /**
  * Provides access to the the real-time states of joysticks and gamepads.

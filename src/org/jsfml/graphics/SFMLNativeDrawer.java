@@ -1,6 +1,6 @@
 package org.jsfml.graphics;
 
-import org.jsfml.internal.IntercomHelper;
+import com.rubynaxela.kyanite.core.IntercomHelper;
 
 import java.nio.*;
 

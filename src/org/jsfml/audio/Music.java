@@ -1,8 +1,8 @@
 package org.jsfml.audio;
 
 import com.rubynaxela.kyanite.audio.SoundStream;
-import org.jsfml.internal.Intercom;
-import org.jsfml.internal.SFMLInputStream;
+import com.rubynaxela.kyanite.core.Intercom;
+import com.rubynaxela.kyanite.core.SFMLInputStream;
 
 import java.nio.Buffer;
 

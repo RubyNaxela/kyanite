@@ -1,6 +1,6 @@
 package org.jsfml.graphics;
 
-import org.jsfml.internal.Const;
+import com.rubynaxela.kyanite.core.Const;
 
 /**
  * Interface for read-only fonts.
@@ -11,7 +11,7 @@ import org.jsfml.internal.Const;
  * Note that this interface is expected to be implemented by a {@link Font}.
  * It is not recommended to be implemented outside of the JSFML API.
  *
- * @see org.jsfml.internal.Const
+ * @see Const
  */
 public interface ConstFont extends Const {
     /**

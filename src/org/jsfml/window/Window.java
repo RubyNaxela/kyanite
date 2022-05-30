@@ -1,10 +1,10 @@
 package org.jsfml.window;
 
 import org.jsfml.graphics.Image;
-import org.jsfml.internal.IntercomHelper;
-import org.jsfml.internal.JSFMLError;
-import org.jsfml.internal.SFMLNative;
-import org.jsfml.internal.SFMLNativeObject;
+import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.core.SFMLError;
+import com.rubynaxela.kyanite.core.SFMLNative;
+import com.rubynaxela.kyanite.core.SFMLNativeObject;
 import com.rubynaxela.kyanite.math.Vector2i;
 import org.jsfml.window.event.*;
 
@@ -209,9 +209,9 @@ public class Window extends SFMLNativeObject implements WindowStyle {
      */
     public void create(VideoMode mode, String title, int style, ContextSettings settings) {
         if (!isLegalWindowThread()) {
-            throw new JSFMLError("This thread is not allowed to create a window on this system. " +
-                    "If you are running on Mac OS X, you MUST run your " +
-                    "application with the -XstartOnFirstThread command line argument!");
+            throw new SFMLError("This thread is not allowed to create a window on this system. " +
+                                "If you are running on Mac OS X, you MUST run your " +
+                                "application with the -XstartOnFirstThread command line argument!");
         }
 
         if ((style & FULLSCREEN) != 0 && !mode.isValid())

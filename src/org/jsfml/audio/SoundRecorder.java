@@ -1,7 +1,7 @@
 package org.jsfml.audio;
 
-import org.jsfml.internal.Intercom;
-import org.jsfml.internal.SFMLNativeObject;
+import com.rubynaxela.kyanite.core.Intercom;
+import com.rubynaxela.kyanite.core.SFMLNativeObject;
 
 @Deprecated
 @Intercom

@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.util.Time;
-import org.jsfml.internal.Const;
+import com.rubynaxela.kyanite.core.Const;
 
 import java.io.IOException;
 import java.nio.file.Path;

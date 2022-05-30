@@ -1,9 +1,9 @@
 package org.jsfml.graphics;
 
-import org.jsfml.internal.IntercomHelper;
-import org.jsfml.internal.SFMLErrorCapture;
-import org.jsfml.internal.SFMLNativeObject;
-import org.jsfml.internal.StreamUtil;
+import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.core.SFMLErrorCapture;
+import com.rubynaxela.kyanite.core.SFMLNativeObject;
+import com.rubynaxela.kyanite.core.StreamUtil;
 import com.rubynaxela.kyanite.math.Vector2i;
 
 import java.awt.image.BufferedImage;

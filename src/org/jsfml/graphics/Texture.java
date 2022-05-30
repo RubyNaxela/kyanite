@@ -1,7 +1,8 @@
 package org.jsfml.graphics;
 
-import org.jsfml.internal.*;
+import com.rubynaxela.kyanite.core.*;
 import com.rubynaxela.kyanite.math.Vector2i;
+import com.rubynaxela.kyanite.core.SFMLNativeObject;
 import org.jsfml.window.Context;
 import org.jsfml.window.Window;
 
@@ -15,60 +16,12 @@ import java.util.Objects;
  * Represents a 2D texture stored on the graphics card for rendering.
  */
 public class Texture extends SFMLNativeObject implements ConstTexture {
+
     private static final int maximumSize;
 
     static {
         SFMLNative.loadNativeLibraries();
         maximumSize = nativeGetMaximumSize();
-    }
-
-    private static native int nativeGetMaximumSize();
-
-    /**
-     * Gets the maximum texture size supported by the current hardware.
-     *
-     * @return the maximum texture size supported by the current hardware.
-     */
-    public static int getMaximumSize() {
-        return maximumSize;
-    }
-
-    /**
-     * Enumeation of texture coordinate types that can be used for rendering.
-     */
-    public static enum CoordinateType {
-        /**
-         * Normalized OpenGL coordinates, ranging from 0 to 1.
-         */
-        NORMALIZED,
-
-        /**
-         * Pixel coordinates, ranging from 0 to the respective dimension (width or height).
-         */
-        PIXELS
-    }
-
-    private static native void nativeBind(Texture texture, int coordinateType);
-
-    /**
-     * Activates a texture for rendering with the specified coordinate type.
-     * <p/>
-     * This is required only if you wish to use JSFML textures in custom OpenGL code.
-     *
-     * @param texture        the texture to bind, or {@code null} to indicate that
-     *                       no texture is to be used..
-     * @param coordinateType the coordinate type to use.
-     */
-    public static void bind(ConstTexture texture, CoordinateType coordinateType) {
-        nativeBind((Texture) texture, coordinateType.ordinal());
-    }
-
-    /**
-     * Activates a texture for rendering, using the
-     * {@link Texture.CoordinateType#NORMALIZED} coordinate type.
-     */
-    public static void bind(ConstTexture texture) {
-        bind(texture, CoordinateType.NORMALIZED);
     }
 
     //cache
@@ -103,6 +56,40 @@ public class Texture extends SFMLNativeObject implements ConstTexture {
         updateSize();
         smooth = nativeIsSmooth();
         repeated = nativeIsRepeated();
+    }
+
+    private static native int nativeGetMaximumSize();
+
+    /**
+     * Gets the maximum texture size supported by the current hardware.
+     *
+     * @return the maximum texture size supported by the current hardware.
+     */
+    public static int getMaximumSize() {
+        return maximumSize;
+    }
+
+    private static native void nativeBind(Texture texture, int coordinateType);
+
+    /**
+     * Activates a texture for rendering with the specified coordinate type.
+     * <p/>
+     * This is required only if you wish to use JSFML textures in custom OpenGL code.
+     *
+     * @param texture        the texture to bind, or {@code null} to indicate that
+     *                       no texture is to be used..
+     * @param coordinateType the coordinate type to use.
+     */
+    public static void bind(ConstTexture texture, CoordinateType coordinateType) {
+        nativeBind((Texture) texture, coordinateType.ordinal());
+    }
+
+    /**
+     * Activates a texture for rendering, using the
+     * {@link Texture.CoordinateType#NORMALIZED} coordinate type.
+     */
+    public static void bind(ConstTexture texture) {
+        bind(texture, CoordinateType.NORMALIZED);
     }
 
     @Override
@@ -230,7 +217,7 @@ public class Texture extends SFMLNativeObject implements ConstTexture {
      * @throws TextureCreationException if the texture could not be loaded from the image.
      */
     public void loadFromImage(Image image, IntRect area)
-            throws TextureCreationException {
+    throws TextureCreationException {
 
         image.commit();
 
@@ -268,8 +255,6 @@ public class Texture extends SFMLNativeObject implements ConstTexture {
         return size;
     }
 
-    private native long nativeCopyToImage();
-
     @Override
     public Image copyToImage() {
         Image image = new Image(nativeCopyToImage());
@@ -277,6 +262,42 @@ public class Texture extends SFMLNativeObject implements ConstTexture {
 
         return image;
     }
+
+    @Override
+    public boolean isSmooth() {
+        return smooth;
+    }
+
+    /**
+     * Enables or disables the smooth filter.
+     * <p/>
+     * The smooth filter is disabled by default.
+     *
+     * @param smooth {@code true} to enable, {@code false} to disable.
+     */
+    public void setSmooth(boolean smooth) {
+        nativeSetSmooth(smooth);
+        this.smooth = smooth;
+    }
+
+    @Override
+    public boolean isRepeated() {
+        return repeated;
+    }
+
+    /**
+     * Enables or disables texture repeating.
+     * <p/>
+     * Texture repeating is disabled by default.
+     *
+     * @param repeated {@code true} to enable, {@code false} to disable.
+     */
+    public void setRepeated(boolean repeated) {
+        nativeSetRepeated(repeated);
+        this.repeated = repeated;
+    }
+
+    private native long nativeCopyToImage();
 
     private native void nativeUpdate(Image image, int x, int y);
 
@@ -316,43 +337,24 @@ public class Texture extends SFMLNativeObject implements ConstTexture {
 
     private native void nativeSetSmooth(boolean smooth);
 
-    /**
-     * Enables or disables the smooth filter.
-     * <p/>
-     * The smooth filter is disabled by default.
-     *
-     * @param smooth {@code true} to enable, {@code false} to disable.
-     */
-    public void setSmooth(boolean smooth) {
-        nativeSetSmooth(smooth);
-        this.smooth = smooth;
-    }
-
     private native boolean nativeIsSmooth();
-
-    @Override
-    public boolean isSmooth() {
-        return smooth;
-    }
 
     private native void nativeSetRepeated(boolean repeated);
 
-    /**
-     * Enables or disables texture repeating.
-     * <p/>
-     * Texture repeating is disabled by default.
-     *
-     * @param repeated {@code true} to enable, {@code false} to disable.
-     */
-    public void setRepeated(boolean repeated) {
-        nativeSetRepeated(repeated);
-        this.repeated = repeated;
-    }
-
     private native boolean nativeIsRepeated();
 
-    @Override
-    public boolean isRepeated() {
-        return repeated;
+    /**
+     * Enumeation of texture coordinate types that can be used for rendering.
+     */
+    public static enum CoordinateType {
+        /**
+         * Normalized OpenGL coordinates, ranging from 0 to 1.
+         */
+        NORMALIZED,
+
+        /**
+         * Pixel coordinates, ranging from 0 to the respective dimension (width or height).
+         */
+        PIXELS
     }
 }

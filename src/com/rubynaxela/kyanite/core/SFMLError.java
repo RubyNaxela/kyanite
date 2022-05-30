@@ -1,12 +1,16 @@
-package org.jsfml.internal;
+package com.rubynaxela.kyanite.core;
+
+import org.jetbrains.annotations.Nullable;
+
+import java.io.Serial;
 
 /**
- * Error class for severe JSFML faults.
- * <p/>
- * An error of this type is raised either if JSFML tried to load its native libraries on an unsupported
- * platform, or if a platform-specific requirement is violated.
+ * Error class for severe SFML faults. An error of this type is raised either if Kyanite tried to load
+ * its native libraries on an unsupported platform, or if a platform-specific requirement is violated.
  */
-public class JSFMLError extends Error {
+public class SFMLError extends Error {
+
+    @Serial
     private static final long serialVersionUID = -8281004117329430845L;
 
     /**
@@ -14,7 +18,7 @@ public class JSFMLError extends Error {
      *
      * @param message the exception's message text.
      */
-    public JSFMLError(String message) {
+    public SFMLError(@Nullable String message) {
         super(message);
     }
 
@@ -24,7 +28,7 @@ public class JSFMLError extends Error {
      * @param message the exception's message text.
      * @param cause   the exception's cause, or {@code null} if no cause is known or available.
      */
-    public JSFMLError(String message, Throwable cause) {
+    public SFMLError(@Nullable String message, @Nullable Throwable cause) {
         super(message, cause);
     }
 }

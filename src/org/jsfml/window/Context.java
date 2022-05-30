@@ -1,7 +1,7 @@
 package org.jsfml.window;
 
-import org.jsfml.internal.SFMLNative;
-import org.jsfml.internal.SFMLNativeObject;
+import com.rubynaxela.kyanite.core.SFMLNative;
+import com.rubynaxela.kyanite.core.SFMLNativeObject;
 
 /**
  * Holds a valid OpenGL drawing context.

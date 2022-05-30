@@ -1,6 +1,6 @@
 package org.jsfml.audio;
 
-import org.jsfml.internal.Intercom;
+import com.rubynaxela.kyanite.core.Intercom;
 
 @Deprecated
 @Intercom

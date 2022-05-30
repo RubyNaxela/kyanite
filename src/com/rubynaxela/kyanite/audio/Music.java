@@ -3,9 +3,9 @@ package com.rubynaxela.kyanite.audio;
 import com.rubynaxela.kyanite.util.NativeImplementation;
 import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.system.IOException;
-import org.jsfml.internal.IntercomHelper;
-import org.jsfml.internal.SFMLErrorCapture;
-import org.jsfml.internal.SFMLInputStream;
+import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.core.SFMLErrorCapture;
+import com.rubynaxela.kyanite.core.SFMLInputStream;
 
 import java.io.InputStream;
 import java.nio.ByteBuffer;

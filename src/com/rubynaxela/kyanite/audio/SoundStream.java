@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.util.Time;
-import org.jsfml.internal.Intercom;
+import com.rubynaxela.kyanite.core.Intercom;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;

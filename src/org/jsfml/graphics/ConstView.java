@@ -1,6 +1,6 @@
 package org.jsfml.graphics;
 
-import org.jsfml.internal.Const;
+import com.rubynaxela.kyanite.core.Const;
 import com.rubynaxela.kyanite.math.Vector2f;
 
 /**

@@ -2,8 +2,8 @@ package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.util.Time;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.internal.IntercomHelper;
-import org.jsfml.internal.UnsafeOperations;
+import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.core.UnsafeOperations;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;

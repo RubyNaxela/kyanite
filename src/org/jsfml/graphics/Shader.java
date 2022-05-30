@@ -1,6 +1,8 @@
 package org.jsfml.graphics;
 
-import org.jsfml.internal.*;
+import com.rubynaxela.kyanite.core.*;
+import com.rubynaxela.kyanite.core.SFMLErrorCapture;
+import com.rubynaxela.kyanite.core.SFMLNative;
 import com.rubynaxela.kyanite.math.Vector2f;
 import com.rubynaxela.kyanite.math.Vector3f;
 

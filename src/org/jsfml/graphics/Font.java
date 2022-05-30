@@ -1,6 +1,8 @@
 package org.jsfml.graphics;
 
-import org.jsfml.internal.*;
+import com.rubynaxela.kyanite.core.*;
+import com.rubynaxela.kyanite.core.NativeRef;
+import com.rubynaxela.kyanite.core.SFMLErrorCapture;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,7 +86,7 @@ public class Font extends SFMLNativeObject implements ConstFont {
         memoryRef.initialize(StreamUtil.readStream(in));
         final String msg = SFMLErrorCapture.finish();
 
-        if (!memoryRef.hasNonZeroPointer()) {
+        if (memoryRef.isNull()) {
             throw new IOException(msg);
         }
     }
@@ -100,7 +102,7 @@ public class Font extends SFMLNativeObject implements ConstFont {
         memoryRef.initialize(StreamUtil.readFile(path));
         final String msg = SFMLErrorCapture.finish();
 
-        if (!memoryRef.hasNonZeroPointer()) {
+        if (memoryRef.isNull()) {
             throw new IOException(msg);
         }
     }

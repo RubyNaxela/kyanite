@@ -3,10 +3,10 @@ package com.rubynaxela.kyanite.audio;
 import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.system.IOException;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.internal.IntercomHelper;
-import org.jsfml.internal.SFMLErrorCapture;
-import org.jsfml.internal.StreamUtil;
-import org.jsfml.internal.UnsafeOperations;
+import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.core.SFMLErrorCapture;
+import com.rubynaxela.kyanite.core.StreamUtil;
+import com.rubynaxela.kyanite.core.UnsafeOperations;
 
 import java.io.InputStream;
 import java.nio.*;
@@ -55,20 +55,16 @@ public class SoundBuffer extends org.jsfml.audio.SoundBuffer {
      * @throws IOException in case an I/O error occurs.
      */
     public void loadFromStream(@NotNull InputStream in) throws IOException {
-        try {
-            SFMLErrorCapture.start();
-            final boolean success = nativeLoadFromMemory(StreamUtil.readStream(in));
-            final String err = SFMLErrorCapture.finish();
+        SFMLErrorCapture.start();
+        final boolean success = nativeLoadFromMemory(StreamUtil.readStream(in));
+        final String err = SFMLErrorCapture.finish();
 
-            if (!success) {
-                throw new IOException(err);
-            }
-
-            needsSync = true;
-            samplesNeedSync = true;
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
+        if (!success) {
+            throw new IOException(err);
         }
+
+        needsSync = true;
+        samplesNeedSync = true;
     }
 
     /**
@@ -78,18 +74,14 @@ public class SoundBuffer extends org.jsfml.audio.SoundBuffer {
      * @throws IOException in case an I/O error occurs
      */
     public void loadFromFile(@NotNull Path path) throws IOException {
-        try {
-            SFMLErrorCapture.start();
-            final boolean success = nativeLoadFromMemory(StreamUtil.readFile(path));
-            final String err = SFMLErrorCapture.finish();
+        SFMLErrorCapture.start();
+        final boolean success = nativeLoadFromMemory(StreamUtil.readFile(path));
+        final String err = SFMLErrorCapture.finish();
 
-            if (!success) throw new IOException(err);
+        if (!success) throw new IOException(err);
 
-            needsSync = true;
-            samplesNeedSync = true;
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
-        }
+        needsSync = true;
+        samplesNeedSync = true;
     }
 
     /**

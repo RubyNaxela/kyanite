@@ -2,7 +2,7 @@ package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.math.Vector3f;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.internal.SFMLNative;
+import com.rubynaxela.kyanite.core.SFMLNative;
 
 /**
  * Represents the point in the scene from where all the sounds are heard and provides funcionality to modify it. Modifying
