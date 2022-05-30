@@ -3,8 +3,8 @@ package org.jsfml.graphics;
 import com.rubynaxela.kyanite.core.*;
 import com.rubynaxela.kyanite.math.Vector2i;
 import com.rubynaxela.kyanite.core.SFMLNativeObject;
-import org.jsfml.window.Context;
-import org.jsfml.window.Window;
+import com.rubynaxela.kyanite.window.Context;
+import com.rubynaxela.kyanite.window.BasicWindow;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -313,7 +313,7 @@ public class Texture extends SFMLNativeObject implements ConstTexture {
         nativeUpdate(image, x, y);
     }
 
-    private native void nativeUpdate(Window window, int x, int y);
+    private native void nativeUpdate(BasicWindow window, int x, int y);
 
     /**
      * Updates a part of the texture from the contents of a window.
@@ -322,7 +322,7 @@ public class Texture extends SFMLNativeObject implements ConstTexture {
      * @param x      the X offset inside the texture.
      * @param y      the Y offset inside the texture.
      */
-    public void update(Window window, int x, int y) {
+    public void update(BasicWindow window, int x, int y) {
         nativeUpdate(Objects.requireNonNull(window), x, y);
     }
 
@@ -331,7 +331,7 @@ public class Texture extends SFMLNativeObject implements ConstTexture {
      *
      * @param window the window to update from.
      */
-    public final void update(Window window) {
+    public final void update(BasicWindow window) {
         update(window, 0, 0);
     }
 

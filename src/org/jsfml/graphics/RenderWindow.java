@@ -4,23 +4,24 @@ import com.rubynaxela.kyanite.core.IntercomHelper;
 import com.rubynaxela.kyanite.core.UnsafeOperations;
 import com.rubynaxela.kyanite.math.Vector2f;
 import com.rubynaxela.kyanite.math.Vector2i;
-import org.jsfml.window.ContextSettings;
-import org.jsfml.window.VideoMode;
-import org.jsfml.window.Window;
+import org.jetbrains.annotations.NotNull;
+import com.rubynaxela.kyanite.window.ContextSettings;
+import com.rubynaxela.kyanite.window.VideoMode;
+import com.rubynaxela.kyanite.window.BasicWindow;
 
 import java.util.Objects;
 
 /**
  * Provides a window that can serve as a target for 2D drawing.
  */
-public class RenderWindow extends Window implements RenderTarget {
+public class RenderWindow extends BasicWindow implements RenderTarget {
     private ConstView defaultView = null;
     private ConstView view = null;
 
     /**
      * Constructs a new render window without actually creating (opening) it.
      *
-     * @see RenderWindow#create(org.jsfml.window.VideoMode, String, int, org.jsfml.window.ContextSettings)
+     * @see RenderWindow#create(VideoMode, String, int, ContextSettings)
      */
     public RenderWindow() {
         super();
@@ -42,7 +43,7 @@ public class RenderWindow extends Window implements RenderTarget {
      * @param title    the window title.
      * @param style    the window style.
      * @param settings the settings for the OpenGL context.
-     * @see #create(org.jsfml.window.VideoMode, String, int, org.jsfml.window.ContextSettings)
+     * @see #create(VideoMode, String, int, ContextSettings)
      */
     public RenderWindow(VideoMode mode, String title, int style, ContextSettings settings) {
         this();
@@ -55,7 +56,7 @@ public class RenderWindow extends Window implements RenderTarget {
      * @param mode  the video mode to use for rendering.
      * @param title the window title.
      * @param style the window style.
-     * @see #create(org.jsfml.window.VideoMode, String, int)
+     * @see #create(VideoMode, String, int)
      */
     public RenderWindow(VideoMode mode, String title, int style) {
         this();
@@ -89,7 +90,7 @@ public class RenderWindow extends Window implements RenderTarget {
     protected native void nativeDelete();
 
     @Override
-    public void create(VideoMode mode, String title, int style, ContextSettings settings) {
+    public void create(@NotNull VideoMode mode, @NotNull String title, int style, @NotNull ContextSettings settings) {
         super.create(mode, title, style, settings);
 
         defaultView = new View(nativeGetDefaultView());
@@ -105,7 +106,7 @@ public class RenderWindow extends Window implements RenderTarget {
      * Copies the current contents of the window to an image.
      * <p/>
      * This is a slow operation and should be used to take screenshots, not to re-use
-     * resulting image as a texture. For that, use {@link Texture#update(org.jsfml.window.Window)}
+     * resulting image as a texture. For that, use {@link Texture#update(BasicWindow)}
      * or a {@link RenderTexture} instead.
      *
      * @return the image with the current contents of the window.

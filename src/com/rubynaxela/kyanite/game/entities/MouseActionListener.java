@@ -2,7 +2,7 @@ package com.rubynaxela.kyanite.game.entities;
 
 import org.jetbrains.annotations.NotNull;
 import com.rubynaxela.kyanite.math.Vector2i;
-import org.jsfml.window.event.MouseButtonEvent;
+import com.rubynaxela.kyanite.window.event.MouseButtonEvent;
 
 /**
  * This interface serves the purpose of simplifying the handling of actions triggered by the mouse buttons.

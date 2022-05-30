@@ -1,10 +1,10 @@
 package com.rubynaxela.kyanite.window.event;
 
-import org.jsfml.window.event.JoystickMoveEvent;
+import com.rubynaxela.kyanite.window.Window;
 
 /**
  * The listener interface for receiving the joystick movement event. To add a {@code JoystickListener}, call the
- * {@link com.rubynaxela.kyanite.window.Window#addJoystickListener} with the parameter of an object implementing
+ * {@link Window#addJoystickListener} with the parameter of an object implementing
  * this interface. When a joystick movement event occurs, that object's {@code joystickMoved} method is invoked.
  *
  * @see JoystickMoveEvent

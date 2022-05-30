@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.rubynaxela.kyanite.math.Vector2i;
-import org.jsfml.window.VideoMode;
+import com.rubynaxela.kyanite.window.VideoMode;
 
 import java.util.HashMap;
 import java.util.Map;

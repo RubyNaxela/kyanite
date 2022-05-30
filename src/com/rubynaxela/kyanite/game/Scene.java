@@ -16,7 +16,7 @@ import org.jsfml.graphics.Drawable;
 import java.util.ConcurrentModificationException;
 
 /**
- * Provides a scene that can be given a custom behavior and displayed on a {@link com.rubynaxela.kyanite.window.Window}.
+ * Provides a scene that can be given a custom behavior and displayed on a {@link Window}.
  */
 public abstract class Scene extends RenderLayer {
 

@@ -14,4 +14,3 @@ com.rubynaxela.kyanite.window
 com.rubynaxela.kyanite.window.event
 org.jsfml.graphics
 org.jsfml.window
-org.jsfml.window.event
