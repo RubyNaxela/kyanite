@@ -1,6 +1,6 @@
 package org.jsfml.audio;
 
-import com.rubynaxela.kyanite.core.audio.SoundRecorder;
+import com.rubynaxela.kyanite.audio.SoundRecorder;
 import org.jsfml.internal.Intercom;
 
 @Deprecated

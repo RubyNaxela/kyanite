@@ -1,4 +1,4 @@
-package com.rubynaxela.kyanite.core.audio;
+package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.util.Time;
 import org.jsfml.internal.Const;

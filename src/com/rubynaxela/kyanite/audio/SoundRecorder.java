@@ -1,4 +1,4 @@
-package com.rubynaxela.kyanite.core.audio;
+package com.rubynaxela.kyanite.audio;
 
 import org.jsfml.internal.SFMLNative;
 

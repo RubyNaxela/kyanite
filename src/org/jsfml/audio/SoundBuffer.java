@@ -1,6 +1,6 @@
 package org.jsfml.audio;
 
-import com.rubynaxela.kyanite.core.audio.ConstSoundBuffer;
+import com.rubynaxela.kyanite.audio.ConstSoundBuffer;
 import org.jsfml.internal.Intercom;
 import org.jsfml.internal.SFMLNativeObject;
 

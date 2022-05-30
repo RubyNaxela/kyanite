@@ -1,11 +1,11 @@
 package com.rubynaxela.kyanite.game.assets;
 
-import com.rubynaxela.kyanite.core.audio.SoundBuffer;
+import com.rubynaxela.kyanite.audio.SoundBuffer;
 import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.game.GameContext;
 import com.rubynaxela.kyanite.util.MathUtils;
 import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.core.audio.SoundSource.Status;
+import com.rubynaxela.kyanite.audio.SoundSource.Status;
 
 import java.io.File;
 import java.io.InputStream;
@@ -13,13 +13,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * A wrapper class for JSFML {@link com.rubynaxela.kyanite.core.audio.Sound} objects, representing a sound asset. The source
+ * A wrapper class for JSFML {@link com.rubynaxela.kyanite.audio.Sound} objects, representing a sound asset. The source
  * must be the path or an {@link InputStream} to an audio file. Supported formats are: WAV, OGG/Vorbis and FLAC.
  */
 public class Sound implements Asset {
 
     private static final AudioHandler handler = GameContext.getInstance().getAudioHandler();
-    final com.rubynaxela.kyanite.core.audio.Sound sound;
+    final com.rubynaxela.kyanite.audio.Sound sound;
     float volumeFactor, pitchFactor;
 
     /**
@@ -28,7 +28,7 @@ public class Sound implements Asset {
      * @param path path to source audio file
      */
     public Sound(@NotNull Path path) {
-        sound = new com.rubynaxela.kyanite.core.audio.Sound(load(path));
+        sound = new com.rubynaxela.kyanite.audio.Sound(load(path));
         volumeFactor = sound.getVolume();
         pitchFactor = sound.getPitch();
         setVolume(volumeFactor);
@@ -58,7 +58,7 @@ public class Sound implements Asset {
      * @param stream the audio data input stream
      */
     public Sound(@NotNull InputStream stream) {
-        sound = new com.rubynaxela.kyanite.core.audio.Sound(load(stream));
+        sound = new com.rubynaxela.kyanite.audio.Sound(load(stream));
         volumeFactor = sound.getVolume();
         pitchFactor = sound.getPitch();
         setVolume(volumeFactor);
@@ -169,7 +169,7 @@ public class Sound implements Asset {
         this.volumeFactor = volumeFactor;
     }
 
-    com.rubynaxela.kyanite.core.audio.Sound raw() {
+    com.rubynaxela.kyanite.audio.Sound raw() {
         return sound;
     }
 }

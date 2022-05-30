@@ -1,4 +1,4 @@
-package com.rubynaxela.kyanite.core.audio;
+package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.math.Vector3f;
 import org.jsfml.internal.IntercomHelper;
@@ -141,7 +141,7 @@ public abstract class SoundSource extends org.jsfml.audio.SoundSource {
     }
 
     /**
-     * Gets the sound's minimum distance from the {@link com.rubynaxela.kyanite.core.audio.Listener} before attenuation sets in.
+     * Gets the sound's minimum distance from the {@link Listener} before attenuation sets in.
      *
      * @return the sound's minimum distance before attenuation sets in
      * @see SoundSource#setMinDistance(float)

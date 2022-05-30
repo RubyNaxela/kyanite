@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.game.assets;
 
-import com.rubynaxela.kyanite.core.audio.SoundSource.Status;
+import com.rubynaxela.kyanite.audio.SoundSource.Status;
 import com.rubynaxela.kyanite.game.GameContext;
 import com.rubynaxela.kyanite.util.AssetId;
 import com.rubynaxela.kyanite.util.MathUtils;
@@ -30,7 +30,7 @@ public class AudioHandler {
      */
     public void pauseAllPlayingSounds() {
         globalSounds.stream().filter(Sound::isPlaying).forEach(Sound::pause);
-        channels.forEach((n, channel) -> channel.sounds.forEach(com.rubynaxela.kyanite.core.audio.Sound::pause));
+        channels.forEach((n, channel) -> channel.sounds.forEach(com.rubynaxela.kyanite.audio.Sound::pause));
     }
 
     /**
@@ -39,7 +39,7 @@ public class AudioHandler {
      */
     public void pauseAllPlayingSounds(@NotNull String channelName) {
         try {
-            channels.get(channelName).sounds.forEach(com.rubynaxela.kyanite.core.audio.Sound::pause);
+            channels.get(channelName).sounds.forEach(com.rubynaxela.kyanite.audio.Sound::pause);
         } catch (NullPointerException ignored) {
             throw new NullPointerException("Channel " + channelName + " either does not exist " +
                                            "or was attempted to be used before being created");
@@ -51,7 +51,7 @@ public class AudioHandler {
      */
     public void resumeAllPausedSounds() {
         globalSounds.stream().filter(Sound::isPaused).forEach(Sound::play);
-        channels.forEach((n, channel) -> channel.sounds.forEach(com.rubynaxela.kyanite.core.audio.Sound::play));
+        channels.forEach((n, channel) -> channel.sounds.forEach(com.rubynaxela.kyanite.audio.Sound::play));
     }
 
     /**
@@ -59,7 +59,7 @@ public class AudioHandler {
      */
     public void resumeAllPausedSounds(@NotNull String channelName) {
         try {
-            channels.get(channelName).sounds.forEach(com.rubynaxela.kyanite.core.audio.Sound::play);
+            channels.get(channelName).sounds.forEach(com.rubynaxela.kyanite.audio.Sound::play);
         } catch (NullPointerException ignored) {
             throw new NullPointerException("Channel " + channelName + " either does not exist " +
                                            "or was attempted to be used before being created");
@@ -72,7 +72,7 @@ public class AudioHandler {
     public void stopAllSounds() {
         globalSounds.forEach(Sound::stop);
         channels.forEach((n, channel) -> {
-            channel.sounds.forEach(com.rubynaxela.kyanite.core.audio.Sound::stop);
+            channel.sounds.forEach(com.rubynaxela.kyanite.audio.Sound::stop);
             channel.sounds.clear();
         });
     }
@@ -83,7 +83,7 @@ public class AudioHandler {
     public void stopAllSounds(@NotNull String channelName) {
         try {
             final Channel channel = channels.get(channelName);
-            channel.sounds.forEach(com.rubynaxela.kyanite.core.audio.Sound::stop);
+            channel.sounds.forEach(com.rubynaxela.kyanite.audio.Sound::stop);
             channel.sounds.clear();
         } catch (NullPointerException ignored) {
             throw new NullPointerException("Channel " + channelName + " either does not exist " +
@@ -155,13 +155,13 @@ public class AudioHandler {
      *                    down the sound; values greater than 1 will pitch it up)
      * @return reference to the new sound object
      */
-    public com.rubynaxela.kyanite.core.audio.Sound playSound(@NotNull Sound source, @NotNull String channelName,
-                                                             float volume, float pitch, boolean looping) {
+    public com.rubynaxela.kyanite.audio.Sound playSound(@NotNull Sound source, @NotNull String channelName,
+                                                        float volume, float pitch, boolean looping) {
         if (context.getWindow() == null)
             throw new IllegalStateException("The playSound method cannot be called before the game window is initialized");
         try {
             final Channel channel = channels.get(channelName);
-            final com.rubynaxela.kyanite.core.audio.Sound sound = new com.rubynaxela.kyanite.core.audio.Sound(source.raw().getBuffer());
+            final com.rubynaxela.kyanite.audio.Sound sound = new com.rubynaxela.kyanite.audio.Sound(source.raw().getBuffer());
             sound.setVolume(volume * channel.volume / 100f);
             sound.setPitch(pitch);
             sound.play();
@@ -185,8 +185,8 @@ public class AudioHandler {
      * @param pitch       the pitch of the sound (values between 0 and 1 will pitch
      *                    down the sound; values greater than 1 will pitch it up)
      */
-    public com.rubynaxela.kyanite.core.audio.Sound playSound(@NotNull @AssetId String id, @NotNull String channelName,
-                                                             float volume, float pitch, boolean looping) {
+    public com.rubynaxela.kyanite.audio.Sound playSound(@NotNull @AssetId String id, @NotNull String channelName,
+                                                        float volume, float pitch, boolean looping) {
         try {
             return playSound((Sound) context.getAssetsBundle().get(id), channelName, volume, pitch, looping);
         } catch (NullPointerException | ClassCastException ignored) {
@@ -205,7 +205,7 @@ public class AudioHandler {
 
     private static class Channel {
 
-        List<com.rubynaxela.kyanite.core.audio.Sound> sounds = new LinkedList<>();
+        List<com.rubynaxela.kyanite.audio.Sound> sounds = new LinkedList<>();
         float volume = 100f;
     }
 }

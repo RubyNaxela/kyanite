@@ -1,4 +1,4 @@
 /**
  * Contains classes related to audio playback and recording.
  */
-package com.rubynaxela.kyanite.core.audio;
+package com.rubynaxela.kyanite.audio;

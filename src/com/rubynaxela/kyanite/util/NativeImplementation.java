@@ -1,4 +1,4 @@
-package com.rubynaxela.kyanite.core;
+package com.rubynaxela.kyanite.util;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;

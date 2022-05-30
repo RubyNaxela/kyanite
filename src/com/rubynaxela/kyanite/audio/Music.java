@@ -1,6 +1,6 @@
-package com.rubynaxela.kyanite.core.audio;
+package com.rubynaxela.kyanite.audio;
 
-import com.rubynaxela.kyanite.core.NativeImplementation;
+import com.rubynaxela.kyanite.util.NativeImplementation;
 import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.system.IOException;
 import org.jsfml.internal.IntercomHelper;
@@ -39,7 +39,7 @@ public class Music extends org.jsfml.audio.Music {
 
     @NativeImplementation
     @Override
-    protected final Chunk onGetData() {
+    protected final SoundStream.Chunk onGetData() {
         return null;
     }
 

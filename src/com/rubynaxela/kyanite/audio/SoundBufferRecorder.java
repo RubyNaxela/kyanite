@@ -1,6 +1,6 @@
-package com.rubynaxela.kyanite.core.audio;
+package com.rubynaxela.kyanite.audio;
 
-import com.rubynaxela.kyanite.core.NativeImplementation;
+import com.rubynaxela.kyanite.util.NativeImplementation;
 
 /**
  * A {@code SoundRecorder} which stores captured audio data into a {@code SoundBuffer}.
