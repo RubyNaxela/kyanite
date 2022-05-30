@@ -1,6 +1,6 @@
 package org.jsfml.graphics;
 
-import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2f;
 
 import java.util.ArrayList;
 

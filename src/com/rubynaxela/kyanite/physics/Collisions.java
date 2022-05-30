@@ -5,7 +5,7 @@ import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
 import com.rubynaxela.kyanite.util.Direction;
 import com.rubynaxela.kyanite.util.Direction.Axis;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,7 +13,7 @@ import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Shape;
 import org.jsfml.graphics.Sprite;
 import com.rubynaxela.kyanite.util.Time;
-import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2f;
 
 import java.util.Collections;
 import java.util.List;

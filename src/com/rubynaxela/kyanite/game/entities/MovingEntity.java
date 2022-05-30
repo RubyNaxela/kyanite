@@ -2,13 +2,13 @@ package com.rubynaxela.kyanite.game.entities;
 
 import com.rubynaxela.kyanite.physics.Collisions;
 import com.rubynaxela.kyanite.util.Direction;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.Shape;
 import org.jsfml.graphics.Sprite;
 import com.rubynaxela.kyanite.util.Time;
-import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2f;
 
 /**
  * Objects that implement {@code MovingEntity} are being moved automatically by the scene loop.

@@ -6,7 +6,7 @@ import com.rubynaxela.kyanite.game.assets.Texture;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.CircleShape;
 import com.rubynaxela.kyanite.util.Time;
-import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2f;
 
 /**
  * Represents a temporary object displaying a sequence of textures during its lifetime.

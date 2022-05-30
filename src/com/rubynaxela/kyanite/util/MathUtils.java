@@ -1,13 +1,14 @@
 package com.rubynaxela.kyanite.util;
 
 import com.rubynaxela.kyanite.game.entities.GlobalRect;
+import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.CircleShape;
 import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.Transform;
-import com.rubynaxela.kyanite.core.system.Vector2f;
-import com.rubynaxela.kyanite.core.system.Vector2i;
+import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2i;
 
 import java.util.Random;
 

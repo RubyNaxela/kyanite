@@ -4,8 +4,8 @@ import org.jsfml.internal.IntercomHelper;
 import org.jsfml.internal.SFMLErrorCapture;
 import org.jsfml.internal.SFMLNative;
 import org.jsfml.internal.SFMLNativeObject;
-import com.rubynaxela.kyanite.core.system.Vector2f;
-import com.rubynaxela.kyanite.core.system.Vector2i;
+import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2i;
 
 import java.util.Objects;
 

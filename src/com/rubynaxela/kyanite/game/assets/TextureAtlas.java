@@ -1,12 +1,12 @@
 package com.rubynaxela.kyanite.game.assets;
 
 import com.rubynaxela.kyanite.system.IOException;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.Image;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.TextureCreationException;
-import com.rubynaxela.kyanite.core.system.Vector2i;
+import com.rubynaxela.kyanite.math.Vector2i;
 
 import java.io.File;
 import java.io.InputStream;

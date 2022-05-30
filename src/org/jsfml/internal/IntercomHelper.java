@@ -1,8 +1,8 @@
 package org.jsfml.internal;
 
 import org.jsfml.graphics.*;
-import com.rubynaxela.kyanite.core.system.Vector2f;
-import com.rubynaxela.kyanite.core.system.Vector2i;
+import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2i;
 
 import java.nio.*;
 

@@ -1,66 +1,66 @@
-package com.rubynaxela.kyanite.util;
+package com.rubynaxela.kyanite.math;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.core.system.Vector2f;
-import com.rubynaxela.kyanite.core.system.Vector2i;
 
 /**
- * Provides aliases for {@link Vector2f}'s and {@link Vector2i}'s constructors.
+ * Provides aliases for {@link Vector3f}'s and {@link Vector3i}'s constructors as well as arithmetic operations with both types.
  */
-public final class Vec2 {
+public final strictfp class Vec3 {
 
-    private Vec2() {
+    private Vec3() {
     }
 
     /**
-     * Constructs a new {@link Vector2f} with given values.
+     * Constructs a new {@link Vector3f} with given values.
      *
      * @param x the X component of this vector
      * @param y the Y component of this vector
-     * @return a new {@link Vector2f}
+     * @param z the Z component of this vector
+     * @return a new {@link Vector3f}
      */
     @NotNull
-    @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f f(@NotNull Number x, @NotNull Number y) {
-        return new Vector2f(x.floatValue(), y.floatValue());
+    @Contract(pure = true, value = "_, _, _ -> new")
+    public static Vector3f f(@NotNull Number x, @NotNull Number y, @NotNull Number z) {
+        return new Vector3f(x.floatValue(), y.floatValue(), z.floatValue());
     }
 
     /**
-     * Constructs a new {@link Vector2f} by converting a {@link Vector2i}.
+     * Constructs a new {@link Vector3f} by converting a {@link Vector3i}.
      *
      * @param vector the vector to copy the values from
-     * @return a new {@link Vector2f}
+     * @return a new {@link Vector3f}
      */
     @NotNull
     @Contract(pure = true, value = "_ -> new")
-    public static Vector2f f(@NotNull Vector2i vector) {
-        return new Vector2f(vector);
+    public static Vector3f f(@NotNull Vector3i vector) {
+        return new Vector3f(vector.x, vector.y, vector.z);
     }
 
     /**
-     * Constructs a new {@link Vector2i} with given values.
+     * Constructs a new {@link Vector3i} with given values.
      *
      * @param x the X component of this vector
      * @param y the Y component of this vector
-     * @return a new {@link Vector2i}
+     * @param z the Z component of this vector
+     * @return a new {@link Vector3i}
      */
     @NotNull
-    @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2i i(@NotNull Number x, @NotNull Number y) {
-        return new Vector2i(x.intValue(), y.intValue());
+    @Contract(pure = true, value = "_, _, _ -> new")
+    public static Vector3i i(@NotNull Number x, @NotNull Number y, @NotNull Number z) {
+        return new Vector3i(x.intValue(), y.intValue(), z.intValue());
     }
 
     /**
-     * Constructs a new {@link Vector2i} by converting a {@link Vector2f}.
+     * Constructs a new {@link Vector3i} by converting a {@link Vector3f}.
      *
      * @param vector the vector to copy the values from
-     * @return a new {@link Vector2i}
+     * @return a new {@link Vector3i}
      */
     @NotNull
     @Contract(pure = true, value = "_ -> new")
-    public static Vector2i i(@NotNull Vector2f vector) {
-        return new Vector2i(vector);
+    public static Vector3i i(@NotNull Vector3f vector) {
+        return new Vector3i((int) vector.x, (int) vector.y, (int) vector.z);
     }
 
     /**
@@ -71,8 +71,8 @@ public final class Vec2 {
      * @return a new vector, representing the sum of the two vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f add(@NotNull Vector2f vector1, @NotNull Vector2f vector2) {
-        return Vector2f.add(vector1, vector2);
+    public static Vector3f add(@NotNull Vector3f vector1, @NotNull Vector3f vector2) {
+        return new Vector3f(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z);
     }
 
     /**
@@ -83,8 +83,8 @@ public final class Vec2 {
      * @return a new vector, representing the sum of the two vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f add(@NotNull Vector2i vector1, @NotNull Vector2f vector2) {
-        return Vector2f.add(Vec2.f(vector1), vector2);
+    public static Vector3f add(@NotNull Vector3i vector1, @NotNull Vector3f vector2) {
+        return new Vector3f(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z);
     }
 
     /**
@@ -95,8 +95,8 @@ public final class Vec2 {
      * @return a new vector, representing the sum of the two vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f add(@NotNull Vector2f vector1, @NotNull Vector2i vector2) {
-        return Vector2f.add(vector1, Vec2.f(vector2));
+    public static Vector3f add(@NotNull Vector3f vector1, @NotNull Vector3i vector2) {
+        return new Vector3f(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z);
     }
 
     /**
@@ -107,8 +107,8 @@ public final class Vec2 {
      * @return a new vector, representing the sum of the two vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2i add(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
-        return Vector2i.add(vector1, vector2);
+    public static Vector3i add(@NotNull Vector3i vector1, @NotNull Vector3i vector2) {
+        return new Vector3i(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z);
     }
 
     /**
@@ -119,8 +119,8 @@ public final class Vec2 {
      * @return a new vector, representing the difference between the two vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f subtract(@NotNull Vector2f vector1, @NotNull Vector2f vector2) {
-        return Vector2f.sub(vector1, vector2);
+    public static Vector3f subtract(@NotNull Vector3f vector1, @NotNull Vector3f vector2) {
+        return new Vector3f(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z);
     }
 
     /**
@@ -131,8 +131,8 @@ public final class Vec2 {
      * @return a new vector, representing the difference between the two vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f subtract(@NotNull Vector2i vector1, @NotNull Vector2f vector2) {
-        return Vector2f.sub(Vec2.f(vector1), vector2);
+    public static Vector3f subtract(@NotNull Vector3i vector1, @NotNull Vector3f vector2) {
+        return new Vector3f(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z);
     }
 
     /**
@@ -143,8 +143,8 @@ public final class Vec2 {
      * @return a new vector, representing the difference between the two vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f subtract(@NotNull Vector2f vector1, @NotNull Vector2i vector2) {
-        return Vector2f.sub(vector1, Vec2.f(vector2));
+    public static Vector3f subtract(@NotNull Vector3f vector1, @NotNull Vector3i vector2) {
+        return new Vector3f(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z);
     }
 
     /**
@@ -155,8 +155,8 @@ public final class Vec2 {
      * @return a new vector, representing the difference between the two vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2i subtract(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
-        return Vector2i.sub(vector1, vector2);
+    public static Vector3i subtract(@NotNull Vector3i vector1, @NotNull Vector3i vector2) {
+        return new Vector3i(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z);
     }
 
     /**
@@ -167,8 +167,9 @@ public final class Vec2 {
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f multiply(@NotNull Vector2f vector, @NotNull Number scalar) {
-        return Vector2f.mul(vector, scalar.floatValue());
+    public static Vector3f multiply(@NotNull Vector3f vector, @NotNull Number scalar) {
+        final float factor = scalar.floatValue();
+        return new Vector3f(vector.x * factor, vector.y * factor, vector.z * factor);
     }
 
     /**
@@ -179,8 +180,9 @@ public final class Vec2 {
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f multiply(@NotNull Number scalar, @NotNull Vector2f vector) {
-        return Vector2f.mul(vector, scalar.floatValue());
+    public static Vector3f multiply(@NotNull Number scalar, @NotNull Vector3f vector) {
+        final float factor = scalar.floatValue();
+        return new Vector3f(vector.x * factor, vector.y * factor, vector.z * factor);
     }
 
     /**
@@ -191,8 +193,9 @@ public final class Vec2 {
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2i multiply(@NotNull Vector2i vector, @NotNull Number scalar) {
-        return Vector2i.mul(vector, scalar.intValue());
+    public static Vector3i multiply(@NotNull Vector3i vector, @NotNull Number scalar) {
+        final float factor = scalar.floatValue();
+        return new Vector3i((int) (vector.x * factor), (int) (vector.y * factor), (int) (vector.z * factor));
     }
 
     /**
@@ -203,8 +206,9 @@ public final class Vec2 {
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2i multiply(@NotNull Number scalar, @NotNull Vector2i vector) {
-        return Vector2i.mul(vector, scalar.intValue());
+    public static Vector3i multiply(@NotNull Number scalar, @NotNull Vector3i vector) {
+        final float factor = scalar.floatValue();
+        return new Vector3i((int) (vector.x * factor), (int) (vector.y * factor), (int) (vector.z * factor));
     }
 
     /**
@@ -216,8 +220,8 @@ public final class Vec2 {
      * @return the Hadamard (element-wise) product of the specified vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f multiply(@NotNull Vector2f vector1, @NotNull Vector2f vector2) {
-        return Vec2.f(vector1.x * vector2.x, vector1.y * vector2.y);
+    public static Vector3f multiply(@NotNull Vector3f vector1, @NotNull Vector3f vector2) {
+        return new Vector3f(vector1.x * vector2.x, vector1.y * vector2.y, vector1.z * vector2.z);
     }
 
     /**
@@ -229,8 +233,8 @@ public final class Vec2 {
      * @return the Hadamard (element-wise) product of the specified vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f multiply(@NotNull Vector2f vector1, @NotNull Vector2i vector2) {
-        return Vec2.f(vector1.x * vector2.x, vector1.y * vector2.y);
+    public static Vector3f multiply(@NotNull Vector3f vector1, @NotNull Vector3i vector2) {
+        return new Vector3f(vector1.x * vector2.x, vector1.y * vector2.y, vector1.z * vector2.z);
     }
 
     /**
@@ -242,8 +246,8 @@ public final class Vec2 {
      * @return the Hadamard (element-wise) product of the specified vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f multiply(@NotNull Vector2i vector1, @NotNull Vector2f vector2) {
-        return Vec2.f(vector1.x * vector2.x, vector1.y * vector2.y);
+    public static Vector3f multiply(@NotNull Vector3i vector1, @NotNull Vector3f vector2) {
+        return new Vector3f(vector1.x * vector2.x, vector1.y * vector2.y, vector1.z * vector2.z);
     }
 
     /**
@@ -255,8 +259,8 @@ public final class Vec2 {
      * @return the Hadamard (element-wise) product of the specified vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2i multiply(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
-        return Vec2.i(vector1.x * vector2.x, vector1.y * vector2.y);
+    public static Vector3i multiply(@NotNull Vector3i vector1, @NotNull Vector3i vector2) {
+        return new Vector3i(vector1.x * vector2.x, vector1.y * vector2.y, vector1.z * vector2.z);
     }
 
     /**
@@ -268,8 +272,8 @@ public final class Vec2 {
      * @return the Hadamard (element-wise) quotient of the specified vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f divide(@NotNull Vector2f vector1, @NotNull Vector2f vector2) {
-        return Vec2.f(vector1.x / vector2.x, vector1.y / vector2.y);
+    public static Vector3f divide(@NotNull Vector3f vector1, @NotNull Vector3f vector2) {
+        return new Vector3f(vector1.x / vector2.x, vector1.y / vector2.y, vector1.z / vector2.z);
     }
 
     /**
@@ -281,8 +285,8 @@ public final class Vec2 {
      * @return the Hadamard (element-wise) quotient of the specified vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f divide(@NotNull Vector2f vector1, @NotNull Vector2i vector2) {
-        return Vec2.f(vector1.x / vector2.x, vector1.y / vector2.y);
+    public static Vector3f divide(@NotNull Vector3f vector1, @NotNull Vector3i vector2) {
+        return new Vector3f(vector1.x / vector2.x, vector1.y / vector2.y, vector1.z / vector2.z);
     }
 
     /**
@@ -294,36 +298,37 @@ public final class Vec2 {
      * @return the Hadamard (element-wise) quotient of the specified vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f divide(@NotNull Vector2i vector1, @NotNull Vector2f vector2) {
-        return Vec2.f(vector1.x / vector2.x, vector1.y / vector2.y);
+    public static Vector3f divide(@NotNull Vector3i vector1, @NotNull Vector3f vector2) {
+        return new Vector3f(vector1.x / vector2.x, vector1.y / vector2.y, vector1.z / vector2.z);
     }
 
     /**
      * Computes the Hadamard (element-wise) quotient of the specified vectors, which is the result of the following expression:
      * <pre>[x1 / x2, y1 / y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
+     * Note that integer division is used. For floating-point division use {@link Vec3#divideFloat(Vector3i, Vector3i)}.
      *
      * @param vector1 the first vector
      * @param vector2 the second vector
      * @return the Hadamard (element-wise) quotient of the specified vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2i divide(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
-        return Vec2.i(vector1.x / vector2.x, vector1.y / vector2.y);
+    public static Vector3i divide(@NotNull Vector3i vector1, @NotNull Vector3i vector2) {
+        return new Vector3i(vector1.x / vector2.x, vector1.y / vector2.y, vector1.z / vector2.z);
     }
 
     /**
      * Computes the Hadamard (element-wise) quotient of the specified vectors, which is the result of the following expression:
      * <pre>[x1 / x2, y1 / y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
-     * Despite accepting two {@link Vector2i} arguments, performs mathematically correct
-     * division with the {@code float} precision and returns a {@link Vector2f}.
+     * Note that floating-point division is used. For integer division use {@link Vec3#divide(Vector3i, Vector3i)}.
      *
      * @param vector1 the first vector
      * @param vector2 the second vector
      * @return the Hadamard (element-wise) quotient of the specified vectors
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f divideFloat(@NotNull Vector2i vector1, @NotNull Vector2i vector2) {
-        return Vec2.f(1.0f * vector1.x / vector2.x, 1.0f * vector1.y / vector2.y);
+    public static Vector3i divideFloat(@NotNull Vector3i vector1, @NotNull Vector3i vector2) {
+        return new Vector3i((int) ((float) vector1.x / vector2.x), (int) ((float) vector1.y / vector2.y),
+                            (int) ((float) vector1.z / vector2.z));
     }
 
     /**
@@ -334,43 +339,36 @@ public final class Vec2 {
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f divide(@NotNull Vector2f vector, @NotNull Number scalar) {
-        return Vector2f.div(vector, scalar.floatValue());
+    public static Vector3f divide(@NotNull Vector3f vector, @NotNull Number scalar) {
+        final float factor = scalar.floatValue();
+        return new Vector3f(vector.x / factor, vector.y / factor, vector.z / factor);
     }
 
     /**
      * Multiplies a vector by the inverse of a scalar.
+     * Note that integer division is used. For floating-point division use {@link Vec3#divideFloat(Vector3i, Number)}.
      *
      * @param vector the vector
      * @param scalar the scalar to divide by
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2i divide(@NotNull Vector2i vector, @NotNull Number scalar) {
-        return Vector2i.div(vector, scalar.intValue());
+    public static Vector3i divide(@NotNull Vector3i vector, @NotNull Number scalar) {
+        final int factor = scalar.intValue();
+        return new Vector3i(vector.x / factor, vector.y / factor, vector.z / factor);
     }
 
     /**
      * Multiplies a vector by the inverse of a scalar.
+     * Note that floating-point division is used. For integer division use {@link Vec3#divide(Vector3i, Number)}.
      *
      * @param vector the vector
      * @param scalar the scalar to divide by
      * @return a new vector, representing the scaled vector
      */
     @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f divideFloat(@NotNull Vector2f vector, @NotNull Number scalar) {
-        return Vector2f.div(vector, scalar.floatValue());
-    }
-
-    /**
-     * Multiplies a vector by the inverse of a scalar.
-     *
-     * @param vector the vector
-     * @param scalar the scalar to divide by
-     * @return a new vector, representing the scaled vector
-     */
-    @Contract(pure = true, value = "_, _ -> new")
-    public static Vector2f divideFloat(@NotNull Vector2i vector, @NotNull Number scalar) {
-        return Vector2f.div(Vec2.f(vector), scalar.floatValue());
+    public static Vector3i divideFloat(@NotNull Vector3i vector, @NotNull Number scalar) {
+        final float factor = scalar.floatValue();
+        return new Vector3i((int) (vector.x / factor), (int) (vector.y / factor), (int) (vector.z / factor));
     }
 }

@@ -8,14 +8,14 @@ import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
 import com.rubynaxela.kyanite.util.Utils;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.window.event.*;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.*;
-import com.rubynaxela.kyanite.core.system.Vector2f;
-import com.rubynaxela.kyanite.core.system.Vector2i;
+import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2i;
 import org.jsfml.window.ContextSettings;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
@@ -588,7 +588,7 @@ public class Window extends RenderWindow {
                         final Vector2f size = Vec2.f(getSize());
                         final Vector2i position = getPosition();
                         setView(Utils.lambdaInit((View) getView(),
-                                                 v -> v.setSize(size), v -> v.setCenter(Vector2f.mul(size, 0.5f))));
+                                                 v -> v.setSize(size), v -> v.setCenter(Vec2.multiply(size, 0.5f))));
                         setPosition(position);
                         scene.refreshBackgroundTexture();
                         hud.refreshBackgroundTexture();

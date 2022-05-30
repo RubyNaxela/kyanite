@@ -1,6 +1,7 @@
 package org.jsfml.graphics;
 
-import com.rubynaxela.kyanite.core.system.Vector2f;
+import com.rubynaxela.kyanite.math.Vec2;
+import com.rubynaxela.kyanite.math.Vector2f;
 
 /**
  * Implementation of the {@link Transformable} interface.
@@ -101,7 +102,7 @@ public class BasicTransformable implements Transformable {
 
     @Override
     public void move(Vector2f v) {
-        setPosition(Vector2f.add(position, v));
+        setPosition(Vec2.add(position, v));
     }
 
     @Override
@@ -116,7 +117,7 @@ public class BasicTransformable implements Transformable {
 
     @Override
     public void scale(Vector2f factors) {
-        setScale(Vector2f.componentwiseMul(scale, factors));
+        setScale(Vec2.multiply(scale, factors));
     }
 
     @Override

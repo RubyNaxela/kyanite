@@ -2,7 +2,7 @@ package org.jsfml.window;
 
 import org.jsfml.internal.IntercomHelper;
 import org.jsfml.internal.SFMLNative;
-import com.rubynaxela.kyanite.core.system.Vector2i;
+import com.rubynaxela.kyanite.math.Vector2i;
 
 import java.util.Objects;
 

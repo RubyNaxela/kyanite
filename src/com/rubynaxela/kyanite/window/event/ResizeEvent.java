@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.window.event;
 
-import com.rubynaxela.kyanite.core.system.Vector2i;
+import com.rubynaxela.kyanite.math.Vector2i;
 
 /**
  * Represents the window reisze event.

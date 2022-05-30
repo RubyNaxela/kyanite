@@ -1,8 +1,8 @@
 package org.jsfml.graphics;
 
 import org.jsfml.internal.*;
-import com.rubynaxela.kyanite.core.system.Vector2f;
-import com.rubynaxela.kyanite.core.system.Vector3f;
+import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.math.Vector3f;
 
 import java.io.IOException;
 import java.io.InputStream;

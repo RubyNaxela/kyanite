@@ -1,6 +1,6 @@
 package org.jsfml.window.event;
 
-import com.rubynaxela.kyanite.core.system.Vector2i;
+import com.rubynaxela.kyanite.math.Vector2i;
 
 /**
  * Represents window resize events.

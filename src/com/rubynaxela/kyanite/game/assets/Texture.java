@@ -1,11 +1,11 @@
 package com.rubynaxela.kyanite.game.assets;
 
+import com.rubynaxela.kyanite.math.Vec2;
+import com.rubynaxela.kyanite.math.Vector2i;
 import com.rubynaxela.kyanite.system.IOException;
-import com.rubynaxela.kyanite.util.Vec2;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.*;
-import com.rubynaxela.kyanite.core.system.Vector2i;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -217,7 +217,7 @@ public class Texture implements Asset {
     public RectangleShape createRectangleShape(boolean originAtCenter) {
         final RectangleShape rectangle = new RectangleShape(Vec2.f(getSize()));
         apply(rectangle);
-        if (originAtCenter) rectangle.setOrigin(Vec2.divideFloat(getSize(), 2));
+        if (originAtCenter) rectangle.setOrigin(Vec2.divide(Vec2.f(getSize()), 2));
         return rectangle;
     }
 

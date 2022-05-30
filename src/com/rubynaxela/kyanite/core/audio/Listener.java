@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.core.audio;
 
-import com.rubynaxela.kyanite.core.system.Vector3f;
+import com.rubynaxela.kyanite.math.Vector3f;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.internal.SFMLNative;
 

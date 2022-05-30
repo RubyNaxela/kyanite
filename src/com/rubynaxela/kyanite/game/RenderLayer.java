@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.game.assets.Texture;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.NotNull;
 import org.jsfml.graphics.Color;
