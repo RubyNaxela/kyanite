@@ -1,9 +1,11 @@
 package com.rubynaxela.kyanite.game.entities;
 
-import com.rubynaxela.kyanite.util.MathUtils;
+import com.rubynaxela.kyanite.graphics.*;
+import com.rubynaxela.kyanite.graphics.Drawable;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.math.MathUtils;
 import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.*;
 import com.rubynaxela.kyanite.math.Vector2f;
 
 import java.lang.reflect.InvocationTargetException;

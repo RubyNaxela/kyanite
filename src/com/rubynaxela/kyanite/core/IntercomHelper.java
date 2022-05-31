@@ -3,10 +3,10 @@ package com.rubynaxela.kyanite.core;
 import com.rubynaxela.kyanite.math.Vector2f;
 import com.rubynaxela.kyanite.math.Vector2i;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Color;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.IntRect;
-import org.jsfml.graphics.Transform;
+import com.rubynaxela.kyanite.graphics.Color;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.math.IntRect;
+import com.rubynaxela.kyanite.graphics.Transform;
 
 import java.nio.*;
 

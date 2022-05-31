@@ -1,11 +1,11 @@
 package com.rubynaxela.kyanite.game.assets;
 
+import com.rubynaxela.kyanite.graphics.Drawable;
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.util.Utils;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Drawable;
-import org.jsfml.graphics.Shape;
-import org.jsfml.graphics.Sprite;
-import com.rubynaxela.kyanite.util.Time;
+import com.rubynaxela.kyanite.graphics.Shape;
+import com.rubynaxela.kyanite.graphics.Sprite;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +87,9 @@ public class AnimatedTexture implements Asset {
     /**
      * Updates this texture for the specified object. This method is
      * run by the scene loop and does not need to be invoked manualy.
+     *
+     * @param object      the object for which to update the texture
+     * @param elapsedTime the time since the game started
      */
     public void update(@NotNull Object object, @NotNull Time elapsedTime) {
         final int frame = (int) (elapsedTime.asSeconds() / frameDuration) % frames.length;

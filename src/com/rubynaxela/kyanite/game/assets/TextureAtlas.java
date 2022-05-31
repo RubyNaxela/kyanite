@@ -3,9 +3,9 @@ package com.rubynaxela.kyanite.game.assets;
 import com.rubynaxela.kyanite.system.IOException;
 import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Image;
-import org.jsfml.graphics.IntRect;
-import org.jsfml.graphics.TextureCreationException;
+import com.rubynaxela.kyanite.graphics.Image;
+import com.rubynaxela.kyanite.math.IntRect;
+import com.rubynaxela.kyanite.graphics.TextureCreationException;
 import com.rubynaxela.kyanite.math.Vector2i;
 
 import java.io.File;
@@ -31,20 +31,18 @@ public class TextureAtlas implements Asset {
      * Creates a new texture atlas from the source specified by the path.
      *
      * @param path path to the source image file
+     * @throws IOException in case an I/O error occurs
      */
     public TextureAtlas(@NotNull Path path) {
         atlas = new Image();
-        try {
-            atlas.loadFromFile(path);
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
-        }
+        atlas.loadFromFile(path);
     }
 
     /**
      * Creates a new texture atlas from the source specified by the path.
      *
      * @param path path to the source image file
+     * @throws IOException in case an I/O error occurs
      */
     public TextureAtlas(@NotNull String path) {
         this(Paths.get(path));
@@ -54,6 +52,7 @@ public class TextureAtlas implements Asset {
      * Creates a new texture atlas from the source image file.
      *
      * @param file the source image file
+     * @throws IOException in case an I/O error occurs
      */
     public TextureAtlas(@NotNull File file) {
         this(file.toPath());
@@ -63,14 +62,11 @@ public class TextureAtlas implements Asset {
      * Creates a new texture atlas from the input stream.
      *
      * @param stream the image data input stream
+     * @throws IOException in case an I/O error occurs
      */
     public TextureAtlas(@NotNull InputStream stream) {
         atlas = new Image();
-        try {
-            atlas.loadFromStream(stream);
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
-        }
+        atlas.loadFromStream(stream);
     }
 
     /**
@@ -88,7 +84,7 @@ public class TextureAtlas implements Asset {
         if (!cache.containsKey(bounds)) {
             if (width < 0) throw new IllegalArgumentException("endX must be greater than startX");
             if (height < 0) throw new IllegalArgumentException("endY must be greater than startY");
-            final org.jsfml.graphics.Texture target = new org.jsfml.graphics.Texture();
+            final com.rubynaxela.kyanite.graphics.Texture target = new com.rubynaxela.kyanite.graphics.Texture();
             try {
                 target.loadFromImage(atlas, bounds);
             } catch (TextureCreationException e) {

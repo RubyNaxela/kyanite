@@ -2,7 +2,7 @@ package org.jsfml.window;
 
 import com.rubynaxela.kyanite.core.SFMLNativeObject;
 import com.rubynaxela.kyanite.window.WindowStyle;
-import org.jsfml.graphics.Image;
+import com.rubynaxela.kyanite.graphics.Image;
 
 import java.nio.Buffer;
 

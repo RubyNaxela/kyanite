@@ -3,7 +3,7 @@ package com.rubynaxela.kyanite.game.assets;
 import com.rubynaxela.kyanite.audio.SoundBuffer;
 import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.game.GameContext;
-import com.rubynaxela.kyanite.util.MathUtils;
+import com.rubynaxela.kyanite.math.MathUtils;
 import org.jetbrains.annotations.NotNull;
 import com.rubynaxela.kyanite.audio.SoundSource.Status;
 

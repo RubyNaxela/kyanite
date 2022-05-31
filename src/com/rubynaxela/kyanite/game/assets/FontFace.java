@@ -2,11 +2,11 @@ package com.rubynaxela.kyanite.game.assets;
 
 import com.rubynaxela.kyanite.game.gui.Font;
 import com.rubynaxela.kyanite.game.gui.Text;
+import com.rubynaxela.kyanite.graphics.ConstFont;
 import com.rubynaxela.kyanite.system.IOException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jsfml.graphics.ConstFont;
-import org.jsfml.graphics.Texture;
+import com.rubynaxela.kyanite.graphics.Texture;
 
 import java.io.File;
 import java.io.InputStream;
@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 /**
- * A wrapper class for JSFML {@link org.jsfml.graphics.Font} objects, representing a font
+ * A wrapper class for JSFML {@link com.rubynaxela.kyanite.graphics.Font} objects, representing a font
  * face asset. The source must be the path or an {@link InputStream} to an font file. Supported
  * formats are: TrueType, Type 1, CFF, OpenType, SFNT, X11 PCF, Windows FNT, BDF, PFR and Type 42.
  *
@@ -29,9 +29,9 @@ public class FontFace implements Asset {
     public static final FontFace JETBRAINS_MONO = new FontFace(
             Objects.requireNonNull(FontFace.class.getResourceAsStream("/res/jetbrains_mono.ttf")));
 
-    private final org.jsfml.graphics.Font font;
+    private final com.rubynaxela.kyanite.graphics.Font font;
 
-    private FontFace(@NotNull org.jsfml.graphics.Font font) {
+    private FontFace(@NotNull com.rubynaxela.kyanite.graphics.Font font) {
         this.font = font;
     }
 
@@ -39,20 +39,18 @@ public class FontFace implements Asset {
      * Creates a new font from the source specified by the path.
      *
      * @param path path to the font file
+     * @throws IOException in case an I/O error occurs
      */
     public FontFace(@NotNull Path path) {
-        font = new org.jsfml.graphics.Font();
-        try {
-            font.loadFromFile(path);
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
-        }
+        font = new com.rubynaxela.kyanite.graphics.Font();
+        font.loadFromFile(path);
     }
 
     /**
      * Creates a new font from the source specified by the path.
      *
      * @param path path to the font file
+     * @throws IOException in case an I/O error occurs
      */
     public FontFace(@NotNull String path) {
         this(Paths.get(path));
@@ -62,6 +60,7 @@ public class FontFace implements Asset {
      * Creates a new font from the source font file.
      *
      * @param file the font file
+     * @throws IOException in case an I/O error occurs
      */
     public FontFace(@NotNull File file) {
         this(file.toPath());
@@ -71,14 +70,11 @@ public class FontFace implements Asset {
      * Creates a new font from the input stream.
      *
      * @param stream the font data input stream
+     * @throws IOException in case an I/O error occurs
      */
     public FontFace(@NotNull InputStream stream) {
-        font = new org.jsfml.graphics.Font();
-        try {
-            font.loadFromStream(stream);
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
-        }
+        font = new com.rubynaxela.kyanite.graphics.Font();
+        font.loadFromStream(stream);
     }
 
     /**
@@ -88,15 +84,15 @@ public class FontFace implements Asset {
     @Nullable
     public static FontFace of(@NotNull Text text) {
         final ConstFont font = text.getFont();
-        return font != null ? new FontFace((org.jsfml.graphics.Font) font) : null;
+        return font != null ? new FontFace((com.rubynaxela.kyanite.graphics.Font) font) : null;
     }
 
     /**
-     * Applies this font on the {@link org.jsfml.graphics.Text}.
+     * Applies this font on the {@link com.rubynaxela.kyanite.graphics.Text}.
      *
-     * @param text a {@link org.jsfml.graphics.Text} to apply this font on
+     * @param text a {@link com.rubynaxela.kyanite.graphics.Text} to apply this font on
      */
-    public void apply(@NotNull org.jsfml.graphics.Text text) {
+    public void apply(@NotNull com.rubynaxela.kyanite.graphics.Text text) {
         text.setFont(font);
     }
 

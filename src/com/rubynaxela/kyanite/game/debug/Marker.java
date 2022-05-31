@@ -1,9 +1,9 @@
 package com.rubynaxela.kyanite.game.debug;
 
-import com.rubynaxela.kyanite.util.Colors;
+import com.rubynaxela.kyanite.graphics.Colors;
 import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.CircleShape;
+import com.rubynaxela.kyanite.graphics.CircleShape;
 import com.rubynaxela.kyanite.math.Vector2f;
 
 /**

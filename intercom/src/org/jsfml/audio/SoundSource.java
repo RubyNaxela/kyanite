@@ -13,7 +13,6 @@ public abstract class SoundSource extends SFMLNativeObject {
     }
 
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected SoundSource(long wrap) {
         super(wrap);
     }

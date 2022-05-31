@@ -3,10 +3,8 @@ package com.rubynaxela.kyanite.window.event;
 import com.rubynaxela.kyanite.input.Joystick;
 
 /**
- * Represents joystick or gamepad axis movement events.
- * <p/>
- * Objects of this class are created for events of type
- * {@link Event.Type#JOYSTICK_MOVED}.
+ * Represents joystick or gamepad axis movement events. Objects of this
+ * class are created for events of type {@link Event.Type#JOYSTICK_MOVED}.
  */
 public final class JoystickMoveEvent extends JoystickEvent {
 

@@ -3,14 +3,15 @@ package com.rubynaxela.kyanite.game.assets;
 import com.rubynaxela.kyanite.audio.SoundSource.Status;
 import com.rubynaxela.kyanite.game.GameContext;
 import com.rubynaxela.kyanite.util.AssetId;
-import com.rubynaxela.kyanite.util.MathUtils;
+import com.rubynaxela.kyanite.math.MathUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 /**
- * A sounds management utility class. Provides functionality for stopping or pausing/resuming all sounds, setting
- * master volume and playing sounds in separate abstract channels that can have individual volume settings.
+ * A sounds management utility class. Provides functionality for stopping or pausing/resuming all sounds,
+ * setting master volume and playing sounds in separate abstract channels that can have individual
+ * volume settings, as well as collective stopping or pausing/resuming sounds from specific channels
  */
 public class AudioHandler {
 
@@ -20,6 +21,12 @@ public class AudioHandler {
     private final Object lock = new Object();
     float masterVolume = 100f;
 
+    /**
+     * Creates the {@code AudioHandler} for the game. It is created automatically before
+     * the pre-init stage of the game and there is no need to create one manually.
+     *
+     * @param context the {@code GameContext} instance
+     */
     public AudioHandler(@NotNull GameContext context) {
         this.context = context;
     }
@@ -36,6 +43,8 @@ public class AudioHandler {
     /**
      * Pauses all sounds that were playing in the specified channel. They can
      * be later resumed with the {@link AudioHandler#resumeAllPausedSounds} method.
+     *
+     * @param channelName the channel to pause
      */
     public void pauseAllPlayingSounds(@NotNull String channelName) {
         try {
@@ -56,6 +65,8 @@ public class AudioHandler {
 
     /**
      * Resumes all sounds in the specified channel.
+     *
+     * @param channelName the channel to resume
      */
     public void resumeAllPausedSounds(@NotNull String channelName) {
         try {
@@ -79,6 +90,8 @@ public class AudioHandler {
 
     /**
      * Stops all sounds that were playing in the specified channel.
+     *
+     * @param channelName the channel to stop
      */
     public void stopAllSounds(@NotNull String channelName) {
         try {
@@ -109,11 +122,19 @@ public class AudioHandler {
         globalSounds.forEach(s -> s.sound.setVolume(masterVolume * s.volumeFactor / 100f));
     }
 
+    /**
+     * Creates a new abstract audio channel through which sounds can be played, as well as collectively paused and stopped
+     *
+     * @param name the channel name (ID)
+     */
     public void createChannel(@NotNull String name) {
         channels.put(name, new Channel());
     }
 
     /**
+     * Gets the current volume of the specified channel, ranging from 0 (silence) to 100 (full volume).
+     *
+     * @param channelName the channel name
      * @return current volume setting for the specified channel
      * @throws NullPointerException if channel of the specified name does not exist
      */
@@ -131,7 +152,8 @@ public class AudioHandler {
      * volume factors of the individual sounds. The volume is a percentage and ranges
      * between 0 (silence) and 100 (full volume). The default channel volume is 100.
      *
-     * @param volume the new master volume, ranging between 0 and 100
+     * @param channelName the channel for which to set the volume
+     * @param volume      the new master volume, ranging between 0 and 100
      * @throws NullPointerException if channel of the specified name does not exist
      */
     public void setChannelVolume(@NotNull String channelName, float volume) {
@@ -153,7 +175,8 @@ public class AudioHandler {
      * @param volume      the volume of the sound, ranging between 0 (silence) and 100 (full volume)
      * @param pitch       the pitch of the sound (values between 0 and 1 will pitch
      *                    down the sound; values greater than 1 will pitch it up)
-     * @return reference to the new sound object
+     * @param looping     {@code true} to play the specified sound in a loop; {@code false} to play once
+     * @return a reference to the raw sound being played, so it can be stored to control later
      */
     public com.rubynaxela.kyanite.audio.Sound playSound(@NotNull Sound source, @NotNull String channelName,
                                                         float volume, float pitch, boolean looping) {
@@ -184,6 +207,8 @@ public class AudioHandler {
      * @param volume      the volume of the sound, ranging between 0 (silence) and 100 (full volume)
      * @param pitch       the pitch of the sound (values between 0 and 1 will pitch
      *                    down the sound; values greater than 1 will pitch it up)
+     * @param looping     {@code true} to play the specified sound in a loop; {@code false} to play once
+     * @return a reference to the raw sound being played, so it can be stored to control later
      */
     public com.rubynaxela.kyanite.audio.Sound playSound(@NotNull @AssetId String id, @NotNull String channelName,
                                                         float volume, float pitch, boolean looping) {

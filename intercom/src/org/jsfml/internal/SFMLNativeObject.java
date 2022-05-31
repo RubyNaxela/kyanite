@@ -20,6 +20,7 @@ public abstract class SFMLNativeObject {
     }
 
     protected SFMLNativeObject(long wrap) {
+        ptr = wrap;
     }
 
     @Deprecated

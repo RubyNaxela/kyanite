@@ -2,10 +2,10 @@ package com.rubynaxela.kyanite.game.gui;
 
 import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
-import com.rubynaxela.kyanite.util.MathUtils;
+import com.rubynaxela.kyanite.math.MathUtils;
 import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.CircleShape;
+import com.rubynaxela.kyanite.graphics.CircleShape;
 import com.rubynaxela.kyanite.math.Vector2i;
 
 public class CircleButton extends CircleShape implements MouseActionListener {

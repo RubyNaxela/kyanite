@@ -7,6 +7,10 @@ import com.rubynaxela.kyanite.game.assets.Icon;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
+import com.rubynaxela.kyanite.graphics.*;
+import com.rubynaxela.kyanite.graphics.Drawable;
+import com.rubynaxela.kyanite.graphics.Shape;
+import com.rubynaxela.kyanite.graphics.Sprite;
 import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.math.Vector2f;
 import com.rubynaxela.kyanite.math.Vector2i;
@@ -15,7 +19,6 @@ import com.rubynaxela.kyanite.window.event.*;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.*;
 import com.rubynaxela.kyanite.input.Mouse;
 
 import java.util.ArrayList;

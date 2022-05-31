@@ -1,11 +1,15 @@
 package com.rubynaxela.kyanite.game.assets;
 
+import com.rubynaxela.kyanite.graphics.RectangleShape;
+import com.rubynaxela.kyanite.graphics.Shape;
+import com.rubynaxela.kyanite.graphics.Sprite;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.math.IntRect;
 import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.math.Vector2i;
 import com.rubynaxela.kyanite.system.IOException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -16,24 +20,24 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 /**
- * A wrapper class for JSFML {@link org.jsfml.graphics.Texture} objects, representing a texture asset.
+ * A wrapper class for JSFML {@link com.rubynaxela.kyanite.graphics.Texture} objects, representing a texture asset.
  * The source must be the path or an {@link InputStream}to an image file. Supported formats are: BMP,
  * DDS, JPEG, PNG, TGA and PSD. If the specified image data source is not valid (for instance, if
  * if the specified file does not exist), the texture is replaced with a magenta-black checkboard.
  */
 public class Texture implements Asset {
 
-    private final org.jsfml.graphics.Texture texture;
+    private final com.rubynaxela.kyanite.graphics.Texture texture;
     private final String path;
     private boolean missing = false, suppressWarning = false;
 
-    private Texture(@NotNull org.jsfml.graphics.Texture texture, boolean suppressWarning) {
+    private Texture(@NotNull com.rubynaxela.kyanite.graphics.Texture texture, boolean suppressWarning) {
         this.texture = texture;
         this.path = this + " (created with the copy constructor)";
         this.suppressWarning = suppressWarning;
     }
 
-    Texture(@NotNull org.jsfml.graphics.Texture texture) {
+    Texture(@NotNull com.rubynaxela.kyanite.graphics.Texture texture) {
         this(texture, false);
     }
 
@@ -44,7 +48,7 @@ public class Texture implements Asset {
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public Texture(@NotNull Path path) {
-        this.texture = new org.jsfml.graphics.Texture();
+        this.texture = new com.rubynaxela.kyanite.graphics.Texture();
         this.path = path.toString();
         try {
             final File imageFile = path.toFile();
@@ -85,11 +89,11 @@ public class Texture implements Asset {
      * @param stream the image data input stream
      */
     public Texture(@NotNull InputStream stream) {
-        texture = new org.jsfml.graphics.Texture();
+        texture = new com.rubynaxela.kyanite.graphics.Texture();
         path = this + " (created with the Texture(InputStream) constructor constructor)";
         try {
             texture.loadFromStream(stream);
-        } catch (java.io.IOException | IllegalArgumentException e) {
+        } catch (IOException | IllegalArgumentException e) {
             if (!suppressWarning) e.printStackTrace();
             missingTexture();
         }
@@ -99,7 +103,7 @@ public class Texture implements Asset {
      * @return a tileable magenta-black checkboard texture typically used to indicate a texture loading error
      */
     public static Texture missing() {
-        final Texture texture = new Texture(new org.jsfml.graphics.Texture(), true);
+        final Texture texture = new Texture(new com.rubynaxela.kyanite.graphics.Texture(), true);
         texture.missingTexture();
         return texture;
     }
@@ -197,13 +201,9 @@ public class Texture implements Asset {
     }
 
     private void missingTexture() {
-        try {
-            missing = true;
-            texture.loadFromStream(Objects.requireNonNull(getClass().getResourceAsStream("/res/missing_texture.png")));
-            texture.setRepeated(true);
-        } catch (java.io.IOException ex) {
-            throw new IOException(ex);
-        }
+        missing = true;
+        texture.loadFromStream(Objects.requireNonNull(getClass().getResourceAsStream("/res/missing_texture.png")));
+        texture.setRepeated(true);
     }
 
     /**

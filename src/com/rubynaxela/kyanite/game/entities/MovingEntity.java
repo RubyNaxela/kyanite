@@ -1,12 +1,12 @@
 package com.rubynaxela.kyanite.game.entities;
 
 import com.rubynaxela.kyanite.physics.Collisions;
-import com.rubynaxela.kyanite.util.Direction;
+import com.rubynaxela.kyanite.math.Direction;
 import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.Shape;
-import org.jsfml.graphics.Sprite;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.graphics.Shape;
+import com.rubynaxela.kyanite.graphics.Sprite;
 import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.math.Vector2f;
 

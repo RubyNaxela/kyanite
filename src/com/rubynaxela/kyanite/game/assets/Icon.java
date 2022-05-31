@@ -3,7 +3,7 @@ package com.rubynaxela.kyanite.game.assets;
 import com.rubynaxela.kyanite.system.IOException;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Image;
+import com.rubynaxela.kyanite.graphics.Image;
 
 import java.io.File;
 import java.io.InputStream;
@@ -11,32 +11,30 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * A wrapper class for JSFML {@link org.jsfml.graphics.Image} objects, representing an icon asset.
+ * A wrapper class for JSFML {@link Image} objects, representing an icon asset.
  * An icon can be set as a {@link Window} icon. The source must be the path or an {@link InputStream}
  * to an image file. Supported formats are: BMP, DDS, JPEG, PNG, TGA and PSD.
  */
 public class Icon implements Asset {
 
-    private final org.jsfml.graphics.Image icon;
+    private final Image icon;
 
     /**
      * Creates a new icon from the source specified by the path.
      *
      * @param path path to the data source
+     * @throws IOException in case an I/O error occurs
      */
     public Icon(@NotNull Path path) {
         icon = new Image();
-        try {
-            icon.loadFromFile(path);
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
-        }
+        icon.loadFromFile(path);
     }
 
     /**
      * Creates a new icon from the source specified by the path.
      *
      * @param path path to the data source
+     * @throws IOException in case an I/O error occurs
      */
     public Icon(@NotNull String path) {
         this(Paths.get(path));
@@ -46,6 +44,7 @@ public class Icon implements Asset {
      * Creates a new icon from the source image file.
      *
      * @param file the data source file
+     * @throws IOException in case an I/O error occurs
      */
     public Icon(@NotNull File file) {
         this(file.toPath());
@@ -55,14 +54,11 @@ public class Icon implements Asset {
      * Creates a new icon from the input stream.
      *
      * @param stream the data source input stream
+     * @throws IOException in case an I/O error occurs
      */
     public Icon(@NotNull InputStream stream) {
         icon = new Image();
-        try {
-            icon.loadFromStream(stream);
-        } catch (java.io.IOException e) {
-            throw new IOException(e);
-        }
+        icon.loadFromStream(stream);
     }
 
     /**

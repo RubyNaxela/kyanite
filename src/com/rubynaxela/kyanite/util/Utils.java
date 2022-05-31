@@ -3,8 +3,8 @@ package com.rubynaxela.kyanite.util;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.IntRect;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.math.IntRect;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

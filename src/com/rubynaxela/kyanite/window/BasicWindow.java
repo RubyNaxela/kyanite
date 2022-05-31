@@ -7,7 +7,7 @@ import com.rubynaxela.kyanite.math.Vector2i;
 import com.rubynaxela.kyanite.window.event.*;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Image;
+import com.rubynaxela.kyanite.graphics.Image;
 import org.jsfml.window.Window;
 
 import java.nio.IntBuffer;
