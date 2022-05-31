@@ -5,14 +5,14 @@ import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
 import com.rubynaxela.kyanite.physics.GravityAffected;
-import com.rubynaxela.kyanite.util.Colors;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.graphics.Colors;
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Drawable;
-import org.jsfml.graphics.RectangleShape;
-import org.jsfml.system.Time;
+import com.rubynaxela.kyanite.graphics.Drawable;
+import com.rubynaxela.kyanite.graphics.RectangleShape;
+import com.rubynaxela.kyanite.util.Time;
 
 import java.util.ConcurrentModificationException;
 

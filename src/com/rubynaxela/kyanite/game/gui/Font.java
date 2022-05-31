@@ -3,8 +3,8 @@ package com.rubynaxela.kyanite.game.gui;
 import com.rubynaxela.kyanite.game.assets.FontFace;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Text;
-import org.jsfml.graphics.TextStyle;
+import com.rubynaxela.kyanite.graphics.Text;
+import com.rubynaxela.kyanite.graphics.TextStyle;
 
 /**
  * Holds a font face along with the font style and the character size for use in text displays.

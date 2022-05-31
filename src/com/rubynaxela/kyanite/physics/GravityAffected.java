@@ -3,15 +3,14 @@ package com.rubynaxela.kyanite.physics;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
-import com.rubynaxela.kyanite.util.Direction;
-import com.rubynaxela.kyanite.util.Utils;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.Direction;
+import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.Shape;
-import org.jsfml.graphics.Sprite;
-import org.jsfml.system.Time;
-import org.jsfml.system.Vector2f;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.graphics.Shape;
+import com.rubynaxela.kyanite.graphics.Sprite;
+import com.rubynaxela.kyanite.util.Time;
+import com.rubynaxela.kyanite.math.Vector2f;
 
 /**
  * An extension of the {@link MovingEntity} interface, providing additional functionality related to gravity.
@@ -52,7 +51,7 @@ public interface GravityAffected extends MovingEntity {
     default boolean isOnGround(@NotNull Object ground) {
         final Vector2f velocity = getVelocity();
         setVelocity(Vec2.f(velocity.x, 1f));
-        final Direction.Axis collisionAxis = Collisions.checkAABBCollision(this, ground, Utils.timeOf(1000L));
+        final Direction.Axis collisionAxis = Collisions.checkAABBCollision(this, ground, Time.ms(1));
         setVelocity(velocity);
         return collisionAxis == Direction.Axis.Y &&
                Collisions.extractGlobalRect(this).bottom <= Collisions.extractGlobalRect(ground).top;

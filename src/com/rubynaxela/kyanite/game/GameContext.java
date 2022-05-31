@@ -3,13 +3,13 @@ package com.rubynaxela.kyanite.game;
 import com.rubynaxela.kyanite.game.assets.AssetsBundle;
 import com.rubynaxela.kyanite.game.assets.AudioHandler;
 import com.rubynaxela.kyanite.system.Clock;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jsfml.system.Vector2i;
-import org.jsfml.window.VideoMode;
+import com.rubynaxela.kyanite.math.Vector2i;
+import com.rubynaxela.kyanite.window.VideoMode;
 
 import java.util.HashMap;
 import java.util.Map;

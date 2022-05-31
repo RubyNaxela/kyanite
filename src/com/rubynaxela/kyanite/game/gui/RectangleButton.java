@@ -2,13 +2,13 @@ package com.rubynaxela.kyanite.game.gui;
 
 import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
-import com.rubynaxela.kyanite.util.MathUtils;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.MathUtils;
+import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.RectangleShape;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.graphics.RectangleShape;
+import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2i;
 
 /**
  * A {@link RectangleShape} that can be given an action to execute when a mouse

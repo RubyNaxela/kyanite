@@ -14,7 +14,7 @@ public class IOException extends RuntimeException {
      *
      * @param message the detail message. The detail message is saved for later retrieval by the {@link #getMessage()} method.
      */
-    public IOException(@NotNull String message) {
+    public IOException(@Nullable String message) {
         super(message);
     }
 
@@ -26,7 +26,7 @@ public class IOException extends RuntimeException {
      * @param cause   the cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null}
      *                value is permitted, and indicates that the cause is nonexistent or unknown.)
      */
-    public IOException(@NotNull String message, @Nullable Throwable cause) {
+    public IOException(@Nullable String message, @Nullable Throwable cause) {
         super(message, cause);
     }
 

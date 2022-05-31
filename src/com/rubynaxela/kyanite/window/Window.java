@@ -7,32 +7,28 @@ import com.rubynaxela.kyanite.game.assets.Icon;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
+import com.rubynaxela.kyanite.graphics.*;
+import com.rubynaxela.kyanite.graphics.Drawable;
+import com.rubynaxela.kyanite.graphics.Shape;
+import com.rubynaxela.kyanite.graphics.Sprite;
+import com.rubynaxela.kyanite.math.Vec2;
+import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2i;
 import com.rubynaxela.kyanite.util.Utils;
-import com.rubynaxela.kyanite.util.Vec2;
 import com.rubynaxela.kyanite.window.event.*;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.*;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
-import org.jsfml.window.ContextSettings;
-import org.jsfml.window.Mouse;
-import org.jsfml.window.VideoMode;
-import org.jsfml.window.WindowStyle;
-import org.jsfml.window.event.*;
+import com.rubynaxela.kyanite.input.Mouse;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * Provides a window that can serve as a target for 2D drawing. The window
- * is already initialized with an empty scene to which {@link Drawable}
- * objects can be added. The game window should not be stored in static
- * fields because after the game restarts, the window is a new object.
+ * Provides a window that can serve as a target for 2D drawing. The window is already initialized
+ * with an empty scene to which {@link Drawable} objects can be added. The game window should
+ * not be stored in static fields because after the game restarts, the window is a new object.
  */
 public class Window extends RenderWindow {
 
@@ -111,23 +107,6 @@ public class Window extends RenderWindow {
      */
     public Window(@NotNull VideoMode videoMode, @NotNull String title, @NotNull AudioHandler audioHandler) {
         this(videoMode, title, WindowStyle.DEFAULT, audioHandler);
-    }
-
-    /**
-     * Sets the size of the window.
-     *
-     * @param size the new size of the window
-     */
-    @Override
-    public void setSize(@NotNull Vector2i size) {
-        try {
-            final Method method = org.jsfml.window.Window.class.getDeclaredMethod("nativeSetSize", int.class, int.class);
-            method.setAccessible(true);
-            method.invoke(this, size.x, size.y);
-            lastSetSize = size;
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -588,7 +567,7 @@ public class Window extends RenderWindow {
                         final Vector2f size = Vec2.f(getSize());
                         final Vector2i position = getPosition();
                         setView(Utils.lambdaInit((View) getView(),
-                                                 v -> v.setSize(size), v -> v.setCenter(Vector2f.mul(size, 0.5f))));
+                                                 v -> v.setSize(size), v -> v.setCenter(Vec2.multiply(size, 0.5f))));
                         setPosition(position);
                         scene.refreshBackgroundTexture();
                         hud.refreshBackgroundTexture();

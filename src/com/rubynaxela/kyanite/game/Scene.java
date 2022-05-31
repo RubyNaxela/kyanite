@@ -1,23 +1,22 @@
 package com.rubynaxela.kyanite.game;
 
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.game.assets.AnimatedTexture;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
 import com.rubynaxela.kyanite.physics.GravityAffected;
 import com.rubynaxela.kyanite.system.Clock;
-import com.rubynaxela.kyanite.util.Utils;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.Drawable;
-import org.jsfml.system.Time;
+import com.rubynaxela.kyanite.graphics.Drawable;
 
 import java.util.ConcurrentModificationException;
 
 /**
- * Provides a scene that can be given a custom behavior and displayed on a {@link com.rubynaxela.kyanite.window.Window}.
+ * Provides a scene that can be given a custom behavior and displayed on a {@link Window}.
  */
 public abstract class Scene extends RenderLayer {
 
@@ -162,6 +161,6 @@ public abstract class Scene extends RenderLayer {
 
     private Time estimatedTime() {
         final int framerate = getContext().getWindow().getFramerateLimit();
-        return Utils.timeOf((long) (1000000.0f / (framerate > 0 ? framerate : 60)));
+        return Time.s(1f / (framerate > 0 ? framerate : 60));
     }
 }

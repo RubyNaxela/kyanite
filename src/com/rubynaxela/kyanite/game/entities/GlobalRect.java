@@ -1,13 +1,13 @@
 package com.rubynaxela.kyanite.game.entities;
 
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.IntRect;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.math.IntRect;
+import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2i;
 
 /**
  * Represents an axis-aligned rectangle using floating point coordinates. Useful when the

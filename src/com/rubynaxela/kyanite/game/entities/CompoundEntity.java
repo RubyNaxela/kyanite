@@ -1,10 +1,12 @@
 package com.rubynaxela.kyanite.game.entities;
 
-import com.rubynaxela.kyanite.util.MathUtils;
-import com.rubynaxela.kyanite.util.Vec2;
+import com.rubynaxela.kyanite.graphics.*;
+import com.rubynaxela.kyanite.graphics.Drawable;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.math.MathUtils;
+import com.rubynaxela.kyanite.math.Vec2;
 import org.jetbrains.annotations.NotNull;
-import org.jsfml.graphics.*;
-import org.jsfml.system.Vector2f;
+import com.rubynaxela.kyanite.math.Vector2f;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -271,7 +273,7 @@ public class CompoundEntity implements Drawable, Transformable {
      */
     @Override
     public void move(@NotNull Vector2f offset) {
-        setPosition(Vector2f.add(position, offset));
+        setPosition(Vec2.add(position, offset));
     }
 
     /**

@@ -1,12 +1,12 @@
 package com.rubynaxela.kyanite.window.event;
 
-import org.jsfml.window.event.JoystickButtonEvent;
+import com.rubynaxela.kyanite.window.Window;
 
 import java.util.EventListener;
 
 /**
  * The listener interface for receiving the joystick button event. To add a {@code JoystickButtonListener}, call
- * the {@link com.rubynaxela.kyanite.window.Window#addJoystickButtonListener} with the parameter of an object
+ * the {@link Window#addJoystickButtonListener} with the parameter of an object
  * implementing this interface. When a joystick button event occurs, that object's {@code joystickButtonPressed} or
  * {@code joystickButtonReleased} method is invoked, depending on whether the event button was pressed or released.
  *

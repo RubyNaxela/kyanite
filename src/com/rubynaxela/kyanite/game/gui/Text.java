@@ -1,13 +1,12 @@
 package com.rubynaxela.kyanite.game.gui;
 
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
-import com.rubynaxela.kyanite.util.Colors;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a graphical text that can be transformed and drawn to a render target.
  */
-public class Text extends org.jsfml.graphics.Text {
+public class Text extends com.rubynaxela.kyanite.graphics.Text {
 
     private Alignment alignment = Alignment.TOP_LEFT;
 
