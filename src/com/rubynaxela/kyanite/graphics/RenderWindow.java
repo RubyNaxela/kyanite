@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * Provides a window that can serve as a target for 2D drawing.
  */
 @SuppressWarnings("deprecation")
-public class RenderWindow extends org.jsfml.graphics.RenderWindow {
+public class RenderWindow extends org.jsfml.graphics.RenderWindow implements RenderTarget {
 
     private ConstView defaultView = null, view = null;
 
@@ -134,5 +134,20 @@ public class RenderWindow extends org.jsfml.graphics.RenderWindow {
      */
     public void clear() {
         nativeClear(0xFF000000);
+    }
+
+    @Override
+    public void pushGLStates() {
+        super.pushGLStates();
+    }
+
+    @Override
+    public void popGLStates() {
+        super.popGLStates();
+    }
+
+    @Override
+    public void resetGLStates() {
+        super.resetGLStates();
     }
 }

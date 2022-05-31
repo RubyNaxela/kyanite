@@ -10,21 +10,18 @@ import java.nio.Buffer;
 
 @Deprecated
 @Intercom
-public abstract class Text extends SFMLNativeTransformable implements Drawable, TextStyle {
+public abstract class Text extends SFMLNativeTransformable {
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeSetExPtr();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native void nativeSetString(String string);

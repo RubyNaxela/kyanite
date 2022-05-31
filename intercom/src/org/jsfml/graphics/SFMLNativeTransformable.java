@@ -8,7 +8,7 @@ import java.nio.Buffer;
 
 @Deprecated
 @Intercom
-public abstract class SFMLNativeTransformable extends SFMLNativeObject implements Transformable {
+public abstract class SFMLNativeTransformable extends SFMLNativeObject {
 
     protected native void nativeSetPosition(float x, float y);
 

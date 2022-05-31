@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * Provides a render target for off-screen 2D rendering into a texture.
  */
 @SuppressWarnings("deprecation")
-public class RenderTexture extends org.jsfml.graphics.RenderTexture {
+public class RenderTexture extends org.jsfml.graphics.RenderTexture implements RenderTarget {
 
     private final Texture texture;
     private Vector2i size = Vector2i.ZERO;
@@ -160,5 +160,20 @@ public class RenderTexture extends org.jsfml.graphics.RenderTexture {
      */
     public void clear() {
         nativeClear(0xFF000000);
+    }
+
+    @Override
+    public void pushGLStates() {
+        super.pushGLStates();
+    }
+
+    @Override
+    public void popGLStates() {
+        super.popGLStates();
+    }
+
+    @Override
+    public void resetGLStates() {
+        super.resetGLStates();
     }
 }

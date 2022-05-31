@@ -14,7 +14,7 @@ import java.util.Objects;
  * implements the {@code TextStyle} interface for quick access to the constants provided by it.
  */
 @SuppressWarnings("deprecation")
-public class Text extends org.jsfml.graphics.Text {
+public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle {
 
     private ConstFont font = null;
     private String string = "";

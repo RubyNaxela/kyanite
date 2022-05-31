@@ -8,7 +8,7 @@ import java.nio.Buffer;
 
 @Deprecated
 @Intercom
-public abstract class View extends SFMLNativeObject implements ConstView {
+public abstract class View extends SFMLNativeObject {
 
     public View() {
     }
@@ -19,18 +19,15 @@ public abstract class View extends SFMLNativeObject implements ConstView {
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected final native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected void nativeSetExPtr() {
     }
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native void nativeSetCenter(float x, float y);

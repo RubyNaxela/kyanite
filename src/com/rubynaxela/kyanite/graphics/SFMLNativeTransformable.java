@@ -10,7 +10,7 @@ import java.util.Objects;
  * Decomposed transform defined by a position, a rotation and a scale.
  */
 @SuppressWarnings("deprecation")
-public abstract class SFMLNativeTransformable extends org.jsfml.graphics.SFMLNativeTransformable {
+public abstract class SFMLNativeTransformable extends org.jsfml.graphics.SFMLNativeTransformable implements Transformable {
 
     private Vector2f position = Vector2f.ZERO;
     private float rotation = 0;

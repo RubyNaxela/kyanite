@@ -14,7 +14,7 @@ import java.nio.FloatBuffer;
  * Abstract base class for (optionally) textured shapes with (optional) outlines.
  */
 @SuppressWarnings("deprecation")
-public abstract class Shape extends org.jsfml.graphics.Shape {
+public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable {
 
     protected boolean pointsNeedUpdate = true;
     protected Vector2f[] points = null;

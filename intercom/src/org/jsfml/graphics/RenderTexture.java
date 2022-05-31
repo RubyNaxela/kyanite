@@ -8,21 +8,18 @@ import com.rubynaxela.kyanite.graphics.View;
 
 @Deprecated
 @Intercom
-public abstract class RenderTexture extends SFMLNativeObject implements RenderTarget {
+public abstract class RenderTexture extends SFMLNativeObject {
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeSetExPtr();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native boolean nativeCreateTexture(int width, int height, boolean depthBuffer);
@@ -33,14 +30,11 @@ public abstract class RenderTexture extends SFMLNativeObject implements RenderTa
 
     protected native void nativeClear(int color);
 
-    @Override
-    public native void pushGLStates();
+    protected native void pushGLStates();
 
-    @Override
-    public native void popGLStates();
+    protected native void popGLStates();
 
-    @Override
-    public native void resetGLStates();
+    protected native void resetGLStates();
 
     protected native void nativeSetView(View view);
 

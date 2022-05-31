@@ -8,7 +8,7 @@ import java.nio.Buffer;
 
 @Deprecated
 @Intercom
-public abstract class SoundBuffer extends SFMLNativeObject implements ConstSoundBuffer {
+public abstract class SoundBuffer extends SFMLNativeObject {
 
     public SoundBuffer() {
     }
@@ -19,18 +19,15 @@ public abstract class SoundBuffer extends SFMLNativeObject implements ConstSound
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected void nativeSetExPtr() {
     }
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native long nativeCopy();

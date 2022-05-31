@@ -9,7 +9,7 @@ import java.nio.Buffer;
 
 @Deprecated
 @Intercom
-public abstract class Shape extends SFMLNativeTransformable implements Drawable {
+public abstract class Shape extends SFMLNativeTransformable {
 
     protected native void nativeSetTexture(Texture texture, boolean resetRect);
 

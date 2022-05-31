@@ -19,17 +19,14 @@ public abstract class Sound extends SoundSource {
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeSetExPtr();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native long nativeCopy();

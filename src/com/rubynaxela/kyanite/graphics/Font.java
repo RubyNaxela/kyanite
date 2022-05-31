@@ -18,7 +18,7 @@ import java.util.TreeMap;
  * Holds a character font for use in text displays.
  */
 @SuppressWarnings("deprecation")
-public class Font extends org.jsfml.graphics.Font {
+public class Font extends org.jsfml.graphics.Font implements ConstFont {
 
     private final Map<Integer, SizeInfo> sizeInfos = new TreeMap<>();
 

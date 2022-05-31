@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  * Represents a 2D camera which defines the region of the scene that is visible.
  */
 @SuppressWarnings("deprecation")
-public class View extends org.jsfml.graphics.View {
+public class View extends org.jsfml.graphics.View implements ConstView {
 
     private Vector2f size = new Vector2f(1000, 1000);
     private Vector2f center = new Vector2f(500, 500);

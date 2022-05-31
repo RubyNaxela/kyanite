@@ -9,21 +9,18 @@ import java.nio.Buffer;
 
 @Deprecated
 @Intercom
-public abstract class Sprite extends SFMLNativeTransformable implements Drawable {
+public abstract class Sprite extends SFMLNativeTransformable {
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeSetExPtr();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native void nativeSetTexture(Texture texture, boolean resetRect);

@@ -8,22 +8,19 @@ import java.nio.Buffer;
 
 @Deprecated
 @Intercom
-public abstract class Font extends SFMLNativeObject implements ConstFont {
+public abstract class Font extends SFMLNativeObject {
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected void nativeSetExPtr() {
     }
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native long nativeLoadFromMemory(byte[] memory);

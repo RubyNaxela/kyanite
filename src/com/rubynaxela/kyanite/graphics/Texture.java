@@ -16,7 +16,7 @@ import java.util.Objects;
  * Represents a 2D texture stored on the graphics card for rendering.
  */
 @SuppressWarnings("deprecation")
-public class Texture extends org.jsfml.graphics.Texture {
+public class Texture extends org.jsfml.graphics.Texture implements ConstTexture {
 
     private static final int MAXIMUM_SIZE = nativeGetMaximumSize();
 
@@ -34,7 +34,6 @@ public class Texture extends org.jsfml.graphics.Texture {
     public Texture() {
     }
 
-    @SuppressWarnings("deprecation")
     Texture(long wrap) {
         super(wrap);
         updateSize();

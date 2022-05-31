@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * Represents a drawable instance of a texture or texture portion.
  */
 @SuppressWarnings("deprecation")
-public class Sprite extends org.jsfml.graphics.Sprite {
+public class Sprite extends org.jsfml.graphics.Sprite implements Drawable {
 
     private Color color = Colors.WHITE;
     private IntRect textureRect = IntRect.EMPTY;

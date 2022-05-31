@@ -10,7 +10,7 @@ import java.nio.Buffer;
 
 @Deprecated
 @Intercom
-public abstract class Texture extends SFMLNativeObject implements ConstTexture {
+public abstract class Texture extends SFMLNativeObject {
 
     public Texture() {
     }
@@ -25,18 +25,15 @@ public abstract class Texture extends SFMLNativeObject implements ConstTexture {
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected void nativeSetExPtr() {
     }
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native long nativeCopy();

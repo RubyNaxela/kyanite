@@ -18,7 +18,7 @@ import java.util.Iterator;
  * {@link WindowStyle} interface for quick access to the constants provided by it.
  */
 @SuppressWarnings("deprecation")
-public class BasicWindow extends Window {
+public class BasicWindow extends Window implements WindowStyle {
 
     /**
      * The current window icon image. A reference to it must be maintained

@@ -18,7 +18,7 @@ import java.util.Objects;
  * Represents a GLSL shader program, consisting of a vertex and a fragment shader.
  */
 @SuppressWarnings("deprecation")
-public class Shader extends org.jsfml.graphics.Shader {
+public class Shader extends org.jsfml.graphics.Shader implements ConstShader {
 
     /**
      * Special value denoting that the texture of the object being drawn

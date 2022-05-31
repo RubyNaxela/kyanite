@@ -16,7 +16,7 @@ import java.nio.file.Path;
  * Buffer of audio samples, providing an audio data source for a {@code Sound}.
  */
 @SuppressWarnings("deprecation")
-public class SoundBuffer extends org.jsfml.audio.SoundBuffer {
+public class SoundBuffer extends org.jsfml.audio.SoundBuffer implements ConstSoundBuffer {
 
     private int sampleCount = 0;
     private int sampleRate = 0;

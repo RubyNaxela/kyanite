@@ -9,7 +9,7 @@ import java.nio.Buffer;
 
 @Deprecated
 @Intercom
-public abstract class Shader extends SFMLNativeObject implements ConstShader {
+public abstract class Shader extends SFMLNativeObject {
 
     protected static native void bind(ConstShader shader);
 
@@ -17,18 +17,15 @@ public abstract class Shader extends SFMLNativeObject implements ConstShader {
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected void nativeSetExPtr() {
     }
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native boolean nativeLoadFromSource1(String source, int shaderType);

@@ -7,7 +7,7 @@ import com.rubynaxela.kyanite.graphics.Image;
 import java.nio.Buffer;
 
 @Deprecated
-public abstract class Window extends SFMLNativeObject implements WindowStyle {
+public abstract class Window extends SFMLNativeObject {
 
     public Window() {
     }
@@ -20,17 +20,14 @@ public abstract class Window extends SFMLNativeObject implements WindowStyle {
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native long nativeCreate();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeSetExPtr();
 
     @Override
     @Deprecated
-    @SuppressWarnings("deprecation")
     protected native void nativeDelete();
 
     protected native void nativeCreateWindow(Buffer buffer, String title);
