@@ -111,12 +111,7 @@ public class SFMLInputStream extends org.jsfml.internal.SFMLInputStream {
     /**
      * Native pointer manager for an {@code SFMLInputStream} bound natively to an {@code sf::InputStream}.
      */
-    public static class NativeStreamRef extends NativeRef<SFMLInputStream> {
+    public static class NativeStreamRef extends org.jsfml.internal.SFMLInputStream.NativeStreamRef {
 
-        @Override
-        protected native long nativeInitialize(SFMLInputStream ref);
-
-        @Override
-        protected native void nativeRelease(SFMLInputStream ref, long ptr);
     }
 }

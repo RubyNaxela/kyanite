@@ -18,10 +18,11 @@ import java.util.Objects;
 @SuppressWarnings("deprecation")
 public class Texture extends org.jsfml.graphics.Texture implements ConstTexture {
 
-    private static final int MAXIMUM_SIZE = nativeGetMaximumSize();
+    private static final int MAXIMUM_SIZE;
 
     static {
         SFMLNative.loadNativeLibraries();
+        MAXIMUM_SIZE = nativeGetMaximumSize();
     }
 
     private Vector2i size = Vector2i.ZERO;
