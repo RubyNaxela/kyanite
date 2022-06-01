@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * A wrapper class for JSFML {@link com.rubynaxela.kyanite.graphics.Texture} objects, representing a texture asset.
@@ -88,12 +89,19 @@ public class Texture implements Asset {
      *
      * @param stream the image data input stream
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public Texture(@NotNull InputStream stream) {
         texture = new com.rubynaxela.kyanite.graphics.Texture();
         path = this + " (created with the Texture(InputStream) constructor constructor)";
         try {
-            texture.loadFromStream(stream);
-        } catch (IOException | IllegalArgumentException e) {
+            if (ImageIO.getImageReaders(ImageIO.createImageInputStream(stream)).next().getFormatName().equals("JPEG")) {
+                final File tmpImageFile = new File(UUID.randomUUID() + ".png");
+                final BufferedImage bufferedImage = ImageIO.read(stream);
+                ImageIO.write(bufferedImage, "png", tmpImageFile);
+                texture.loadFromFile(tmpImageFile.toPath());
+                tmpImageFile.delete();
+            } else texture.loadFromStream(stream);
+        } catch (java.io.IOException | IllegalArgumentException e) {
             if (!suppressWarning) e.printStackTrace();
             missingTexture();
         }
