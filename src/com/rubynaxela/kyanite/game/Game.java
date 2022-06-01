@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.game;
 
-import com.rubynaxela.kyanite.system.FirstThreadTool;
+import com.rubynaxela.kyanite.system.SystemUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,7 +20,7 @@ public abstract class Game {
      * @param args      the {@code args} argument from the application {@code main()} method
      */
     public static void run(@NotNull Class<? extends Game> gameClass, @NotNull String[] args) {
-        FirstThreadTool.restartIfNecessary(args);
+        SystemUtils.restartIfNecessary(args);
         try {
             final Game game = gameClass.getConstructor().newInstance();
             game.preInit();

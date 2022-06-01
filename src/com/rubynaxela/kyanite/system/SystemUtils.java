@@ -1,20 +1,21 @@
 package com.rubynaxela.kyanite.system;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.*;
 import java.lang.management.ManagementFactory;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * If the application is running on macOS, it must be started with the -XstartOnFirstThread JVM option.
- * Otherwise, the application thread will not be allowed to create a window. This is an SWT limitation.
+ * Generic OS & IO related functionalities.
  */
-public final class FirstThreadTool {
+public final class SystemUtils {
 
-    private FirstThreadTool() {
+    private SystemUtils() {
     }
 
     /**
@@ -52,10 +53,39 @@ public final class FirstThreadTool {
             while ((line = br.readLine()) != null) System.out.println(line);
 
             System.exit(process.waitFor());
-        } catch (IOException | InterruptedException e) {
+        } catch (java.io.IOException | InterruptedException e) {
             e.printStackTrace();
         }
 
         System.exit(0);
+    }
+
+    /**
+     * Gets the pathname of the JAR file containing the specified class, or
+     * {@code c.getName() + "!"} if that class is not contained in a JAR file.
+     *
+     * @return the pathname of this JAR file, {@code c.getName() + "!"} if the code is not running from a JAR file
+     */
+    public static String getJarPath(@NotNull Class<?> c) {
+        try {
+            return c.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+        } catch (URISyntaxException ignored) {
+            return "";
+        }
+    }
+
+    /**
+     * Gets an {@link InputStream} from a specified file from the specified class resources.
+     *
+     * @param pathname a path relative to the root of the specified class module
+     * @return an input stream from the specified file
+     */
+    @NotNull
+    @Contract(pure = true)
+    public static InputStream internalFile(@NotNull Class<?> c, @NotNull String pathname) throws FileNotFoundException {
+        if (!pathname.startsWith("/") && !pathname.startsWith("\\")) pathname = File.separator + pathname;
+        final InputStream stream = c.getResourceAsStream(pathname);
+        if (stream == null) throw new FileNotFoundException("File not found inside the jar file: " + pathname);
+        return stream;
     }
 }
