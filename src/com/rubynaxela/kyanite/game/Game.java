@@ -1,5 +1,6 @@
 package com.rubynaxela.kyanite.game;
 
+import com.rubynaxela.kyanite.core.KyaniteException;
 import com.rubynaxela.kyanite.system.SystemUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,8 +34,10 @@ public abstract class Game {
                                                "getContext().setupWindow in the init() method of the game class");
             game.context.getClock().tryStart();
             game.context.getWindow().startLoop();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            throw new KyaniteException("The " + gameClass.getName() + " must have a default constructor");
         }
     }
 
