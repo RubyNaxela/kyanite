@@ -2,14 +2,14 @@ package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.game.assets.AssetsBundle;
 import com.rubynaxela.kyanite.game.assets.AudioHandler;
-import com.rubynaxela.kyanite.system.Clock;
 import com.rubynaxela.kyanite.math.Vec2;
+import com.rubynaxela.kyanite.math.Vector2i;
+import com.rubynaxela.kyanite.system.Clock;
+import com.rubynaxela.kyanite.window.VideoMode;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.rubynaxela.kyanite.math.Vector2i;
-import com.rubynaxela.kyanite.window.VideoMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -175,5 +175,14 @@ public final class GameContext {
         if (resources.containsKey(key)) return (T) resources.get(key);
         else throw new NoSuchElementException("Resource of ID " + key + " either does not exist or " +
                                               "was attempted to be used before being registered");
+    }
+
+    /**
+     * Gets the class of the game instance (which has been passed to the {@link Game#run} method).
+     *
+     * @return the main game class
+     */
+    public Class<? extends Game> getGameInstanceClass() {
+        return gameInstance.getClass();
     }
 }
