@@ -200,5 +200,6 @@ li {
 }
 
 #intro-logo {
-    height: min(32rem, 32vw);
+    height: min(19.5rem, 19.5vw);
+    margin: min(4.25rem, 4.25vw) min(4rem, 4vw)
 }
