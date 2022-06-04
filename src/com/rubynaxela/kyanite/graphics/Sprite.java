@@ -5,20 +5,19 @@ import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.IntRect;
 import com.rubynaxela.kyanite.math.Vector2f;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a drawable instance of a texture or texture portion.
  */
 @SuppressWarnings("deprecation")
-public class Sprite extends org.jsfml.graphics.Sprite implements Drawable {
+public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, SceneObject {
 
     private Color color = Colors.WHITE;
     private IntRect textureRect = IntRect.EMPTY;
     private ConstTexture texture = null;
-
     private boolean boundsNeedUpdate = true;
-    private FloatRect localBounds = null;
-    private FloatRect globalBounds = null;
+    private FloatRect localBounds = null, globalBounds = null;
 
     /**
      * Constructs a new sprite without a texture.
@@ -45,60 +44,6 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable {
     public Sprite(@NotNull ConstTexture texture, IntRect rect) {
         this(texture);
         setTextureRect(rect);
-    }
-
-    /**
-     * Sets the texture of this sprite.
-     *
-     * @param texture   the new texture
-     * @param resetRect {@code true} to reset the texture rectangle, {@code false} otherwise
-     */
-    public void setTexture(@NotNull ConstTexture texture, boolean resetRect) {
-        nativeSetTexture((Texture) texture, resetRect);
-        this.texture = texture;
-        if (resetRect) textureRect = IntRect.EMPTY;
-        boundsNeedUpdate = true;
-    }
-
-    /**
-     * Gets the sprite's current texture.
-     *
-     * @return the sprite's current texture
-     */
-    public ConstTexture getTexture() {
-        return texture;
-    }
-
-    /**
-     * Sets the texture of this sprite without affecting the texture rectangle.
-     *
-     * @param texture the new texture
-     */
-    public final void setTexture(@NotNull ConstTexture texture) {
-        setTexture(texture, false);
-    }
-
-    /**
-     * Gets the sprite's current texture rectangle.
-     *
-     * @return the sprite's current texture rectangle
-     */
-    public IntRect getTextureRect() {
-        return textureRect;
-    }
-
-    /**
-     * Sets the portion of the texture that will be used for drawing. An empty rectangle can be
-     * passed to indicate that the whole texture shall be used. The width and / or height of the
-     * rectangle may be negative to indicate that the respective axis should be flipped. For example,
-     * a width of {@code -32} will result in a sprite that is 32 pixels wide and flipped horizontally.
-     *
-     * @param rect the texture portion
-     */
-    public void setTextureRect(@NotNull IntRect rect) {
-        this.textureRect = rect;
-        nativeSetTextureRect(IntercomHelper.encodeIntRect(rect));
-        boundsNeedUpdate = true;
     }
 
     /**
@@ -136,6 +81,7 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable {
      * @return the sprite's local bounding rectangle
      * @see Sprite#getGlobalBounds()
      */
+    @Override
     public FloatRect getLocalBounds() {
         if (boundsNeedUpdate) updateBounds();
         return localBounds;
@@ -147,9 +93,69 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable {
      * @return the sprite's global bounding rectangle
      * @see Sprite#getLocalBounds()
      */
+    @Override
     public FloatRect getGlobalBounds() {
         if (boundsNeedUpdate) updateBounds();
         return globalBounds;
+    }
+
+    /**
+     * Gets the sprite's current texture.
+     *
+     * @return the sprite's current texture
+     */
+    @Override
+    public ConstTexture getTexture() {
+        return texture;
+    }
+
+    /**
+     * Sets the texture of this sprite without affecting the texture rectangle.
+     *
+     * @param texture the new texture
+     */
+    @Override
+    public final void setTexture(@Nullable ConstTexture texture) {
+        setTexture(texture, false);
+    }
+
+    /**
+     * Sets the texture of this sprite.
+     *
+     * @param texture   the new texture
+     * @param resetRect {@code true} to reset the texture rectangle, {@code false} otherwise
+     */
+    @Override
+    public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
+        nativeSetTexture((Texture) texture, resetRect);
+        this.texture = texture;
+        if (resetRect) textureRect = IntRect.EMPTY;
+        boundsNeedUpdate = true;
+    }
+
+    /**
+     * Gets the sprite's current texture rectangle.
+     *
+     * @return the sprite's current texture rectangle
+     */
+    @Override
+    public IntRect getTextureRect() {
+        return textureRect;
+    }
+
+    /**
+     * Sets the portion of the texture that will be used for drawing. An empty rectangle can be
+     * passed to indicate that the whole texture shall be used. The width and / or height of the
+     * rectangle may be negative to indicate that the respective axis should be flipped. For example,
+     * a width of {@code -32} will result in a sprite that is 32 pixels wide and flipped horizontally.
+     *
+     * @param rect the texture portion
+     */
+    @Override
+    public void setTextureRect(@NotNull IntRect rect) {
+        this.textureRect = rect;
+        nativeSetTextureRect(IntercomHelper.encodeIntRect(rect));
+        boundsNeedUpdate = true;
     }
 
     @Override

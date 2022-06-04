@@ -14,17 +14,14 @@ import java.util.Objects;
  * implements the {@code TextStyle} interface for quick access to the constants provided by it.
  */
 @SuppressWarnings("deprecation")
-public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle {
+public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle, BoundsObject {
 
     private ConstFont font = null;
     private String string = "";
     private Color color = Colors.WHITE;
-    private int style = TextStyle.REGULAR;
-    private int characterSize = 30;
-
+    private int style = TextStyle.REGULAR, characterSize = 30;
     private boolean boundsNeedUpdate = true;
-    private FloatRect localBounds = null;
-    private FloatRect globalBounds = null;
+    private FloatRect localBounds = null, globalBounds = null;
 
     /**
      * Creates a new empty text.
@@ -40,7 +37,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      */
     public Text(@NotNull String string, @NotNull ConstFont font) {
         setFont(font);
-        setString(string);
+        setText(string);
     }
 
     /**
@@ -53,7 +50,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
     public Text(@NotNull String string, @NotNull ConstFont font, int characterSize) {
         setCharacterSize(characterSize);
         setFont(font);
-        setString(string);
+        setText(string);
     }
 
     /**
@@ -61,7 +58,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      *
      * @return the text strng
      */
-    public String getString() {
+    public String getText() {
         return string;
     }
 
@@ -70,7 +67,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      *
      * @param string the string to display
      */
-    public void setString(String string) {
+    public void setText(String string) {
         this.string = Objects.requireNonNull(string);
         nativeSetString(string);
         boundsNeedUpdate = true;
@@ -184,6 +181,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      * @return the text's local bounding rectangle
      * @see Sprite#getGlobalBounds()
      */
+    @Override
     public FloatRect getLocalBounds() {
         if (boundsNeedUpdate) updateBounds();
         return localBounds;
@@ -195,6 +193,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      * @return the text's global bounding rectangle
      * @see Text#getLocalBounds()
      */
+    @Override
     public FloatRect getGlobalBounds() {
         if (boundsNeedUpdate) updateBounds();
         return globalBounds;
