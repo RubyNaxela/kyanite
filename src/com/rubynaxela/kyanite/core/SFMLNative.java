@@ -33,8 +33,6 @@ public final class SFMLNative extends org.jsfml.internal.SFMLNative {
      * The substring of the {@code os.name} system property to look for to detect Mac OS X systems.
      */
     public static final String OS_NAME_MACOSX = "Mac OS X";
-    private static final Path KYANITE_USER_HOME = Paths.get(System.getProperty("user.home"), ".kyanite");
-    private static final String KYANITE_BIN_RESOURCE_PATH = "/bin/";
     private static final String MD5_EXT = ".MD5";
     private static final int MD5_LENGTH = 32;
     private static boolean loaded = false;
@@ -111,8 +109,8 @@ public final class SFMLNative extends org.jsfml.internal.SFMLNative {
 
             if (arch == null) throw new SFMLError("Unsupported platform: " + osName + " " + osArch);
 
-            final String nativeResourcePath = KYANITE_BIN_RESOURCE_PATH + arch + "/";
-            final Path nativeLibPath = KYANITE_USER_HOME.resolve(arch);
+            final String nativeResourcePath = KyaniteStorage.KYANITE_BIN_RESOURCE_PATH + arch + "/";
+            final Path nativeLibPath = KyaniteStorage.KYANITE_USER_HOME.resolve(arch);
 
             try {
                 Files.createDirectories(nativeLibPath);
