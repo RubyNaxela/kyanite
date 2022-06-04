@@ -17,16 +17,16 @@ public final class Vertex implements Serializable {
     /**
      * The vertex position.
      */
-    public final Vector2f position;
+    public Vector2f position;
     /**
      * The vertex color.
      */
-    public final Color color;
+    public Color color;
     /**
      * The vertex texture coordinates. The unit space this information is measured in depends on the way the respective
      * texture will be bound. By the default, the {@link Texture.CoordinateType#NORMALIZED} coordinate type is used.
      */
-    public final Vector2f texCoords;
+    public Vector2f texCoords;
 
     /**
      * Constructs a new vertex at the specified position with white color.

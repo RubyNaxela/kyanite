@@ -12,14 +12,10 @@ import java.util.Objects;
 @SuppressWarnings("deprecation")
 public abstract class SFMLNativeTransformable extends org.jsfml.graphics.SFMLNativeTransformable implements Transformable {
 
-    private Vector2f position = Vector2f.ZERO;
+    private Vector2f position = Vector2f.ZERO, scale = new Vector2f(1, 1), origin = Vector2f.ZERO;
     private float rotation = 0;
-    private Vector2f scale = new Vector2f(1, 1);
-    private Vector2f origin = Vector2f.ZERO;
-
     private boolean transformNeedsUpdate = true;
-    private Transform transformCache = null;
-    private Transform inverseTransformCache = null;
+    private Transform transformCache = null, inverseTransformCache = null;
 
     protected SFMLNativeTransformable() {
     }

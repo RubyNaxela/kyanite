@@ -12,9 +12,9 @@ import java.nio.Buffer;
 @Intercom
 public abstract class SFMLNativeDrawer {
 
-    protected static native void nativeDrawVertices(int num, Buffer vbuf, int type, RenderTarget target, int blendMode,
+    protected static native void nativeDrawVertices(int num, Buffer buffer, int type, RenderTarget target, int blendMode,
                                                     Buffer transform, ConstTexture texture, ConstShader shader);
 
-    protected static native void nativeDrawDrawable(Drawable drawable, RenderTarget target, int blendMode, Buffer xform,
+    protected static native void nativeDrawDrawable(Drawable drawable, RenderTarget target, int blendMode, Buffer transform,
                                                     ConstTexture texture, ConstShader shader);
 }
