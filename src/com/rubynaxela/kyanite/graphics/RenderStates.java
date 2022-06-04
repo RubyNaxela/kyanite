@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2021-2022 Alex Pawelski
+ *
+ * Licensed under the Silicon License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://rubynaxela.github.io/Silicon-License/plain_text.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
 package com.rubynaxela.kyanite.graphics;
 
 import java.util.Objects;
@@ -70,6 +84,7 @@ public final class RenderStates {
     /**
      * Constructs a new set of render states by copying other states, but changing the blend mode.
      *
+     * @param states    the {@code RenderStates} to copy
      * @param blendMode the blending mode used for drawing
      */
     public RenderStates(RenderStates states, BlendMode blendMode) {
@@ -79,6 +94,7 @@ public final class RenderStates {
     /**
      * Constructs a new set of render states by copying other states, but changing the transformation.
      *
+     * @param states    the {@code RenderStates} to copy
      * @param transform the transformation matrix used for drawing
      */
     public RenderStates(RenderStates states, Transform transform) {
@@ -88,6 +104,7 @@ public final class RenderStates {
     /**
      * Constructs a new set of render states by copying other states, but changing the texture.
      *
+     * @param states    the {@code RenderStates} to copy
      * @param texture the texture used for drawing, or {@code null} to indicate that no texture should be used
      */
     public RenderStates(RenderStates states, ConstTexture texture) {
@@ -97,6 +114,7 @@ public final class RenderStates {
     /**
      * Constructs a new set of render states by copying other states, but changing the shader.
      *
+     * @param states    the {@code RenderStates} to copy
      * @param shader the shader applied to whatever is drawn using these states,
      *               or {@code null} to indicate that no shader should be used
      */

@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2021-2022 Alex Pawelski
+ *
+ * Licensed under the Silicon License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://rubynaxela.github.io/Silicon-License/plain_text.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
 package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.util.Time;
@@ -92,8 +106,7 @@ public class SoundBuffer extends org.jsfml.audio.SoundBuffer implements ConstSou
      * @param sampleRate   the sample rate in samples per second
      * @throws IOException in case an I/O error occurs
      */
-    public void loadFromSamples(short[] samples, int channelCount, int sampleRate)
-    throws java.io.IOException {
+    public void loadFromSamples(short[] samples, int channelCount, int sampleRate) {
 
         final ShortBuffer buffer = ByteBuffer.allocateDirect(2 * samples.length).order(
                 ByteOrder.nativeOrder()).asShortBuffer();

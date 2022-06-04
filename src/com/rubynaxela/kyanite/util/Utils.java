@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2021-2022 Alex Pawelski
+ *
+ * Licensed under the Silicon License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://rubynaxela.github.io/Silicon-License/plain_text.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
 package com.rubynaxela.kyanite.util;
 
 import org.jetbrains.annotations.Contract;
@@ -32,8 +46,6 @@ public class Utils {
      * @param object      the object to initialize
      * @param initActions actions to be performed on the specified object
      * @return the specified object after initialization
-     * @apiNote The usefulness of this method is questionable when any of the initialization actions may
-     * throw an exception as the exception must be handled within the lambda expression of that action.
      */
     @SafeVarargs
     public static <T> T lambdaInit(@NotNull T object, @NotNull Consumer<T>... initActions) {

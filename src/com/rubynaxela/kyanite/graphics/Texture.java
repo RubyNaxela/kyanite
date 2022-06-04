@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2021-2022 Alex Pawelski
+ *
+ * Licensed under the Silicon License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://rubynaxela.github.io/Silicon-License/plain_text.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
 package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.core.IntercomHelper;
@@ -13,6 +27,7 @@ import com.rubynaxela.kyanite.system.IOException;
 import com.rubynaxela.kyanite.window.BasicWindow;
 import com.rubynaxela.kyanite.window.Context;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -194,14 +209,15 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
      * @param texture        the texture to bind, or {@code null} to indicate that no texture is to be used
      * @param coordinateType the coordinate type to use
      */
-    public static void bind(@NotNull ConstTexture texture, @NotNull CoordinateType coordinateType) {
+    public static void bind(@Nullable ConstTexture texture, @NotNull CoordinateType coordinateType) {
         nativeBind((Texture) texture, coordinateType.ordinal());
     }
 
     /**
      * Activates a texture for rendering, using the {@link Texture.CoordinateType#NORMALIZED} coordinate type.
+     * @param texture the texture to bind, or {@code null} to indicate that no texture is to be used
      */
-    public static void bind(@NotNull ConstTexture texture) {
+    public static void bind(@Nullable ConstTexture texture) {
         bind(texture, CoordinateType.NORMALIZED);
     }
 

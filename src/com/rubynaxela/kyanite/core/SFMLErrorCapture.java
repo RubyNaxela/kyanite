@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2021-2022 Alex Pawelski
+ *
+ * Licensed under the Silicon License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://rubynaxela.github.io/Silicon-License/plain_text.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
 package com.rubynaxela.kyanite.core;
 
 import java.util.concurrent.Semaphore;
@@ -15,12 +29,9 @@ public final class SFMLErrorCapture extends org.jsfml.internal.SFMLErrorCapture 
     }
 
     /**
-     * Starts capturing all output to {@code sf::err()}.
-     * <p/>
-     * This method acquires a semaphore and will block if a capture is currently going,
-     * therefore the capturing is thread-safe.
-     * <p/>
-     * A capture must be concluded by calling the {@link #finish()} method.
+     * Starts capturing all output to {@code sf::err()}. This method acquires a semaphore
+     * and will block if a capture is currently going, therefore the capturing is
+     * thread-safe. A capture must be concluded by calling the {@link #finish()} method.
      */
     public static void start() {
         try {

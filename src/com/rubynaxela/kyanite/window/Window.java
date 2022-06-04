@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2021-2022 Alex Pawelski
+ *
+ * Licensed under the Silicon License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://rubynaxela.github.io/Silicon-License/plain_text.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
 package com.rubynaxela.kyanite.window;
 
 import com.rubynaxela.kyanite.game.HUD;
@@ -72,6 +86,7 @@ public class Window extends RenderWindow {
      * @param title           the window title
      * @param style           the window style
      * @param contextSettings the settings for the OpenGL context
+     * @param audioHandler    reference to the audio handler
      */
     public Window(@NotNull VideoMode videoMode, @NotNull String title,
                   @MagicConstant(flagsFromClass = WindowStyle.class) int style, @NotNull ContextSettings contextSettings,
@@ -90,9 +105,10 @@ public class Window extends RenderWindow {
     /**
      * Constructs a new render window and creates it with default context settings.
      *
-     * @param videoMode the video mode to use for rendering
-     * @param title     the window title
-     * @param style     the window style
+     * @param videoMode    the video mode to use for rendering
+     * @param title        the window title
+     * @param style        the window style
+     * @param audioHandler reference to the audio handler
      */
     public Window(@NotNull VideoMode videoMode, @NotNull String title,
                   @MagicConstant(flagsFromClass = WindowStyle.class) int style, @NotNull AudioHandler audioHandler) {
@@ -102,8 +118,9 @@ public class Window extends RenderWindow {
     /**
      * Constructs a new render window and creates it with default style and context settings.
      *
-     * @param videoMode the video mode to use for rendering
-     * @param title     the window title
+     * @param videoMode    the video mode to use for rendering
+     * @param title        the window title
+     * @param audioHandler reference to the audio handler
      */
     public Window(@NotNull VideoMode videoMode, @NotNull String title, @NotNull AudioHandler audioHandler) {
         this(videoMode, title, WindowStyle.DEFAULT, audioHandler);
@@ -202,11 +219,10 @@ public class Window extends RenderWindow {
     }
 
     /**
-     * Sets the ability for the user to resize this window. The default value is {@code false}.
+     * Sets the ability for the user to resize this window. The default value is {@code false}. This only affects <b>the user's
+     * </b> ability to resize this window. Even if this is set to {@code false}, {@link Window#setSize} can still be used.
      *
      * @param resizable true to enable looping, false to disable
-     * @implSpec This only affects <b>the user's</b> ability to resize this window.
-     * Even if this is set to {@code false}, {@link Window#setSize} can still be used.
      */
     public void setResizable(boolean resizable) {
         this.resizable = resizable;
@@ -258,7 +274,7 @@ public class Window extends RenderWindow {
     /**
      * Adds the specified focus listener to receive focus events from this window.
      *
-     * @param listener the resize event listener
+     * @param listener the focus event listener
      */
     public void addFocusListener(@NotNull FocusListener listener) {
         focusListeners.add(listener);
@@ -267,7 +283,7 @@ public class Window extends RenderWindow {
     /**
      * Removes the specified focus listener from this window.
      *
-     * @param listener the resize event listener
+     * @param listener the focus event listener
      */
     public void removeFocusListener(@NotNull FocusListener listener) {
         focusListeners.remove(listener);
@@ -283,7 +299,7 @@ public class Window extends RenderWindow {
     /**
      * Adds the specified text listener to receive text input events from this window.
      *
-     * @param listener the resize event listener
+     * @param listener the text event listener
      */
     public void addTextListener(@NotNull TextListener listener) {
         textListeners.add(listener);
@@ -292,7 +308,7 @@ public class Window extends RenderWindow {
     /**
      * Removes the specified text listener from this window.
      *
-     * @param listener the resize event listener
+     * @param listener the text event listener
      */
     public void removeTextListener(@NotNull TextListener listener) {
         textListeners.remove(listener);
@@ -308,7 +324,7 @@ public class Window extends RenderWindow {
     /**
      * Adds the specified key listener to receive key input events from this window.
      *
-     * @param listener the resize event listener
+     * @param listener the key event listener
      */
     public void addKeyListener(@NotNull KeyListener listener) {
         keyListeners.add(listener);
@@ -317,7 +333,7 @@ public class Window extends RenderWindow {
     /**
      * Removes the specified key listener from this window.
      *
-     * @param listener the resize event listener
+     * @param listener the key event listener
      */
     public void removeKeyListener(@NotNull KeyListener listener) {
         keyListeners.remove(listener);
@@ -333,7 +349,7 @@ public class Window extends RenderWindow {
     /**
      * Adds the specified mouse wheel listener to receive mouse wheel input events from this window.
      *
-     * @param listener the resize event listener
+     * @param listener the mouse wheel event listener
      */
     public void addMouseWheelListener(@NotNull MouseWheelListener listener) {
         mouseWheelListeners.add(listener);
@@ -342,7 +358,7 @@ public class Window extends RenderWindow {
     /**
      * Removes the specified mouse wheel listener from this window.
      *
-     * @param listener the resize event listener
+     * @param listener the mouse wheel event listener
      */
     public void removeMouseWheelListener(@NotNull MouseWheelListener listener) {
         mouseWheelListeners.remove(listener);
@@ -572,6 +588,7 @@ public class Window extends RenderWindow {
                         scene.refreshBackgroundTexture();
                         hud.refreshBackgroundTexture();
                         new ArrayList<>(resizeListeners).forEach(action -> action.resized(new ResizeEvent(Vec2.i(size))));
+                        lastSetSize = getSize();
                     } else setSize(lastSetSize);
                 }
                 case LOST_FOCUS -> new ArrayList<>(focusListeners).forEach(FocusListener::focusLost);
@@ -579,7 +596,8 @@ public class Window extends RenderWindow {
                 case TEXT_ENTERED -> new ArrayList<>(textListeners).forEach(l -> l.textEntered((TextEvent) ev));
                 case KEY_PRESSED -> new ArrayList<>(keyListeners).forEach(l -> l.keyPressed((KeyEvent) ev));
                 case KEY_RELEASED -> new ArrayList<>(keyListeners).forEach(l -> l.keyReleased((KeyEvent) ev));
-                case MOUSE_WHEEL_MOVED -> new ArrayList<>(mouseWheelListeners).forEach(l -> l.mouseWheelMoved((MouseWheelEvent) ev));
+                case MOUSE_WHEEL_MOVED ->
+                        new ArrayList<>(mouseWheelListeners).forEach(l -> l.mouseWheelMoved((MouseWheelEvent) ev));
                 case MOUSE_BUTTON_PRESSED -> {
                     new ArrayList<>(mouseButtonListeners).forEach(l -> l.mouseButtonPressed((MouseButtonEvent) ev));
                     boolean hudClicked = false;

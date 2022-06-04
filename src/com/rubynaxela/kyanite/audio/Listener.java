@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2021-2022 Alex Pawelski
+ *
+ * Licensed under the Silicon License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://rubynaxela.github.io/Silicon-License/plain_text.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
 package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.math.Vector3f;
@@ -84,10 +98,8 @@ public final class Listener extends org.jsfml.audio.Listener {
     }
 
     /**
-     * Sets the orientation or "view direction" of the listener in the scene.
-     * <p/>
-     * The vector passed does not need to be normalized. Initially, the listener's orientation
-     * is along the Z axis, looking "into" the screen <i>(0, 0, -1)</i>.
+     * Sets the orientation or "view direction" of the listener in the scene. The vector passed does not need to be
+     * normalized. Initially, the listener's orientation is along the Z axis, looking "into" the screen <i>(0, 0, -1)</i>.
      *
      * @param direction the listener's new orientation.
      * @see SoundSource#setPosition(Vector3f)

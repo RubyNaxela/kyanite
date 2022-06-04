@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2021-2022 Alex Pawelski
+ *
+ * Licensed under the Silicon License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://rubynaxela.github.io/Silicon-License/plain_text.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
 package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.core.IntercomHelper;
@@ -241,11 +255,9 @@ public class Shader extends org.jsfml.graphics.Shader implements ConstShader {
     }
 
     /**
-     * Sets a texture (sampler2D) parameter value in the shader to the texture
-     * of the object being drawn in the moment the shader is applied.
-     * <p/>
-     * Since that texture cannot be known before the object is actually being drawn,
-     * this overload can be used to tell the shader to use it when applied.
+     * Sets a texture (sampler2D) parameter value in the shader to the texture of the object being
+     * drawn in the moment the shader is applied. Since that texture cannot be known before the object
+     * is actually being drawn, this overload can be used to tell the shader to use it when applied.
      *
      * @param name the parameter's name.
      * @param t    should be {@link Shader#CURRENT_TEXTURE}.

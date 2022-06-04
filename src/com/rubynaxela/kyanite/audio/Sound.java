@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2021-2022 Alex Pawelski
+ *
+ * Licensed under the Silicon License, Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://rubynaxela.github.io/Silicon-License/plain_text.txt
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
 package com.rubynaxela.kyanite.audio;
 
 import com.rubynaxela.kyanite.util.Time;
@@ -103,10 +117,8 @@ public class Sound extends org.jsfml.audio.Sound {
     }
 
     /**
-     * Enables or disables repeated looping of the sound.
-     * <p/>
-     * If this is set to {@code true} and the sound has finished playing, it will
-     * be restarted from the beginning as if {@code setPlayingOffset(Time.ZERO)} was called.
+     * Enables or disables repeated looping of the sound. If this is set to {@code true} and the sound has finished
+     * playing, it will be restarted from the beginning as if {@code setPlayingOffset(Time.ZERO)} was called.
      *
      * @param loop {@code true} to enable looping, {@code false} to disable.
      */
