@@ -2,7 +2,6 @@ package org.jsfml.graphics;
 
 import com.rubynaxela.kyanite.core.Intercom;
 import com.rubynaxela.kyanite.core.SFMLNativeObject;
-import com.rubynaxela.kyanite.graphics.ConstFont;
 
 import java.nio.Buffer;
 

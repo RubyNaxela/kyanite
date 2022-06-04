@@ -1,10 +1,10 @@
 package com.rubynaxela.kyanite.graphics;
 
 /**
- * Provides text style constants. These constants can be combined
- * using an arithmetic {@code OR} operation to define a text style.
+ * Provides font style constants. These constants can be combined
+ * using an arithmetic {@code OR} operation to define a font style.
  */
-public interface TextStyle {
+public interface FontStyle {
 
     /**
      * Regular drawing style.

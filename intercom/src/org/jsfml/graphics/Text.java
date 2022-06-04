@@ -1,10 +1,8 @@
 package org.jsfml.graphics;
 
 import com.rubynaxela.kyanite.core.Intercom;
-import com.rubynaxela.kyanite.graphics.Drawable;
-import com.rubynaxela.kyanite.graphics.Font;
+import com.rubynaxela.kyanite.graphics.Typeface;
 import com.rubynaxela.kyanite.graphics.SFMLNativeTransformable;
-import com.rubynaxela.kyanite.graphics.TextStyle;
 
 import java.nio.Buffer;
 
@@ -26,7 +24,7 @@ public abstract class Text extends SFMLNativeTransformable {
 
     protected native void nativeSetString(String string);
 
-    protected native void nativeSetFont(Font font);
+    protected native void nativeSetFont(Typeface typeFace);
 
     protected native void nativeSetCharacterSize(int characterSize);
 

@@ -1,135 +1,93 @@
 package com.rubynaxela.kyanite.graphics;
 
-import com.rubynaxela.kyanite.core.IntercomHelper;
-import com.rubynaxela.kyanite.core.NativeRef;
-import com.rubynaxela.kyanite.core.SFMLErrorCapture;
-import com.rubynaxela.kyanite.core.StreamUtil;
-import com.rubynaxela.kyanite.math.IntRect;
-import com.rubynaxela.kyanite.system.IOException;
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.InputStream;
-import java.nio.IntBuffer;
-import java.nio.file.Path;
-import java.util.Map;
-import java.util.TreeMap;
-
 /**
- * Holds a character font for use in text displays.
+ * Holds a {@link Typeface} along with the font style and the character size for use in text displays.
  */
-@SuppressWarnings("deprecation")
-public class Font extends org.jsfml.graphics.Font implements ConstFont {
+public class Font {
 
-    private final Map<Integer, SizeInfo> sizeInfos = new TreeMap<>();
-
-    /**
-     * Memory reference and heap pointer that keeps alive the data input stream for freetype.
-     */
-    private final NativeRef<byte[]> memoryRef = new NativeRef<>() {
-        @Override
-        protected long nativeInitialize(byte[] ref) {
-            return nativeLoadFromMemory(ref);
-        }
-
-        @Override
-        protected void nativeRelease(byte[] ref, long ptr) {
-            nativeReleaseMemory(ref, ptr);
-        }
-    };
+    private final ConstTypeface typeface;
+    private final int size, style;
+    private final boolean antialiasing;
 
     /**
-     * Constructs a new font.
-     */
-    public Font() {
-    }
-
-    /**
-     * Fully loads all available bytes from an {@link java.io.InputStream} and attempts to load the texture from it.
+     * Creates a new font.
      *
-     * @param in the input stream to read from
-     * @throws IOException in case an I/O error occurs
+     * @param typeface     the font face
+     * @param size         the character size
+     * @param style        the font style
+     * @param antialiasing {@code true} to enable font antialiasing; {@code false} to disable
      */
-    public void loadFromStream(@NotNull InputStream in) throws IOException {
-        SFMLErrorCapture.start();
-        memoryRef.initialize(StreamUtil.readStream(in));
-        final String msg = SFMLErrorCapture.finish();
-        if (memoryRef.isNull()) throw new IOException(msg);
+    public Font(@NotNull Typeface typeface, int size,
+                @MagicConstant(flagsFromClass = FontStyle.class) int style, boolean antialiasing) {
+        this.typeface = typeface;
+        this.size = size;
+        this.style = style;
+        this.antialiasing = antialiasing;
     }
 
     /**
-     * Attempts to load the texture from a file.
+     * Creates a new font. Font antialiasing is enabled.
      *
-     * @param path the path to the file to load the texture from
-     * @throws IOException in case an I/O error occurs
+     * @param typeface the font face
+     * @param size     the character size
+     * @param style    the font style
      */
-    public void loadFromFile(@NotNull Path path) throws IOException {
-        SFMLErrorCapture.start();
-        memoryRef.initialize(StreamUtil.readFile(path));
-        final String msg = SFMLErrorCapture.finish();
-        if (memoryRef.isNull()) throw new IOException(msg);
+    public Font(@NotNull Typeface typeface, int size, @MagicConstant(flagsFromClass = FontStyle.class) int style) {
+        this(typeface, size, style, true);
     }
 
-    private SizeInfo getSizeInfo(int characterSize) {
-        SizeInfo info = sizeInfos.get(characterSize);
-        if (info == null) {
-            final int lineSpacing = nativeGetLineSpacing(characterSize);
-            final long p = nativeGetTexture(characterSize);
-            final ConstTexture tex = (p != 0) ? new Texture(p) : null;
-            info = new SizeInfo(characterSize, lineSpacing, tex);
-            sizeInfos.put(characterSize, info);
-        }
-        return info;
+    /**
+     * Creates a new font with default style.
+     *
+     * @param typeface     the font face
+     * @param size         the character size
+     * @param antialiasing {@code true} to enable font antialiasing; {@code false} to disable
+     */
+    public Font(@NotNull Typeface typeface, int size, boolean antialiasing) {
+        this(typeface, size, FontStyle.REGULAR, antialiasing);
     }
 
-    @Override
-    public Glyph getGlyph(int unicode, int characterSize, boolean bold) {
-        final SizeInfo info = getSizeInfo(characterSize);
-        final Map<Integer, Glyph> glyphMap = bold ? info.boldGlyphs : info.glyphs;
-        Glyph glyph = glyphMap.get(unicode);
-        if (glyph == null) {
-            final IntBuffer buf = IntercomHelper.getBuffer().asIntBuffer();
-            nativeGetGlyph(unicode, characterSize, bold, buf);
-            glyph = new Glyph(buf.get(0),
-                              new IntRect(buf.get(1), buf.get(2), buf.get(3), buf.get(4)),
-                              new IntRect(buf.get(5), buf.get(6), buf.get(7), buf.get(8)));
-            glyphMap.put(unicode, glyph);
-        }
-        return glyph;
+    /**
+     * Creates a new font with default style. Font antialiasing is enabled.
+     *
+     * @param typeface the font face
+     * @param size     the character size
+     */
+    public Font(@NotNull Typeface typeface, int size) {
+        this(typeface, size, FontStyle.REGULAR, true);
     }
 
-    @Override
-    public int getKerning(int first, int second, int characterSize) {
-        final SizeInfo info = getSizeInfo(characterSize);
-        final long x = ((long) first << 32) | (long) second;
-        Integer kerning = info.kerning.get(x);
-        if (kerning == null) {
-            kerning = nativeGetKerning(first, second, characterSize);
-            info.kerning.put(x, kerning);
-        }
-        return kerning;
+    /**
+     * @return the font face
+     */
+    public ConstTypeface getTypeface() {
+        return typeface;
     }
 
-    @Override
-    public int getLineSpacing(int characterSize) {
-        return getSizeInfo(characterSize).lineSpacing;
+    /**
+     * @return the character size of this font
+     */
+    public int getSize() {
+        return size;
     }
 
-    @Override
-    public ConstTexture getTexture(int characterSize) {
-        return getSizeInfo(characterSize).texture;
+    /**
+     * @return the style of this font
+     */
+    @MagicConstant(flagsFromClass = FontStyle.class)
+    public int getStyle() {
+        return style;
     }
 
-    private static class SizeInfo {
-
-        final int characterSize, lineSpacing;
-        final ConstTexture texture;
-        final Map<Long, Integer> kerning = new TreeMap<>();
-        final Map<Integer, Glyph> glyphs = new TreeMap<>(), boldGlyphs = new TreeMap<>();
-
-        SizeInfo(int characterSize, int lineSpacing, ConstTexture texture) {
-            this.characterSize = characterSize;
-            this.lineSpacing = lineSpacing;
-            this.texture = texture;
-        }
+    /**
+     * Whether antialiasing is enabled for this font.
+     *
+     * @return {@code true} if antialiasing is enabled; {@code false} otherwise
+     */
+    public boolean antialiasingEnabled() {
+        return antialiasing;
     }
 }

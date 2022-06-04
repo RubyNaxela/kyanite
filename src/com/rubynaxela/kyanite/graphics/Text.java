@@ -1,11 +1,11 @@
 package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.Vector2f;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -14,43 +14,50 @@ import java.util.Objects;
  * implements the {@code TextStyle} interface for quick access to the constants provided by it.
  */
 @SuppressWarnings("deprecation")
-public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle, BoundsObject {
+public class Text extends org.jsfml.graphics.Text implements Drawable, FontStyle, BoundsObject {
 
-    private ConstFont font = null;
-    private String string = "";
+    private static final Font DEFAULT_FONT = new Font(Typeface.JETBRAINS_MONO, 32, REGULAR);
+    private Font font;
+    private String text;
     private Color color = Colors.WHITE;
-    private int style = TextStyle.REGULAR, characterSize = 30;
     private boolean boundsNeedUpdate = true;
     private FloatRect localBounds = null, globalBounds = null;
+    private Alignment alignment = Alignment.TOP_LEFT;
 
     /**
-     * Creates a new empty text.
+     * Creates a new empty text with default font ({@link Typeface#JETBRAINS_MONO}, 32px, regular).
      */
     public Text() {
+        this("", DEFAULT_FONT);
+    }
+
+    /**
+     * Creates a new empty text with the specified font.
+     *
+     * @param font the font face to use
+     */
+    public Text(@NotNull Font font) {
+        this("", font);
+    }
+
+    /**
+     * Creates a new text with the specified string and default font ({@link Typeface#JETBRAINS_MONO}, 32px, regular).
+     *
+     * @param text the text string
+     */
+    public Text(@NotNull String text) {
+        this(text, DEFAULT_FONT);
     }
 
     /**
      * Creates a new text.
      *
-     * @param string the text string
-     * @param font   the font to use
+     * @param text the text string
+     * @param font the font to use
      */
-    public Text(@NotNull String string, @NotNull ConstFont font) {
+    public Text(@NotNull String text, @NotNull Font font) {
         setFont(font);
-        setText(string);
-    }
-
-    /**
-     * Creates a new text.
-     *
-     * @param string        the text string
-     * @param font          the font to use
-     * @param characterSize the font size
-     */
-    public Text(@NotNull String string, @NotNull ConstFont font, int characterSize) {
-        setCharacterSize(characterSize);
-        setFont(font);
-        setText(string);
+        setText(text);
     }
 
     /**
@@ -59,7 +66,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      * @return the text strng
      */
     public String getText() {
-        return string;
+        return text;
     }
 
     /**
@@ -68,9 +75,10 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      * @param string the string to display
      */
     public void setText(String string) {
-        this.string = Objects.requireNonNull(string);
+        this.text = Objects.requireNonNull(string);
         nativeSetString(string);
         boundsNeedUpdate = true;
+        updateOrigin();
     }
 
     /**
@@ -78,8 +86,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      *
      * @return The text's current font (may be {@code null} if no font has been set yet)
      */
-    @Nullable
-    public ConstFont getFont() {
+    public Font getFont() {
         return font;
     }
 
@@ -88,10 +95,44 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      *
      * @param font the text's font
      */
-    public void setFont(@NotNull ConstFont font) {
+    public void setFont(@NotNull Font font) {
         this.font = Objects.requireNonNull(font);
-        nativeSetFont((Font) font);
+        nativeSetFont((Typeface) font.getTypeface());
+        setCharacterSize(font.getSize());
+        setStyle(font.getStyle());
         boundsNeedUpdate = true;
+        updateOrigin();
+    }
+
+    /**
+     * Gets the text's current typeface.
+     *
+     * @return the text's current typeface
+     */
+    public ConstTypeface getTypeface() {
+        return font.getTypeface();
+    }
+
+    /**
+     * Sets the typeface for this text.
+     *
+     * @param typeface the typeface for this text
+     */
+    public void setTypeface(@NotNull ConstTypeface typeface) {
+        setTypeface(typeface, true);
+    }
+
+    /**
+     * Sets the typeface for this text.
+     *
+     * @param typeface     the typeface for this text
+     * @param antialiasing {@code true} to enable font antialiasing; {@code false} to disable
+     */
+    public void setTypeface(@NotNull ConstTypeface typeface, boolean antialiasing) {
+        nativeSetFont((Typeface) typeface);
+        font = new Font((Typeface) typeface, font.getSize(), font.getStyle(), antialiasing);
+        boundsNeedUpdate = true;
+        updateOrigin();
     }
 
     /**
@@ -100,7 +141,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      * @return the text's current font size
      */
     public int getCharacterSize() {
-        return characterSize;
+        return font.getSize();
     }
 
     /**
@@ -110,8 +151,10 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      */
     public void setCharacterSize(int characterSize) {
         nativeSetCharacterSize(characterSize);
-        this.characterSize = characterSize;
+        font = new Font((Typeface) font.getTypeface(), characterSize, font.getStyle(), font.antialiasingEnabled());
+        ((Texture) font.getTypeface().getTexture(characterSize)).setSmooth(font.antialiasingEnabled());
         boundsNeedUpdate = true;
+        updateOrigin();
     }
 
     /**
@@ -121,7 +164,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      * @see Text#setStyle(int)
      */
     public int getStyle() {
-        return style;
+        return font.getStyle();
     }
 
     /**
@@ -129,10 +172,11 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
      *
      * @param style the font drawing style
      */
-    public void setStyle(@MagicConstant(flagsFromClass = TextStyle.class) int style) {
+    public void setStyle(@MagicConstant(flagsFromClass = FontStyle.class) int style) {
         nativeSetStyle(style);
-        this.style = style;
+        font = new Font((Typeface) font.getTypeface(), font.getSize(), style, font.antialiasingEnabled());
         boundsNeedUpdate = true;
+        updateOrigin();
     }
 
     /**
@@ -155,13 +199,32 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
     }
 
     /**
+     * @return the alignment mode of this text
+     */
+    public Alignment getAlignment() {
+        return alignment;
+    }
+
+    /**
+     * Sets the alignment mode of this text. The default value is {@code TOP_LEFT}. This does
+     * not properly align multiline texts in horizontal direction. For proper multiline text
+     * alignment, build a {@link CompoundEntity} consisting of multiple {@code Text} objects.
+     *
+     * @param alignment the new alignment mode of this text
+     */
+    public void setAlignment(@NotNull Alignment alignment) {
+        this.alignment = alignment;
+        updateOrigin();
+    }
+
+    /**
      * Returns the position of a character inside the string.
      *
      * @param i the index of the character to return the position for
      * @return the position of the character at the given index
      */
     public Vector2f findCharacterPos(int i) {
-        if (i < 0 || i >= string.length()) throw new StringIndexOutOfBoundsException(Integer.toString(i));
+        if (i < 0 || i >= text.length()) throw new StringIndexOutOfBoundsException(Integer.toString(i));
         return IntercomHelper.decodeVector2f(nativeFindCharacterPos(i));
     }
 
@@ -173,6 +236,22 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, TextStyle
             globalBounds = IntercomHelper.decodeFloatRect();
             boundsNeedUpdate = false;
         }
+    }
+
+    private void updateOrigin() {
+        final float width = getGlobalBounds().width, height = getGlobalBounds().height;
+        switch (alignment) {
+            case TOP_LEFT -> setOrigin(0, 0);
+            case TOP_CENTER -> setOrigin(width / 2, 0);
+            case TOP_RIGHT -> setOrigin(width, 0);
+            case CENTER_LEFT -> setOrigin(0, height / 2);
+            case CENTER -> setOrigin(width / 2, height / 2);
+            case CENTER_RIGHT -> setOrigin(width, height / 2);
+            case BOTTOM_LEFT -> setOrigin(0, height);
+            case BOTTOM_CENTER -> setOrigin(width / 2, height);
+            case BOTTOM_RIGHT -> setOrigin(width, height);
+        }
+        boundsNeedUpdate = true;
     }
 
     /**

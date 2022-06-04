@@ -5,11 +5,11 @@ import com.rubynaxela.kyanite.core.Const;
 /**
  * Interface for read-only fonts. It provides methods to can gain information from a font,
  * but none to modify it in any way. Note that this interface is expected to be implemented
- * by a {@link Font}. It is not recommended to be implemented outside of the Kyanite API.
+ * by a {@link Typeface}. It is not recommended to be implemented outside of the Kyanite API.
  *
  * @see Const
  */
-public interface ConstFont extends Const {
+public interface ConstTypeface extends Const {
 
     /**
      * Gets a glyph information structure from the font.
