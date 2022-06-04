@@ -1,4 +1,4 @@
-package com.rubynaxela.kyanite.util.data;
+package com.rubynaxela.kyanite.data;
 
 import com.rubynaxela.kyanite.system.IOException;
 import org.jetbrains.annotations.Contract;

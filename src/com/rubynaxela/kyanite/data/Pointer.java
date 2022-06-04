@@ -1,4 +1,4 @@
-package com.rubynaxela.kyanite.util;
+package com.rubynaxela.kyanite.data;
 
 import org.jetbrains.annotations.Nullable;
 

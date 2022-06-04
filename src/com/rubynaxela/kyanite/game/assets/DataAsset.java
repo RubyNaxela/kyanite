@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.game.assets;
 
-import com.rubynaxela.kyanite.util.JSONDictonary;
-import com.rubynaxela.kyanite.util.data.DataFile;
+import com.rubynaxela.kyanite.data.JSONDictonary;
+import com.rubynaxela.kyanite.data.DataFile;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 

@@ -1,7 +1,7 @@
 package com.rubynaxela.kyanite.math;
 
 import com.rubynaxela.kyanite.game.entities.GlobalRect;
-import com.rubynaxela.kyanite.util.Pair;
+import com.rubynaxela.kyanite.data.Pair;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import com.rubynaxela.kyanite.graphics.CircleShape;

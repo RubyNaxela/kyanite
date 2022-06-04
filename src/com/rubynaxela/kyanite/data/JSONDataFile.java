@@ -1,8 +1,6 @@
-package com.rubynaxela.kyanite.util.data;
+package com.rubynaxela.kyanite.data;
 
 import com.rubynaxela.kyanite.system.IOException;
-import com.rubynaxela.kyanite.util.Dictionary;
-import com.rubynaxela.kyanite.util.JSONDictonary;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

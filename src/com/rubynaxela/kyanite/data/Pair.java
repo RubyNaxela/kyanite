@@ -1,4 +1,4 @@
-package com.rubynaxela.kyanite.util;
+package com.rubynaxela.kyanite.data;
 
 /**
  * A simple two-value tuple. The values may be objects of different classes.
