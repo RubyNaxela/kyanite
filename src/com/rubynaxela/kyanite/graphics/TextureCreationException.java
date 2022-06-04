@@ -7,7 +7,7 @@ import java.io.Serial;
 /**
  * Thrown if a texture failed to be created.
  */
-public class TextureCreationException extends Exception {
+public class TextureCreationException extends RuntimeException {
 
     @Serial
     private static final long serialVersionUID = -3423733954575177518L;

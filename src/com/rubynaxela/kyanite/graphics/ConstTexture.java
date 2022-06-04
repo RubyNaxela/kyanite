@@ -38,5 +38,5 @@ public interface ConstTexture extends Const {
      *
      * @return {@code true} if enabled, {@code false} if disabled
      */
-    boolean isRepeated();
+    boolean isTileable();
 }

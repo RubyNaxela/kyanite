@@ -1,13 +1,9 @@
 package com.rubynaxela.kyanite.game;
 
-import com.rubynaxela.kyanite.game.assets.Texture;
-import com.rubynaxela.kyanite.graphics.Colors;
+import com.rubynaxela.kyanite.graphics.*;
 import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.graphics.Color;
-import com.rubynaxela.kyanite.graphics.Drawable;
-import com.rubynaxela.kyanite.graphics.RectangleShape;
 
 import java.util.*;
 import java.util.function.Consumer;

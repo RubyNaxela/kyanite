@@ -1,11 +1,9 @@
-package com.rubynaxela.kyanite.game.assets;
+package com.rubynaxela.kyanite.graphics;
 
-import com.rubynaxela.kyanite.graphics.Drawable;
+import com.rubynaxela.kyanite.game.assets.Asset;
 import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.util.Utils;
 import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.graphics.Shape;
-import com.rubynaxela.kyanite.graphics.Sprite;
 
 import java.util.HashMap;
 import java.util.Map;

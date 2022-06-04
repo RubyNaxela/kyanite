@@ -2,11 +2,11 @@ package com.rubynaxela.kyanite.game.entities;
 
 import com.rubynaxela.kyanite.game.GameContext;
 import com.rubynaxela.kyanite.game.Scene;
-import com.rubynaxela.kyanite.game.assets.Texture;
-import org.jetbrains.annotations.NotNull;
 import com.rubynaxela.kyanite.graphics.CircleShape;
-import com.rubynaxela.kyanite.util.Time;
+import com.rubynaxela.kyanite.graphics.Texture;
 import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.util.Time;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a temporary object displaying a sequence of textures during its lifetime.

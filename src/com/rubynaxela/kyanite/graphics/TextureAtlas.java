@@ -1,12 +1,11 @@
-package com.rubynaxela.kyanite.game.assets;
+package com.rubynaxela.kyanite.graphics;
 
-import com.rubynaxela.kyanite.system.IOException;
-import com.rubynaxela.kyanite.math.Vec2;
-import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.graphics.Image;
+import com.rubynaxela.kyanite.game.assets.Asset;
 import com.rubynaxela.kyanite.math.IntRect;
-import com.rubynaxela.kyanite.graphics.TextureCreationException;
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.math.Vector2i;
+import com.rubynaxela.kyanite.system.IOException;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStream;
@@ -84,12 +83,7 @@ public class TextureAtlas implements Asset {
         if (!cache.containsKey(bounds)) {
             if (width < 0) throw new IllegalArgumentException("endX must be greater than startX");
             if (height < 0) throw new IllegalArgumentException("endY must be greater than startY");
-            final com.rubynaxela.kyanite.graphics.Texture target = new com.rubynaxela.kyanite.graphics.Texture();
-            try {
-                target.loadFromImage(atlas, bounds);
-            } catch (TextureCreationException e) {
-                throw new RuntimeException(e.getMessage(), e);
-            }
+            final Texture target = new Texture(atlas, bounds);
             final Texture texture = new Texture(target);
             cache.put(bounds, texture);
             return texture;

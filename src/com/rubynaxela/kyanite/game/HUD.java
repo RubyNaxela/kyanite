@@ -1,6 +1,6 @@
 package com.rubynaxela.kyanite.game;
 
-import com.rubynaxela.kyanite.game.assets.AnimatedTexture;
+import com.rubynaxela.kyanite.graphics.AnimatedTexture;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;

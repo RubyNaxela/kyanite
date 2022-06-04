@@ -81,7 +81,7 @@ public class RenderTexture extends org.jsfml.graphics.RenderTexture implements R
      * @return {@code true} if enabled, {@code false} if disabled
      */
     public boolean isRepeated() {
-        return texture.isRepeated();
+        return texture.isTileable();
     }
 
     /**
@@ -90,7 +90,7 @@ public class RenderTexture extends org.jsfml.graphics.RenderTexture implements R
      * @param repeated {@code true} to enable, {@code false} to disable
      */
     public void setRepeated(boolean repeated) {
-        texture.setRepeated(repeated);
+        texture.setTileable(repeated);
     }
 
     /**
