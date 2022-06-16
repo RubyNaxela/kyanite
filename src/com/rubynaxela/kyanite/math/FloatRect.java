@@ -22,7 +22,7 @@ import java.io.Serializable;
 /**
  * Represents an axis-aligned rectangle using floating point coordinates.
  */
-public final strictfp class FloatRect implements Serializable {
+public final class FloatRect implements Serializable {
 
     /**
      * An empty rectangle with no dimensions.

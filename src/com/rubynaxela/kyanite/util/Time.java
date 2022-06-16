@@ -23,8 +23,7 @@ import java.io.Serializable;
  * Represents a time period and provides functionality to convert between
  * various time units, as well as arithmetic operations on time intervals.
  */
-@SuppressWarnings("ClassCanBeRecord")
-public final strictfp class Time implements Comparable<Time>, Serializable {
+public final class Time implements Comparable<Time>, Serializable {
 
     /**
      * A time object that represents a zero time period, i.e. with no duration.

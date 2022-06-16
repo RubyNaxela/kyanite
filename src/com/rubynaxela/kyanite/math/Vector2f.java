@@ -21,7 +21,7 @@ import java.io.Serializable;
  * Represents two-dimensional vectors using floating point coordinates and provides
  * arithmetic operations on floating point 2D vectors.
  */
-public final strictfp class Vector2f implements Serializable {
+public final class Vector2f implements Serializable {
 
     /**
      * The zero vector.

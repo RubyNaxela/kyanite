@@ -25,7 +25,7 @@ import java.util.Arrays;
 /**
  * Defines a 3x3 transformation matrix for 2D transformations.
  */
-public final strictfp class Transform implements Serializable {
+public final class Transform implements Serializable {
 
     /**
      * The identity transformation, maps any vector to itself and therefore "does nothing".

@@ -21,7 +21,7 @@ import java.io.Serializable;
  * Represents three-dimensional vectors using floating point coordinates and provides
  * arithmetic operations on floating point 3D vectors.
  */
-public final strictfp class Vector3f implements Serializable {
+public final class Vector3f implements Serializable {
 
     /**
      * The zero vector.

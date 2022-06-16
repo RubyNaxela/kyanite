@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Provides aliases for {@link Vector2f}'s and {@link Vector2i}'s constructors as well as arithmetic operations with both types.
  */
-public final strictfp class Vec2 {
+public final class Vec2 {
 
     private Vec2() {
     }
