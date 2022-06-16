@@ -105,7 +105,7 @@ public class AnimatedTexture implements Asset {
      */
     public void update(@NotNull Object object, @NotNull Time elapsedTime) {
         final int frame = (int) (elapsedTime.asSeconds() / frameDuration) % frames.length;
-        if (object instanceof final Shape shape) frames[frame].apply(shape);
-        if (object instanceof final Sprite sprite) frames[frame].apply(sprite);
+        if (object instanceof final Shape shape) shape.setTexture(frames[frame]);
+        else if (object instanceof final Sprite sprite) sprite.setTexture(frames[frame]);
     }
 }

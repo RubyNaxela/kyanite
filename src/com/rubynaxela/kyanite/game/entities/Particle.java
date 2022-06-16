@@ -62,7 +62,7 @@ public class Particle extends CircleShape implements AnimatedEntity, MovingEntit
     }
 
     private void nextFrame() {
-        frames[stage++].apply(this);
+        setTexture(frames[stage++]);
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.rubynaxela.kyanite.core.IntercomHelper;
 import com.rubynaxela.kyanite.core.SFMLErrorCapture;
 import com.rubynaxela.kyanite.core.SFMLNative;
 import com.rubynaxela.kyanite.core.UnsafeOperations;
+import com.rubynaxela.kyanite.data.Pair;
 import com.rubynaxela.kyanite.game.assets.Asset;
 import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.IntRect;
@@ -215,10 +216,35 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
 
     /**
      * Activates a texture for rendering, using the {@link Texture.CoordinateType#NORMALIZED} coordinate type.
+     *
      * @param texture the texture to bind, or {@code null} to indicate that no texture is to be used
      */
     public static void bind(@Nullable ConstTexture texture) {
         bind(texture, CoordinateType.NORMALIZED);
+    }
+
+    /**
+     * @return a {@link Pair} of two {@code boolean}s: the first one indicating if the texture needs
+     * to be updated; the second one indicating if the texture rectangle was affected by this method
+     */
+    static Pair<Boolean, Boolean> checkUpdates(@Nullable ConstTexture constTexture, @NotNull SceneObject sceneObject) {
+        if (sceneObject.getTexture() == constTexture) return new Pair<>(false, false);
+        final Texture texture = (Texture) constTexture;
+        final FloatRect bounds = sceneObject.getGlobalBounds();
+        boolean textureRectAffected = false;
+        if (texture != null) {
+            if (texture.isTileable()) {
+                texture.checkBounds(bounds);
+                sceneObject.setTextureRect(new IntRect(0, 0, (int) bounds.width, (int) bounds.height));
+                textureRectAffected = true;
+            }
+            if (texture.missing) {
+                sceneObject.setTextureRect(new IntRect(0, 0, (int) bounds.width, (int) bounds.height));
+                if (!texture.suppressWarning) new IOException("Missing texture: " + texture.path).printStackTrace();
+                textureRectAffected = true;
+            }
+        }
+        return new Pair<>(true, textureRectAffected);
     }
 
     private void loadFromStream(@NotNull InputStream in, @NotNull IntRect area) throws IOException {
@@ -259,26 +285,6 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
                                           "is non-zero on both axes before applying a tileable texture.");
     }
 
-    /**
-     * Applies this texture on the specified {@link SceneObject}. Does not affect the texture rectangle, unless the
-     * texture is set to be tileable. If {@code shape} has this texture already applied, this method does nothing.
-     *
-     * @param sceneObject the {@link SceneObject} to apply this texture on
-     */
-    public void apply(@NotNull SceneObject sceneObject) {
-        if (sceneObject.getTexture() == this) return;
-        final FloatRect bounds = sceneObject.getGlobalBounds();
-        if (isTileable()) {
-            checkBounds(bounds);
-            sceneObject.setTextureRect(new IntRect(0, 0, (int) bounds.width, (int) bounds.height));
-        }
-        if (missing) {
-            sceneObject.setTextureRect(new IntRect(0, 0, (int) bounds.width, (int) bounds.height));
-            if (!suppressWarning) new IOException("Missing texture: " + path).printStackTrace();
-        }
-        sceneObject.setTexture(this);
-    }
-
     private void updateSize() {
         size = IntercomHelper.decodeVector2i(nativeGetSize());
     }
@@ -314,6 +320,7 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
         this.smooth = smooth;
     }
 
+    @Override
     public boolean isTileable() {
         return repeated;
     }
@@ -376,7 +383,7 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
      */
     public RectangleShape createRectangleShape(boolean originAtCenter) {
         final RectangleShape rectangle = new RectangleShape(Vec2.f(getSize()));
-        apply(rectangle);
+        rectangle.setTexture(this);
         if (originAtCenter) rectangle.setOrigin(Vec2.divide(Vec2.f(getSize()), 2));
         return rectangle;
     }

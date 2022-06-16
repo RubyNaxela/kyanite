@@ -15,6 +15,7 @@
 package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.data.Pair;
 import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.IntRect;
 import com.rubynaxela.kyanite.math.Vector2f;
@@ -187,8 +188,9 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     }
 
     /**
-     * Sets the texture of the shape without affecting the texture rectangle.
-     * The texture may be {@code null} if no texture is to be used.
+     * Sets the texture of the shape without affecting the texture rectangle, unless the texture
+     * is set to be tileable. If this {@code Sprite} has this texture already applied, this
+     * method does nothing. The texture may be {@code null} if no texture is to be used.
      *
      * @param texture the texture of the shape, or {@code null} to indicate that no texture is to be used
      */
@@ -198,15 +200,20 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     }
 
     /**
-     * Sets the texture of the shape. The texture may be {@code null} if no texture is to be used.
+     * Sets the texture of the shape. If this {@code Sprite} has this texture already applied,
+     * this method does nothing. The texture may be {@code null} if no texture is to be used.
      *
      * @param texture   the texture of the shape, or {@code null} to indicate that no texture is to be used
      * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
+     *                  (this setting is ignored if {@code texture} is tileable)
      */
     @Override
     public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
-        this.texture = texture;
-        nativeSetTexture((Texture) texture, resetRect);
+        final Pair<Boolean, Boolean> updates = Texture.checkUpdates(texture, this);
+        if (updates.value1()) {
+            this.texture = texture;
+            nativeSetTexture((Texture) texture, resetRect && !updates.value2());
+        }
     }
 
     /**

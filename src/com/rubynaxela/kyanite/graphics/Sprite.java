@@ -15,6 +15,7 @@
 package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.data.Pair;
 import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.IntRect;
 import com.rubynaxela.kyanite.math.Vector2f;
@@ -124,7 +125,8 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
     }
 
     /**
-     * Sets the texture of this sprite without affecting the texture rectangle.
+     * Sets the texture of this sprite without affecting the texture rectangle, unless the texture is set
+     * to be tileable. If this {@code Sprite} has this texture already applied, this method does nothing.
      *
      * @param texture the new texture
      */
@@ -134,17 +136,21 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
     }
 
     /**
-     * Sets the texture of this sprite.
+     * Sets the texture of this sprite. If this {@code Sprite} has this texture already applied, this method does nothing.
      *
      * @param texture   the new texture
-     * @param resetRect {@code true} to reset the texture rectangle, {@code false} otherwise
+     * @param resetRect {@code true} to reset the texture rectangle, {@code false}
+     *                  otherwise (this setting is ignored if {@code texture} is tileable)
      */
     @Override
     public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
-        nativeSetTexture((Texture) texture, resetRect);
-        this.texture = texture;
-        if (resetRect) textureRect = IntRect.EMPTY;
-        boundsNeedUpdate = true;
+        final Pair<Boolean, Boolean> updates = Texture.checkUpdates(texture,this);
+        if (updates.value1()) {
+            nativeSetTexture((Texture) texture, resetRect);
+            this.texture = texture;
+            if (resetRect && !updates.value2()) textureRect = IntRect.EMPTY;
+            boundsNeedUpdate = true;
+        }
     }
 
     /**

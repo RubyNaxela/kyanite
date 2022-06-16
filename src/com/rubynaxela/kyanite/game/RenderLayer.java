@@ -103,7 +103,7 @@ public abstract class RenderLayer implements Iterable<Drawable> {
     public void refreshBackgroundTexture() {
         if (backgroundTexture != null) {
             background = new RectangleShape(Vec2.f(GameContext.getInstance().getWindow().getSize()));
-            backgroundTexture.apply(background);
+            background.setTexture(backgroundTexture);
         }
     }
 
