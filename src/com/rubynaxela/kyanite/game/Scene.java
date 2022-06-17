@@ -14,18 +14,18 @@
 
 package com.rubynaxela.kyanite.game;
 
-import com.rubynaxela.kyanite.util.Time;
-import com.rubynaxela.kyanite.graphics.AnimatedTexture;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
+import com.rubynaxela.kyanite.graphics.AnimatedTexture;
+import com.rubynaxela.kyanite.graphics.Drawable;
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.physics.GravityAffected;
 import com.rubynaxela.kyanite.system.Clock;
-import com.rubynaxela.kyanite.math.Vec2;
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.graphics.Drawable;
 
 import java.util.ConcurrentModificationException;
 
@@ -124,6 +124,15 @@ public abstract class Scene extends RenderLayer {
     public Time getDeltaTime() {
         if (previousFrameTime == null || previousFrameTime.equals(currentFrameTime)) return estimatedTime();
         return Time.sub(currentFrameTime, previousFrameTime);
+    }
+
+    /**
+     * Gets the elapsed time since the game was started.
+     *
+     * @return the elapsed time since the game was started
+     */
+    public Time getElapsedTime() {
+        return clock.getTime();
     }
 
     /**
