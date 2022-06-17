@@ -14,13 +14,13 @@
 
 package com.rubynaxela.kyanite.core;
 
+import com.rubynaxela.kyanite.graphics.Color;
+import com.rubynaxela.kyanite.graphics.Transform;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.math.IntRect;
 import com.rubynaxela.kyanite.math.Vector2f;
 import com.rubynaxela.kyanite.math.Vector2i;
 import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.graphics.Color;
-import com.rubynaxela.kyanite.math.FloatRect;
-import com.rubynaxela.kyanite.math.IntRect;
-import com.rubynaxela.kyanite.graphics.Transform;
 
 import java.nio.*;
 
@@ -51,7 +51,7 @@ public final class IntercomHelper {
      * @return the encoded color
      */
     public static int encodeColor(@NotNull Color color) {
-        return (color.a << 24) | (color.b << 16) | (color.g << 8) | color.r;
+        return ((int) color.a << 24) | ((int) color.b << 16) | (color.g << 8) | color.r;
     }
 
     /**

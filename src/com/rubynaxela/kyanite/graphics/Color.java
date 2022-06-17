@@ -14,7 +14,9 @@
 
 package com.rubynaxela.kyanite.graphics;
 
+import com.rubynaxela.kyanite.core.IntercomHelper;
 import com.rubynaxela.kyanite.math.MathUtils;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
@@ -31,19 +33,19 @@ public final class Color implements Serializable {
     /**
      * The red component of the color, ranging between 0 and 255.
      */
-    public final int r;
+    public final short r;
     /**
      * The green component of the color, ranging between 0 and 255.
      */
-    public final int g;
+    public final short g;
     /**
      * The blue component of the color, ranging between 0 and 255.
      */
-    public final int b;
+    public final short b;
     /**
      * The alpha component of the color, ranging between 0 (transparent) and 255 (fully opaque).
      */
-    public final int a;
+    public final short a;
 
     /**
      * Constructs a new color with the specified color components and an alpha value of 255 (fully opaque)
@@ -69,19 +71,6 @@ public final class Color implements Serializable {
         this.g = clamp(g);
         this.b = clamp(b);
         this.a = clamp(a);
-    }
-
-    /**
-     * Constructs a new color by copying another color and resetting the alpha value.
-     *
-     * @param color the color to copy
-     * @param alpha the alpha value of the new color, ranging between 0 (transparent) and 255 (fully opaque)
-     */
-    public Color(@NotNull Color color, int alpha) {
-        this.r = color.r;
-        this.g = color.g;
-        this.b = color.b;
-        this.a = clamp(alpha);
     }
 
     /**
@@ -117,17 +106,58 @@ public final class Color implements Serializable {
         return new Color((int) (color.r * f), (int) (color.g * f), (int) (color.b * f), (int) (color.a * f));
     }
 
-    private static int clamp(int x) {
-        return MathUtils.clamp(x, 0, 255);
+    private static short clamp(int x) {
+        return MathUtils.clamp(x, 0, 255).shortValue();
+    }
+
+    /**
+     * Creates a new color by copying this color and resetting the alpha value.
+     *
+     * @param alpha the alpha value of the new color, ranging between 0 (fully transparent) and 255 (fully opaque)
+     */
+    @Contract(pure = true, value = "_ -> new")
+    public Color withAlpha(int alpha) {
+        return new Color(r, g, b, alpha);
+    }
+
+    /**
+     * Creates a new color by copying this color and resetting the alpha value.
+     *
+     * @param opacity the color's opacity value ranging between {@code 0.0f} (fully transparent) and {@code 1.0f} (fully opaque)
+     */
+    @Contract(pure = true, value = "_ -> new")
+    public Color withOpacity(float opacity) {
+        return new Color(r, g, b, (int) (opacity * 255));
+    }
+
+    /**
+     * Creates a color darker than this color. Each component {@code c} of the resulting
+     * color (except alpha, which remains the same) is decreased by {@code factor * c}.
+     *
+     * @param factor darkening factor ranging between {@code 0.0f} (color unchanged) and {@code 1.0f} (color completely black)
+     * @return the resulting darkened color
+     */
+    @Contract(pure = true, value = "_ -> new")
+    public Color darker(float factor) {
+        final float f = 1 - factor;
+        return new Color((int) (r * f), (int) (g * f), (int) (b * f), a);
+    }
+
+    /**
+     * Returns a color brighter than this color. Each component {@code c} of the resulting
+     * color (except alpha, which remains the same) is increased by {@code factor * (255 - c)}.
+     *
+     * @param factor lightening factor ranging between {@code 0.0f} (color unchanged) and {@code 1.0f} (color completely white)
+     * @return the resulting lightened color
+     */
+    @Contract(pure = true, value = "_ -> new")
+    public Color brighter(float factor) {
+        return new Color((int) (r + factor * (255 - r)), (int) (g + factor * (255 - g)), (int) (b + factor * (255 - b)), a);
     }
 
     @Override
     public int hashCode() {
-        int result = r;
-        result = 31 * result + g;
-        result = 31 * result + b;
-        result = 31 * result + a;
-        return result;
+        return IntercomHelper.encodeColor(this);
     }
 
     @Override
