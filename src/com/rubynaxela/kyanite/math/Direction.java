@@ -23,40 +23,42 @@ public enum Direction {
     /**
      * The north direction.
      */
-    NORTH(Axis.Y),
+    NORTH(Axis.Y, Vec2.f(0, -1)),
     /**
      * The north-east direction.
      */
-    NORTH_EAST(Axis.BOTH),
+    NORTH_EAST(Axis.BOTH, Vec2.f(MathUtils.SQRT2_2, -MathUtils.SQRT2_2)),
     /**
      * The east direction.
      */
-    EAST(Axis.X),
+    EAST(Axis.X, Vec2.f(1, 0)),
     /**
      * The south-east direction.
      */
-    SOUTH_EAST(Axis.BOTH),
+    SOUTH_EAST(Axis.BOTH, Vec2.f(MathUtils.SQRT2_2, MathUtils.SQRT2_2)),
     /**
      * The south direction.
      */
-    SOUTH(Axis.Y),
+    SOUTH(Axis.Y, Vec2.f(0, 1)),
     /**
      * The south-west direction.
      */
-    SOUTH_WEST(Axis.BOTH),
+    SOUTH_WEST(Axis.BOTH, Vec2.f(-MathUtils.SQRT2_2, MathUtils.SQRT2_2)),
     /**
      * The west direction.
      */
-    WEST(Axis.X),
+    WEST(Axis.X, Vec2.f(-1, 0)),
     /**
      * The north-west direction.
      */
-    NORTH_WEST(Axis.BOTH);
+    NORTH_WEST(Axis.BOTH, Vec2.f(-MathUtils.SQRT2_2, -MathUtils.SQRT2_2));
 
     public final Axis axis;
+    public final Vector2f vector;
 
-    Direction(@NotNull Axis axis) {
+    Direction(@NotNull Axis axis, @NotNull Vector2f vector) {
         this.axis = axis;
+        this.vector = vector;
     }
 
     /**
