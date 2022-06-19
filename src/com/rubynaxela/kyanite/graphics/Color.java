@@ -114,6 +114,7 @@ public final class Color implements Serializable {
      * Creates a new color by copying this color and resetting the alpha value.
      *
      * @param alpha the alpha value of the new color, ranging between 0 (fully transparent) and 255 (fully opaque)
+     * @return a color with the same {@code r}, {@code g} and {@code b} components and the specified {@code alpha} component
      */
     @Contract(pure = true, value = "_ -> new")
     public Color withAlpha(int alpha) {
@@ -124,6 +125,8 @@ public final class Color implements Serializable {
      * Creates a new color by copying this color and resetting the alpha value.
      *
      * @param opacity the color's opacity value ranging between {@code 0.0f} (fully transparent) and {@code 1.0f} (fully opaque)
+     * @return a color with the same {@code r}, {@code g} and {@code b}
+     * components and the {@code alpha} component of {@code opacity * 255}
      */
     @Contract(pure = true, value = "_ -> new")
     public Color withOpacity(float opacity) {

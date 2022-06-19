@@ -35,7 +35,7 @@ public class DataFile extends File {
      *
      * @param pathname the pathname string
      * @throws IOException if the specified path does not exist or does exist but is a directory
-     * @see File(String)
+     * @see File#File(String)
      */
     public DataFile(@NotNull String pathname) {
         super(pathname);
@@ -47,7 +47,7 @@ public class DataFile extends File {
      *
      * @param file the abstract pathname
      * @throws IOException if the specified path does not exist or does exist but is a directory
-     * @see File(String)
+     * @see File#File(String)
      */
     public DataFile(@NotNull File file) {
         super(file.getPath());
@@ -60,7 +60,7 @@ public class DataFile extends File {
      * @param parent the parent pathname string
      * @param child  the child pathname string
      * @throws IOException if the specified path does not exist or does exist but is a directory
-     * @see File(String, String)
+     * @see File#File(String, String)
      */
     public DataFile(String parent, @NotNull String child) {
         super(parent, child);
@@ -73,7 +73,7 @@ public class DataFile extends File {
      * @param parent the parent abstract pathname
      * @param child  the child pathname string
      * @throws IOException if the specified path does not exist or does exist but is a directory
-     * @see File(File, String)
+     * @see File#File(File, String)
      */
     public DataFile(File parent, @NotNull String child) {
         super(parent, child);
@@ -85,7 +85,7 @@ public class DataFile extends File {
      *
      * @param uri the pathname string
      * @throws IOException if the specified path does not exist or does exist but is a directory
-     * @see File(URI)
+     * @see File#File(URI)
      */
     public DataFile(@NotNull URI uri) {
         super(uri);
@@ -114,6 +114,8 @@ public class DataFile extends File {
      * {@linkplain java.nio.charset.Charset#defaultCharset() default charset}
      * and a default-sized output buffer. Returned reader is not autocloseable.
      *
+     * @param mode write mode: {@link WriteMode#APPEND} to append to the current contents of the file,
+     *             {@link WriteMode#OVERWRITE} to erase the current contents of the file before writing
      * @return a BufferedWriter given this file to write
      */
     @NotNull
@@ -183,7 +185,18 @@ public class DataFile extends File {
         if (this.isDirectory()) throw new IOException("Path " + this + " leads to a directory rather than a file");
     }
 
+    /**
+     * Working modes for a {@code BufferedWriter} returned by the {@link #writer} method.
+     */
     public enum WriteMode {
-        OVERWRITE, APPEND
+
+        /**
+         * Using this mode, the writer erases the current contents of the file before writing.
+         */
+        OVERWRITE,
+        /**
+         * Using this mode, the writer appends to the current contents of the file.
+         */
+        APPEND
     }
 }

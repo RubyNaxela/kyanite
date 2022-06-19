@@ -53,7 +53,14 @@ public enum Direction {
      */
     NORTH_WEST(Axis.BOTH, Vec2.f(-MathUtils.SQRT2_2, -MathUtils.SQRT2_2));
 
+    /**
+     * The axis or axes with which overlap the components of a vector pointing in this direction.
+     */
     public final Axis axis;
+    /**
+     * A normalized vector pointing in this direction. May be used as the
+     * basis of a translation vector for an object going in this direction.
+     */
     public final Vector2f vector;
 
     Direction(@NotNull Axis axis, @NotNull Vector2f vector) {
@@ -62,7 +69,7 @@ public enum Direction {
     }
 
     /**
-     * Two axes of a 2D plane - X and Y
+     * The two axes of a 2D plane - X and Y.
      */
     public enum Axis {
         /**

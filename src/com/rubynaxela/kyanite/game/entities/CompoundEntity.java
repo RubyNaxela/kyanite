@@ -103,16 +103,15 @@ public class CompoundEntity implements Drawable, Transformable {
     }
 
     /**
-     * Tests whether any of the global bounds of this {@code CompoundEntity}'s components intersect
-     * with any of the global bounds of the parameter {@code CompoundEntity}'s components
+     * Tests whether any of the global bounds of this {@code CompoundEntity}'s components intersect with any of
+     * the global bounds of the parameter {@code CompoundEntity}'s components This method's time complexity is
+     * <i>O(m*n)</i>, where <i>m</i> and <i>n</i>  are the numbers of this and the other's {@code CompoundEntity}'s
+     * components. Using it on {@code CompoundEntity}s with many components might cause performance issues.
      *
      * @param other the other {@code CompoundEntity}
      * @return whether any of this {@code CompoundEntity} components intersects
      * with any of the parameter {@code CompoundEntity}'s components
      * @throws UnsupportedOperationException if any of the component's global bounds cannot be determined
-     * @apiNote This method's time complexity is O(m*n), where m and n are the numbers
-     * of this and the other's {@code CompoundEntity}'s components. Using it on
-     * {@code CompoundEntity}s with many components can cause performance issues.
      */
     public boolean intersects(@NotNull CompoundEntity other) {
         for (final Drawable component : components)
