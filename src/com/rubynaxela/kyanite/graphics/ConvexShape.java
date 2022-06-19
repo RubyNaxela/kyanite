@@ -38,7 +38,20 @@ public class ConvexShape extends org.jsfml.graphics.ConvexShape {
      * @param points the amount of points of the polygon
      */
     public ConvexShape(int points) {
+        this(points, false);
+    }
+
+    /**
+     * Constructs a new empty polygon and allocates a certain amount of points. This is equal to
+     * calling {@link ConvexShape#setPointCount(int)} directly after construction of the polygon.
+     *
+     * @param points   the amount of points of the polygon
+     * @param centered whether this polygon has to be kept centered
+     * @see Shape#setCentered(boolean)
+     */
+    public ConvexShape(int points, boolean centered) {
         setPointCount(points);
+        setCentered(centered);
     }
 
     /**
@@ -48,7 +61,20 @@ public class ConvexShape extends org.jsfml.graphics.ConvexShape {
      * @param points the points of the polygon
      */
     public ConvexShape(@NotNull Vector2f... points) {
+        this(false, points);
+    }
+
+    /**
+     * Constructs a new polygon from a given set of points. This is equal to calling
+     * {@link ConvexShape#setPoints} directly after construction of the polygon.
+     *
+     * @param centered whether this polygon has to be kept centered
+     * @param points   the points of the polygon
+     * @see Shape#setCentered(boolean)
+     */
+    public ConvexShape(boolean centered, @NotNull Vector2f... points) {
         setPoints(points);
+        setCentered(centered);
     }
 
     /**
@@ -60,19 +86,23 @@ public class ConvexShape extends org.jsfml.graphics.ConvexShape {
         nativeSetPointCount(pointCount);
         points = new Vector2f[pointCount];
         for (int i = 0; i < pointCount; i++) points[i] = Vector2f.ZERO;
+        updateOrigin(keepCentered);
+        boundsNeedUpdate = true;
     }
 
     /**
      * Sets a point of the polygon.
      *
-     * @param i the index of the point to set. Note that this index must be within the bounds of the polygon's point
-     *          count, i.e. the point count needs to be set properly using {@link ConvexShape#setPointCount(int)} first
-     * @param v the point to set at the given index
+     * @param index the index of the point to set. Note that this index must be within the bounds of the polygon's point
+     *              count, i.e. the point count needs to be set properly using {@link ConvexShape#setPointCount(int)} first
+     * @param point the point to set at the given index
      */
-    public void setPoint(int i, @NotNull Vector2f v) {
-        if (points == null || i < 0 || i >= points.length) throw new IndexOutOfBoundsException(Integer.toString(i));
-        nativeSetPoint(i, v.x, v.y);
-        points[i] = v;
+    public void setPoint(int index, @NotNull Vector2f point) {
+        if (points == null || index < 0 || index >= points.length) throw new IndexOutOfBoundsException(Integer.toString(index));
+        nativeSetPoint(index, point.x, point.y);
+        points[index] = point;
+        updateOrigin(keepCentered);
+        boundsNeedUpdate = true;
     }
 
     @Override
@@ -91,5 +121,7 @@ public class ConvexShape extends org.jsfml.graphics.ConvexShape {
         this.points = Objects.requireNonNull(points);
         nativeSetPointCount(points.length);
         for (int i = 0; i < points.length; i++) nativeSetPoint(i, points[i].x, points[i].y);
+        updateOrigin(keepCentered);
+        boundsNeedUpdate = true;
     }
 }

@@ -19,9 +19,24 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Defines a set of methods for manipulating an object's texture and computing bounds.
+ * Defines a set of methods for centering, manipulating an object's texture and computing bounds.
  */
 public interface SceneObject extends BoundsObject {
+
+    /**
+     * Returns whether this {@code SceneObject} is set to be centered.
+     *
+     * @return {@code true} if this {@code SceneObject} is set to be centered, {@code false} otherwise.
+     */
+    boolean isCentered();
+
+    /**
+     * Sets whether this {@code SceneObject} has to be centered by keeping its origin at the center of its local bounds.
+     *
+     * @param centered {@code true} to keep this {@code SceneObject} centered,
+     *                 {@code false} to reset the origin to the point (0,0)
+     */
+    void setCentered(boolean centered);
 
     /**
      * Gets the object's current texture.

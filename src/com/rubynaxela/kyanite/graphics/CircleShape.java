@@ -34,7 +34,19 @@ public class CircleShape extends org.jsfml.graphics.CircleShape {
      * @param radius the circle's radius
      */
     public CircleShape(float radius) {
+        this(radius, false);
+    }
+
+    /**
+     * Constructs a new circle shape with the specified radius, approximated using 30 points.
+     *
+     * @param radius   the circle's radius
+     * @param centered whether this circle shape has to be kept centered
+     * @see Shape#setCentered(boolean)
+     */
+    public CircleShape(float radius, boolean centered) {
         setRadius(radius);
+        setCentered(centered);
     }
 
     /**
@@ -45,8 +57,22 @@ public class CircleShape extends org.jsfml.graphics.CircleShape {
      * @see CircleShape#setPointCount(int)
      */
     public CircleShape(float radius, int points) {
+        this(radius, points, false);
+    }
+
+    /**
+     * Constructs a new circle shape with the specified parameters.
+     *
+     * @param radius   the circle's radius
+     * @param points   the amount of points to approximate the circle with
+     * @param centered whether this circle shape has to be kept centered
+     * @see CircleShape#setPointCount(int)
+     * @see Shape#setCentered(boolean)
+     */
+    public CircleShape(float radius, int points, boolean centered) {
         this(radius);
         setPointCount(points);
+        setCentered(centered);
     }
 
     /**
@@ -65,8 +91,10 @@ public class CircleShape extends org.jsfml.graphics.CircleShape {
      */
     public void setRadius(float radius) {
         nativeSetRadius(radius);
+        updateOrigin(keepCentered);
         this.radius = radius;
         pointsNeedUpdate = true;
+        boundsNeedUpdate = true;
     }
 
     /**
@@ -77,6 +105,8 @@ public class CircleShape extends org.jsfml.graphics.CircleShape {
      */
     public void setPointCount(int count) {
         nativeSetPointCount(count);
+        updateOrigin(keepCentered);
         pointsNeedUpdate = true;
+        boundsNeedUpdate = true;
     }
 }

@@ -37,7 +37,19 @@ public class RectangleShape extends org.jsfml.graphics.RectangleShape {
      * @param size the rectangle's dimensions
      */
     public RectangleShape(@NotNull Vector2f size) {
+        this(size, false);
+    }
+
+    /**
+     * Constructs a new rectangle shape with the specified dimensions.
+     *
+     * @param size     the rectangle's dimensions
+     * @param centered whether this rectangle shape has to be kept centered
+     * @see Shape#setCentered(boolean)
+     */
+    public RectangleShape(@NotNull Vector2f size, boolean centered) {
         setSize(size);
+        setCentered(centered);
     }
 
     /**
@@ -54,9 +66,11 @@ public class RectangleShape extends org.jsfml.graphics.RectangleShape {
      *
      * @param size the new dimensions of the rectangle
      */
-    public void setSize(Vector2f size) {
+    public void setSize(@NotNull Vector2f size) {
         nativeSetSize(size.x, size.y);
+        updateOrigin(keepCentered);
         this.size = size;
         pointsNeedUpdate = true;
+        boundsNeedUpdate = true;
     }
 }

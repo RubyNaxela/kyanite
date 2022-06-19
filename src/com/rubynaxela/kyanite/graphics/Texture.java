@@ -377,14 +377,12 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
      * Creates a {@link RectangleShape} with this texture applied. The
      * size of the {@code RectangleShape} matches this texture's size.
      *
-     * @param originAtCenter whether or not the origin of the {@code RectangleShape} has
-     *                       to be in its center; the default value is {@code false}
-     * @return a {@link RectangleShape} representing this texture
+     * @param centered whether the {@code RectangleShape} has to be kept centered
+     * @return a {@code RectangleShape} with this texture
      */
-    public RectangleShape createRectangleShape(boolean originAtCenter) {
-        final RectangleShape rectangle = new RectangleShape(Vec2.f(getSize()));
+    public RectangleShape createRectangleShape(boolean centered) {
+        final RectangleShape rectangle = new RectangleShape(Vec2.f(getSize()), centered);
         rectangle.setTexture(this);
-        if (originAtCenter) rectangle.setOrigin(Vec2.divide(Vec2.f(getSize()), 2));
         return rectangle;
     }
 
@@ -392,7 +390,7 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
      * Creates a {@link RectangleShape} with this texture applied. The
      * size of the {@code RectangleShape} matches this texture's size.
      *
-     * @return a {@link RectangleShape} representing this texture
+     * @return a {@code RectangleShape} with this texture
      */
     public RectangleShape createRectangleShape() {
         return createRectangleShape(false);

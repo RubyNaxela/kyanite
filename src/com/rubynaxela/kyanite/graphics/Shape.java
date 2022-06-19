@@ -33,12 +33,11 @@ import java.nio.FloatBuffer;
 public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable, SceneObject {
 
     protected Vector2f[] points = null;
-    protected boolean pointsNeedUpdate = true;
+    protected boolean pointsNeedUpdate = true, boundsNeedUpdate = true, keepCentered = false;
     private Color fillColor = Colors.WHITE, outlineColor = Colors.WHITE;
     private float outlineThickness = 0;
     private IntRect textureRect = IntRect.EMPTY;
     private ConstTexture texture = null;
-    private boolean boundsNeedUpdate = true;
     private FloatRect localBounds = null, globalBounds = null;
 
     /**
@@ -96,7 +95,99 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
      */
     public void setOutlineThickness(float thickness) {
         nativeSetOutlineThickness(thickness);
+        updateOrigin(keepCentered);
         this.outlineThickness = thickness;
+        boundsNeedUpdate = true;
+    }
+
+    /**
+     * Returns whether this {@code Shape} is set to be centered.
+     *
+     * @return {@code true} if this {@code Shape} is set to be centered, {@code false} otherwise.
+     */
+    public boolean isCentered() {
+        return keepCentered;
+    }
+
+    /**
+     * Sets whether this {@code Shape} has to be centered by keeping its origin at the center
+     * of its local bounds. If the origin is changed manually after this shape is set to be
+     * centered, it will be set back to the center of the sprite whenever its size changes.
+     *
+     * @param centered {@code true} to keep this {@code Shape} centered, {@code false} to reset the origin to the point (0,0)
+     */
+    public void setCentered(boolean centered) {
+        updateOrigin(keepCentered = centered);
+    }
+
+    /**
+     * Gets the shape's current texture.
+     *
+     * @return the shape's current texture
+     */
+    @Override
+    public ConstTexture getTexture() {
+        return texture;
+    }
+
+    /**
+     * Sets the texture of the shape without affecting the texture rectangle, unless the texture
+     * is set to be tileable. If this {@code Sprite} has this texture already applied, this
+     * method does nothing. The texture may be {@code null} if no texture is to be used.
+     *
+     * @param texture the texture of the shape, or {@code null} to indicate that no texture is to be used
+     */
+    @Override
+    public final void setTexture(@Nullable ConstTexture texture) {
+        setTexture(texture, false);
+    }
+
+    /**
+     * Sets the texture of the shape. If this {@code Sprite} has this texture already applied,
+     * this method does nothing. The texture may be {@code null} if no texture is to be used.
+     *
+     * @param texture   the texture of the shape, or {@code null} to indicate that no texture is to be used
+     * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
+     *                  (this setting is ignored if {@code texture} is tileable)
+     */
+    @Override
+    public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
+        final Pair<Boolean, Boolean> updates = Texture.checkUpdates(texture, this);
+        if (updates.value1()) {
+            this.texture = texture;
+            nativeSetTexture((Texture) texture, resetRect && !updates.value2());
+        }
+    }
+
+    /**
+     * Gets the shape's current texture portion.
+     *
+     * @return the shape's current texture portion
+     */
+    @Override
+    public IntRect getTextureRect() {
+        return textureRect;
+    }
+
+    /**
+     * Sets the portion of the texture that will be used for drawing. An empty rectangle can be
+     * passed to indicate that the whole texture shall be used. The width and / or height of the
+     * rectangle may be negative to indicate that the respective axis should be flipped. For example,
+     * a width of {@code -32} will result in a sprite that is 32 pixels wide and flipped horizontally.
+     *
+     * @param rect the texture portion
+     */
+    @Override
+    public void setTextureRect(@NotNull IntRect rect) {
+        nativeSetTextureRect(IntercomHelper.encodeIntRect(rect));
+        this.textureRect = rect;
+    }
+
+    protected void updateOrigin(boolean center) {
+        if (center) {
+            final FloatRect bounds = getLocalBounds();
+            setOrigin(bounds.width / 2, bounds.height / 2);
+        } else setOrigin(0, 0);
     }
 
     private void updatePoints() {
@@ -177,69 +268,6 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
         return globalBounds;
     }
 
-    /**
-     * Gets the shape's current texture.
-     *
-     * @return the shape's current texture
-     */
-    @Override
-    public ConstTexture getTexture() {
-        return texture;
-    }
-
-    /**
-     * Sets the texture of the shape without affecting the texture rectangle, unless the texture
-     * is set to be tileable. If this {@code Sprite} has this texture already applied, this
-     * method does nothing. The texture may be {@code null} if no texture is to be used.
-     *
-     * @param texture the texture of the shape, or {@code null} to indicate that no texture is to be used
-     */
-    @Override
-    public final void setTexture(@Nullable ConstTexture texture) {
-        setTexture(texture, false);
-    }
-
-    /**
-     * Sets the texture of the shape. If this {@code Sprite} has this texture already applied,
-     * this method does nothing. The texture may be {@code null} if no texture is to be used.
-     *
-     * @param texture   the texture of the shape, or {@code null} to indicate that no texture is to be used
-     * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
-     *                  (this setting is ignored if {@code texture} is tileable)
-     */
-    @Override
-    public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
-        final Pair<Boolean, Boolean> updates = Texture.checkUpdates(texture, this);
-        if (updates.value1()) {
-            this.texture = texture;
-            nativeSetTexture((Texture) texture, resetRect && !updates.value2());
-        }
-    }
-
-    /**
-     * Gets the shape's current texture portion.
-     *
-     * @return the shape's current texture portion
-     */
-    @Override
-    public IntRect getTextureRect() {
-        return textureRect;
-    }
-
-    /**
-     * Sets the portion of the texture that will be used for drawing. An empty rectangle can be
-     * passed to indicate that the whole texture shall be used. The width and / or height of the
-     * rectangle may be negative to indicate that the respective axis should be flipped. For example,
-     * a width of {@code -32} will result in a sprite that is 32 pixels wide and flipped horizontally.
-     *
-     * @param rect the texture portion
-     */
-    @Override
-    public void setTextureRect(@NotNull IntRect rect) {
-        nativeSetTextureRect(IntercomHelper.encodeIntRect(rect));
-        this.textureRect = rect;
-    }
-
     @Override
     public void setPosition(@NotNull Vector2f v) {
         super.setPosition(v);
@@ -258,9 +286,15 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
         boundsNeedUpdate = true;
     }
 
+    /**
+     * Sets the rotation, scaling and drawing origin of this shape. If this method is called when this shape
+     * is set to be centered, it will be set back to the center of the shape whenever its size changes.
+     *
+     * @param origin the new origin
+     */
     @Override
-    public void setOrigin(@NotNull Vector2f v) {
-        super.setOrigin(v);
+    public void setOrigin(@NotNull Vector2f origin) {
+        super.setOrigin(origin);
         boundsNeedUpdate = true;
     }
 

@@ -31,7 +31,7 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
     private Color color = Colors.WHITE;
     private IntRect textureRect = IntRect.EMPTY;
     private ConstTexture texture = null;
-    private boolean boundsNeedUpdate = true;
+    private boolean boundsNeedUpdate = true, keepCentered = false;
     private FloatRect localBounds = null, globalBounds = null;
 
     /**
@@ -80,6 +80,99 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
         nativeSetColor(IntercomHelper.encodeColor(color));
     }
 
+    /**
+     * Returns whether this {@code Sprite} is set to be centered.
+     *
+     * @return {@code true} if this {@code Sprite} is set to be centered, {@code false} otherwise.
+     */
+    public boolean isCentered() {
+        return keepCentered;
+    }
+
+    /**
+     * Sets whether this {@code Sprite} has to be centered by keeping its origin at the center
+     * of its local bounds. If the origin is changed manually after this sprite is set to be
+     * centered, it will be set back to the center of the sprite whenever its size changes.
+     *
+     * @param centered {@code true} to keep this {@code Sprite} centered, {@code false} to reset the origin to the point (0,0)
+     */
+    public void setCentered(boolean centered) {
+        updateOrigin(keepCentered = centered);
+    }
+
+    /**
+     * Gets the sprite's current texture.
+     *
+     * @return the sprite's current texture
+     */
+    @Override
+    public ConstTexture getTexture() {
+        return texture;
+    }
+
+    /**
+     * Sets the texture of this sprite without affecting the texture rectangle, unless the texture is set
+     * to be tileable. If this {@code Sprite} has this texture already applied, this method does nothing.
+     *
+     * @param texture the new texture
+     */
+    @Override
+    public final void setTexture(@Nullable ConstTexture texture) {
+        setTexture(texture, false);
+    }
+
+    /**
+     * Sets the texture of this sprite. If this {@code Sprite} has this texture already applied, this method does nothing.
+     *
+     * @param texture   the new texture
+     * @param resetRect {@code true} to reset the texture rectangle, {@code false}
+     *                  otherwise (this setting is ignored if {@code texture} is tileable)
+     */
+    @Override
+    public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
+        final Pair<Boolean, Boolean> updates = Texture.checkUpdates(texture, this);
+        if (updates.value1()) {
+            nativeSetTexture((Texture) texture, resetRect);
+            this.texture = texture;
+            if (resetRect && !updates.value2()) textureRect = IntRect.EMPTY;
+            updateOrigin(keepCentered);
+            boundsNeedUpdate = true;
+        }
+    }
+
+    /**
+     * Gets the sprite's current texture rectangle.
+     *
+     * @return the sprite's current texture rectangle
+     */
+    @Override
+    public IntRect getTextureRect() {
+        return textureRect;
+    }
+
+    /**
+     * Sets the portion of the texture that will be used for drawing. An empty rectangle can be
+     * passed to indicate that the whole texture shall be used. The width and / or height of the
+     * rectangle may be negative to indicate that the respective axis should be flipped. For example,
+     * a width of {@code -32} will result in a sprite that is 32 pixels wide and flipped horizontally.
+     *
+     * @param rect the texture portion
+     */
+    @Override
+    public void setTextureRect(@NotNull IntRect rect) {
+        this.textureRect = rect;
+        nativeSetTextureRect(IntercomHelper.encodeIntRect(rect));
+        updateOrigin(keepCentered);
+        boundsNeedUpdate = true;
+    }
+
+    protected void updateOrigin(boolean center) {
+        if (center) {
+            final FloatRect bounds = getLocalBounds();
+            setOrigin(bounds.width / 2, bounds.height / 2);
+        } else setOrigin(0, 0);
+    }
+
     private void updateBounds() {
         if (boundsNeedUpdate) {
             nativeGetLocalBounds(IntercomHelper.getBuffer());
@@ -114,70 +207,6 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
         return globalBounds;
     }
 
-    /**
-     * Gets the sprite's current texture.
-     *
-     * @return the sprite's current texture
-     */
-    @Override
-    public ConstTexture getTexture() {
-        return texture;
-    }
-
-    /**
-     * Sets the texture of this sprite without affecting the texture rectangle, unless the texture is set
-     * to be tileable. If this {@code Sprite} has this texture already applied, this method does nothing.
-     *
-     * @param texture the new texture
-     */
-    @Override
-    public final void setTexture(@Nullable ConstTexture texture) {
-        setTexture(texture, false);
-    }
-
-    /**
-     * Sets the texture of this sprite. If this {@code Sprite} has this texture already applied, this method does nothing.
-     *
-     * @param texture   the new texture
-     * @param resetRect {@code true} to reset the texture rectangle, {@code false}
-     *                  otherwise (this setting is ignored if {@code texture} is tileable)
-     */
-    @Override
-    public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
-        final Pair<Boolean, Boolean> updates = Texture.checkUpdates(texture,this);
-        if (updates.value1()) {
-            nativeSetTexture((Texture) texture, resetRect);
-            this.texture = texture;
-            if (resetRect && !updates.value2()) textureRect = IntRect.EMPTY;
-            boundsNeedUpdate = true;
-        }
-    }
-
-    /**
-     * Gets the sprite's current texture rectangle.
-     *
-     * @return the sprite's current texture rectangle
-     */
-    @Override
-    public IntRect getTextureRect() {
-        return textureRect;
-    }
-
-    /**
-     * Sets the portion of the texture that will be used for drawing. An empty rectangle can be
-     * passed to indicate that the whole texture shall be used. The width and / or height of the
-     * rectangle may be negative to indicate that the respective axis should be flipped. For example,
-     * a width of {@code -32} will result in a sprite that is 32 pixels wide and flipped horizontally.
-     *
-     * @param rect the texture portion
-     */
-    @Override
-    public void setTextureRect(@NotNull IntRect rect) {
-        this.textureRect = rect;
-        nativeSetTextureRect(IntercomHelper.encodeIntRect(rect));
-        boundsNeedUpdate = true;
-    }
-
     @Override
     public void setPosition(@NotNull Vector2f v) {
         super.setPosition(v);
@@ -196,9 +225,15 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
         boundsNeedUpdate = true;
     }
 
+    /**
+     * Sets the rotation, scaling and drawing origin of this sprite. If this method is called when this sprite
+     * is set to be centered, it will be set back to the center of the sprite whenever its size changes.
+     *
+     * @param origin the new origin
+     */
     @Override
-    public void setOrigin(@NotNull Vector2f v) {
-        super.setOrigin(v);
+    public void setOrigin(@NotNull Vector2f origin) {
+        super.setOrigin(origin);
         boundsNeedUpdate = true;
     }
 
