@@ -14,6 +14,7 @@
 
 package com.rubynaxela.kyanite.graphics;
 
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.math.Vector2f;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +30,28 @@ public class RectangleShape extends org.jsfml.graphics.RectangleShape {
      * Constructs a new rectangle shape with no dimensions.
      */
     public RectangleShape() {
+    }
+
+    /**
+     * Constructs a new rectangle shape with the specified dimensions.
+     *
+     * @param width  the rectangle's width
+     * @param height the rectangle's height
+     */
+    public RectangleShape(float width, float height) {
+        this(Vec2.f(width, height), false);
+    }
+
+    /**
+     * Constructs a new rectangle shape with the specified dimensions.
+     *
+     * @param width    the rectangle's width
+     * @param height   the rectangle's height
+     * @param centered whether this rectangle shape has to be kept centered
+     * @see Shape#setCentered(boolean)
+     */
+    public RectangleShape(float width, float height, boolean centered) {
+        this(Vec2.f(width, height), centered);
     }
 
     /**
@@ -72,5 +95,15 @@ public class RectangleShape extends org.jsfml.graphics.RectangleShape {
         this.size = size;
         pointsNeedUpdate = true;
         boundsNeedUpdate = true;
+    }
+
+    /**
+     * Sets the dimensions of the rectangle.
+     *
+     * @param width  the rectangle's new width
+     * @param height the rectangle's new height
+     */
+    public void setSize(float width, float height) {
+        setSize(Vec2.f(width, height));
     }
 }
