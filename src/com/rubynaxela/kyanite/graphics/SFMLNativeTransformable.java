@@ -19,8 +19,6 @@ import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.math.Vector2f;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 /**
  * Decomposed transform defined by a position, a rotation and a scale.
  */

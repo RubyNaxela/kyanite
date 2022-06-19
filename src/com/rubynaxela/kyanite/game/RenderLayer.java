@@ -16,6 +16,7 @@ package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.graphics.*;
 import com.rubynaxela.kyanite.math.Vec2;
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +31,7 @@ import java.util.stream.Stream;
  * an element is also its z-index. If two elements overlap each other, the one with the higher index will
  * be displayed over the other one. This class is the base of the {@link Scene} and {@link HUD} classes.
  */
-public abstract class RenderLayer implements Iterable<Drawable> {
+public abstract sealed class RenderLayer implements Iterable<Drawable> permits HUD, Scene {
 
     /**
      * The game context.
@@ -56,6 +57,11 @@ public abstract class RenderLayer implements Iterable<Drawable> {
     private Texture backgroundTexture;
 
     RenderLayer() {
+    }
+
+    static void updateAnimatedTexture(@NotNull Drawable object, @NotNull Time elapsedTime) {
+        if (object instanceof final SceneObject sceneObject && sceneObject.getAnimatedTexture() != null)
+            sceneObject.updateAnimatedTexture(elapsedTime);
     }
 
     /**

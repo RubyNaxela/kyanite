@@ -6,3 +6,4 @@
 /site/tutorials/
 .DS_Store
 todos.txt
+/lib/jsfml-intercom/

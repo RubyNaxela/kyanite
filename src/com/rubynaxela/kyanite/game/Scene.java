@@ -17,7 +17,6 @@ package com.rubynaxela.kyanite.game;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
-import com.rubynaxela.kyanite.graphics.AnimatedTexture;
 import com.rubynaxela.kyanite.graphics.Drawable;
 import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.physics.GravityAffected;
@@ -32,7 +31,7 @@ import java.util.ConcurrentModificationException;
 /**
  * Provides a scene that can be given a custom behavior and displayed on a {@link Window}.
  */
-public abstract class Scene extends RenderLayer {
+public abstract non-sealed class Scene extends RenderLayer {
 
     private final Clock clock = context.getClock();
     private Time previousFrameTime, currentFrameTime;
@@ -90,16 +89,14 @@ public abstract class Scene extends RenderLayer {
                 if (background != null) window.draw(background);
                 try {
                     forEach(object -> {
+                        final Time et = getElapsedTime();
                         final float dt = getDeltaTime().asSeconds();
                         if (object instanceof final GravityAffected entity)
                             entity.setVelocity(Vec2.add(entity.getVelocity(), Vec2.f(0, entity.getGravity() * dt)));
-                        if (object instanceof final AnimatedEntity entity) entity.animate(getDeltaTime(), clock.getTime());
-                        if (AnimatedTexture.animatedObjects.containsKey(object))
-                            AnimatedTexture.animatedObjects.get(object).update(object, clock.getTime());
+                        if (object instanceof final AnimatedEntity entity) entity.animate(getDeltaTime(), et);
+                        updateAnimatedTexture(object, et);
                         if (object instanceof final CompoundEntity entity)
-                            for (final Drawable component : entity.getComponents())
-                                if (AnimatedTexture.animatedObjects.containsKey(component))
-                                    AnimatedTexture.animatedObjects.get(component).update(component, clock.getTime());
+                            for (final Drawable component : entity.getComponents()) updateAnimatedTexture(component, et);
                         if (object instanceof final MovingEntity entity) entity.move(Vec2.multiply(entity.getVelocity(), dt));
                     });
                 } catch (ConcurrentModificationException e) {

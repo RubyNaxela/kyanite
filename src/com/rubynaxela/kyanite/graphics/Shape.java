@@ -19,6 +19,7 @@ import com.rubynaxela.kyanite.data.Pair;
 import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.IntRect;
 import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.util.Time;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,6 +39,7 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     private float outlineThickness = 0;
     private IntRect textureRect = IntRect.EMPTY;
     private ConstTexture texture = null;
+    private ConstAnimatedTexture animatedTexture = null;
     private FloatRect localBounds = null, globalBounds = null;
 
     /**
@@ -143,6 +145,16 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     }
 
     /**
+     * Sets the animated texture of the shape without affecting the texture rectangle.
+     * The texture may be {@code null} if no animated texture is to be used.
+     *
+     * @param texture the animated texture of the shape, or {@code null} to indicate that no texture is to be used
+     */
+    public void setTexture(@Nullable ConstAnimatedTexture texture) {
+        setTexture(texture, false);
+    }
+
+    /**
      * Sets the texture of the shape. If this {@code Sprite} has this texture already applied,
      * this method does nothing. The texture may be {@code null} if no texture is to be used.
      *
@@ -154,9 +166,45 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
         final Pair<Boolean, Boolean> updates = Texture.checkUpdates(texture, this);
         if (updates.value1()) {
-            this.texture = texture;
             nativeSetTexture((Texture) texture, resetRect && !updates.value2());
+            this.texture = texture;
+            this.animatedTexture = null;
         }
+    }
+
+    /**
+     * Sets the animated texture of the shape. The texture may be {@code null} if no texture is to be used.
+     *
+     * @param texture   the animated texture of the shape, or {@code null} to indicate that no texture is to be used
+     * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
+     */
+    public void setTexture(@Nullable ConstAnimatedTexture texture, boolean resetRect) {
+        if (texture != this.animatedTexture) {
+            nativeSetTexture(texture != null ? (Texture) texture.getFrame(0) : null, resetRect);
+            this.animatedTexture = texture;
+            this.texture = null;
+        }
+    }
+
+    /**
+     * Gets the shape's current animated texture.
+     *
+     * @return the shape's current animated texture
+     */
+    @Override
+    public ConstAnimatedTexture getAnimatedTexture() {
+        return animatedTexture;
+    }
+
+    /**
+     * Updates this texture for this shape. This method is run by the scene loop and does not need to be invoked manualy.
+     *
+     * @param elapsedTime the time since the game started
+     */
+    @Override
+    public void updateAnimatedTexture(@NotNull Time elapsedTime) {
+        final int frame = (int) (elapsedTime.asSeconds() / animatedTexture.getFrameDuration());
+        nativeSetTexture((Texture) animatedTexture.getFrame(frame % animatedTexture.getFramesCount()), false);
     }
 
     /**

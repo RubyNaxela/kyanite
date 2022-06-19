@@ -15,6 +15,7 @@
 package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.math.IntRect;
+import com.rubynaxela.kyanite.util.Time;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,12 +55,42 @@ public interface SceneObject extends BoundsObject {
     void setTexture(@Nullable ConstTexture texture);
 
     /**
+     * Sets the animated texture of the object without affecting the texture rectangle.
+     * The texture may be {@code null} if no animated texture is to be used.
+     *
+     * @param texture the animated texture of the object, or {@code null} to indicate that no texture is to be used
+     */
+    void setTexture(@Nullable ConstAnimatedTexture texture);
+
+    /**
      * Sets the texture of the object. The texture may be {@code null} if no texture is to be used.
      *
      * @param texture   the texture of the object, or {@code null} to indicate that no texture is to be used
      * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
      */
-    void setTexture(ConstTexture texture, boolean resetRect);
+    void setTexture(@Nullable ConstTexture texture, boolean resetRect);
+
+    /**
+     * Sets the animated texture of the object. The texture may be {@code null} if no texture is to be used.
+     *
+     * @param texture   the animated texture of the object, or {@code null} to indicate that no texture is to be used
+     * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
+     */
+    void setTexture(@Nullable ConstAnimatedTexture texture, boolean resetRect);
+
+    /**
+     * Gets the object's current animated texture.
+     *
+     * @return the object's current animated texture
+     */
+    ConstAnimatedTexture getAnimatedTexture();
+
+    /**
+     * Updates this texture for this object. This method is run by the scene loop and does not need to be invoked manualy.
+     *
+     * @param elapsedTime the time since the game started
+     */
+    void updateAnimatedTexture(@NotNull Time elapsedTime);
 
     /**
      * Gets the object's current texture portion.

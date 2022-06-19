@@ -27,6 +27,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="intercom" />
+    <orderEntry type="module" module-name="jsfml-intercom" />
   </component>
 </module>

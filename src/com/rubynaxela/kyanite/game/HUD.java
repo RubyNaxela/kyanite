@@ -14,26 +14,25 @@
 
 package com.rubynaxela.kyanite.game;
 
-import com.rubynaxela.kyanite.graphics.AnimatedTexture;
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
-import com.rubynaxela.kyanite.physics.GravityAffected;
 import com.rubynaxela.kyanite.graphics.Colors;
+import com.rubynaxela.kyanite.graphics.Drawable;
+import com.rubynaxela.kyanite.graphics.RectangleShape;
 import com.rubynaxela.kyanite.math.Vec2;
+import com.rubynaxela.kyanite.physics.GravityAffected;
+import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.graphics.Drawable;
-import com.rubynaxela.kyanite.graphics.RectangleShape;
-import com.rubynaxela.kyanite.util.Time;
 
 import java.util.ConcurrentModificationException;
 
 /**
  * Provides an overlay designed for being displayed on a {@link Window} over a {@link Scene}.
  */
-public abstract class HUD extends RenderLayer {
+public abstract non-sealed class HUD extends RenderLayer {
 
     private final RectangleShape solidBackground = new RectangleShape();
 
@@ -88,12 +87,9 @@ public abstract class HUD extends RenderLayer {
                 if (object instanceof final GravityAffected entity)
                     entity.setVelocity(Vec2.add(entity.getVelocity(), Vec2.f(0, entity.getGravity() * dt)));
                 if (object instanceof final AnimatedEntity entity) entity.animate(deltaTime, elapsedTime);
-                if (AnimatedTexture.animatedObjects.containsKey(object))
-                    AnimatedTexture.animatedObjects.get(object).update(object, elapsedTime);
+                updateAnimatedTexture(object, elapsedTime);
                 if (object instanceof final CompoundEntity entity)
-                    for (final Drawable component : entity.getComponents())
-                        if (AnimatedTexture.animatedObjects.containsKey(component))
-                            AnimatedTexture.animatedObjects.get(component).update(component, elapsedTime);
+                    for (final Drawable component : entity.getComponents()) updateAnimatedTexture(component, elapsedTime);
                 if (object instanceof final MovingEntity entity) entity.move(Vec2.multiply(entity.getVelocity(), dt));
                 window.draw(object);
             });
