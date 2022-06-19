@@ -22,9 +22,7 @@ import com.rubynaxela.kyanite.game.entities.CompoundEntity;
 import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
 import com.rubynaxela.kyanite.graphics.*;
-import com.rubynaxela.kyanite.graphics.Drawable;
-import com.rubynaxela.kyanite.graphics.Shape;
-import com.rubynaxela.kyanite.graphics.Sprite;
+import com.rubynaxela.kyanite.input.Mouse;
 import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.math.Vector2f;
 import com.rubynaxela.kyanite.math.Vector2i;
@@ -33,7 +31,6 @@ import com.rubynaxela.kyanite.window.event.*;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,16 +124,6 @@ public class Window extends RenderWindow {
     }
 
     /**
-     * @deprecated Use {@code setFramerateLimit(Window.Framerate.VSYNC)} instead.
-     */
-    @Contract("_ -> fail")
-    @Deprecated
-    @Override
-    public void setVerticalSyncEnabled(boolean enable) {
-        throw new UnsupportedOperationException("Use setFramerateLimit(Window.Framerate.VSYNC) instead");
-    }
-
-    /**
      * @return a {@code GlobalRect} covering the entire window
      */
     @Contract(pure = true)
@@ -180,8 +167,8 @@ public class Window extends RenderWindow {
      * This will limit the number of frames displayed to the refresh rate of the monitor, which can avoid some visual
      * artifacts, and limit the framerate to a good value (but not constant across different computers).
      *
-     * @param framerateLimit the maximum frame rate in frames per second, {@link Window.Framerate#UNLIMITED}
-     *                       to disable the limit, or {@link Window.Framerate#VSYNC} for vertical synchronization
+     * @param framerateLimit the maximum frame rate in frames per second, {@link Window.Framerate#UNLIMITED} to
+     *                       disable the limit, or {@link Window.Framerate#VSYNC} to enable vertical synchronization
      */
     @Override
     public void setFramerateLimit(int framerateLimit) {

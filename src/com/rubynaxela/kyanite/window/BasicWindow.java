@@ -229,19 +229,6 @@ public class BasicWindow extends Window implements WindowStyle {
     }
 
     /**
-     * Enables or disables vertical synchronization (VSync). Activating vertical synchronization will limit the number of
-     * frames displayed to the refresh rate of the monitor. This can avoid some visual artifacts, and limit the framerate
-     * to a good value (but not constant across different computers). This should not be used in combination with {@link
-     * #setFramerateLimit}, as these two will conflict with one another. By default, vertical synchronization is disabled.
-     *
-     * @param enable {@code true} to enable vertical synchronization, {@code false} to disable
-     */
-    @Override
-    public void setVerticalSyncEnabled(boolean enable) {
-        super.setVerticalSyncEnabled(enable);
-    }
-
-    /**
      * Determines whether the mouse cursor, if moved over the window, is visible or not
      *
      * @param show {@code true} to make the cursor visible, {@code false} to hide it
