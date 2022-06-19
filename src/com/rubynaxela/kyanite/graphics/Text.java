@@ -293,8 +293,8 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, FontStyle
     }
 
     @Override
-    public void setPosition(@NotNull Vector2f v) {
-        super.setPosition(v);
+    public void setPosition(@NotNull Vector2f position) {
+        super.setPosition(position);
         boundsNeedUpdate = true;
     }
 
@@ -305,14 +305,14 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, FontStyle
     }
 
     @Override
-    public void setScale(@NotNull Vector2f v) {
-        super.setScale(v);
+    public void setScale(@NotNull Vector2f scale) {
+        super.setScale(scale);
         boundsNeedUpdate = true;
     }
 
     @Override
-    public void setOrigin(@NotNull Vector2f v) {
-        super.setOrigin(v);
+    public void setOrigin(@NotNull Vector2f origin) {
+        super.setOrigin(origin);
         boundsNeedUpdate = true;
     }
 

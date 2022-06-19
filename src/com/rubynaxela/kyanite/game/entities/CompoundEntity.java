@@ -15,12 +15,11 @@
 package com.rubynaxela.kyanite.game.entities;
 
 import com.rubynaxela.kyanite.graphics.*;
-import com.rubynaxela.kyanite.graphics.Drawable;
 import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.MathUtils;
 import com.rubynaxela.kyanite.math.Vec2;
-import org.jetbrains.annotations.NotNull;
 import com.rubynaxela.kyanite.math.Vector2f;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -145,25 +144,11 @@ public class CompoundEntity implements Drawable, Transformable {
     }
 
     /**
-     * Sets the position of this object in the scene so that its origin will be exactly on it.
-     *
-     * @param x the new X coordinate.
-     * @param y the new Y coordinate.
+     * @return the position of this object
      */
-
     @Override
-    public void setPosition(float x, float y) {
-        setPosition(Vec2.f(x, y));
-    }
-
-    /**
-     * Scales the object, using its origin as the scaling center. Given
-     * scaling factor is multiplied by the current factors of this object.
-     *
-     * @param factor the scaling factor
-     */
-    public void scale(float factor) {
-        scale(factor, factor);
+    public Vector2f getPosition() {
+        return position;
     }
 
     /**
@@ -177,6 +162,26 @@ public class CompoundEntity implements Drawable, Transformable {
     }
 
     /**
+     * Sets the position of this object in the scene so that its origin will be exactly on it.
+     *
+     * @param x the new X coordinate.
+     * @param y the new Y coordinate.
+     */
+
+    @Override
+    public void setPosition(float x, float y) {
+        setPosition(Vec2.f(x, y));
+    }
+
+    /**
+     * @return the current rotation angle of this object in degrees
+     */
+    @Override
+    public float getRotation() {
+        return rotation;
+    }
+
+    /**
      * Sets the rotation of this object around its origin.
      *
      * @param angle the new rotation angle in degrees
@@ -184,6 +189,14 @@ public class CompoundEntity implements Drawable, Transformable {
     @Override
     public void setRotation(float angle) {
         this.rotation = angle;
+    }
+
+    /**
+     * @return the current scaling factors of this object
+     */
+    @Override
+    public Vector2f getScale() {
+        return scale;
     }
 
     /**
@@ -207,13 +220,21 @@ public class CompoundEntity implements Drawable, Transformable {
     }
 
     /**
-     * Sets the scaling of this object, using its origin as the scaling center.
-     *
-     * @param factors the new scaling factors
+     * @return the current origin of this object
      */
     @Override
-    public void setScale(@NotNull Vector2f factors) {
-        this.scale = factors;
+    public Vector2f getOrigin() {
+        return origin;
+    }
+
+    /**
+     * Sets the rotation, scaling and drawing origin of this object.
+     *
+     * @param origin the new origin
+     */
+    @Override
+    public void setOrigin(@NotNull Vector2f origin) {
+        this.origin = origin;
     }
 
     /**
@@ -228,45 +249,13 @@ public class CompoundEntity implements Drawable, Transformable {
     }
 
     /**
-     * Sets the rotation, scaling and drawing origin of this object.
+     * Moves the object.
      *
-     * @param origin the new origin
+     * @param offset the offset vector added to the current position
      */
     @Override
-    public void setOrigin(@NotNull Vector2f origin) {
-        this.origin = origin;
-    }
-
-    /**
-     * @return the position of this object
-     */
-    @Override
-    public Vector2f getPosition() {
-        return position;
-    }
-
-    /**
-     * @return the current rotation angle of this object in degrees
-     */
-    @Override
-    public float getRotation() {
-        return rotation;
-    }
-
-    /**
-     * @return the current scaling factors of this object
-     */
-    @Override
-    public Vector2f getScale() {
-        return scale;
-    }
-
-    /**
-     * @return the current origin of this object
-     */
-    @Override
-    public Vector2f getOrigin() {
-        return origin;
+    public void move(@NotNull Vector2f offset) {
+        setPosition(Vec2.add(position, offset));
     }
 
     /**
@@ -278,16 +267,6 @@ public class CompoundEntity implements Drawable, Transformable {
     @Override
     public void move(float x, float y) {
         move(Vec2.f(x, y));
-    }
-
-    /**
-     * Moves the object.
-     *
-     * @param offset the offset vector added to the current position
-     */
-    @Override
-    public void move(@NotNull Vector2f offset) {
-        setPosition(Vec2.add(position, offset));
     }
 
     /**
@@ -304,23 +283,34 @@ public class CompoundEntity implements Drawable, Transformable {
      * Scales the object, using its origin as the scaling center. Given
      * scaling factors are multiplied by the current factors of this object.
      *
-     * @param x the X scaling factor
-     * @param y the Y scaling factor
+     * @param scale the scaling factors
      */
     @Override
-    public void scale(float x, float y) {
-        setScale(scale.x * x, scale.y * y);
+    public void scale(@NotNull Vector2f scale) {
+        scale(scale.x, scale.y);
+    }
+
+    /**
+     * Scales the object, using its origin as the scaling center. Given
+     * scaling factor is multiplied by the current factors of this object.
+     *
+     * @param factor the scaling factor
+     */
+    @Override
+    public void scale(float factor) {
+        scale(factor, factor);
     }
 
     /**
      * Scales the object, using its origin as the scaling center. Given
      * scaling factors are multiplied by the current factors of this object.
      *
-     * @param factors the scaling factors
+     * @param x the X scaling factor
+     * @param y the Y scaling factor
      */
     @Override
-    public void scale(@NotNull Vector2f factors) {
-        scale(factors.x, factors.y);
+    public void scale(float x, float y) {
+        setScale(scale.x * x, scale.y * y);
     }
 
     /**
@@ -340,5 +330,15 @@ public class CompoundEntity implements Drawable, Transformable {
     @Override
     public Transform getInverseTransform() {
         return getTransform().getInverse();
+    }
+
+    /**
+     * Sets the scaling of this object, using its origin as the scaling center.
+     *
+     * @param factors the new scaling factors
+     */
+    @Override
+    public void setScale(@NotNull Vector2f factors) {
+        this.scale = factors;
     }
 }

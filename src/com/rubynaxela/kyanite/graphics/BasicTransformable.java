@@ -41,31 +41,21 @@ public class BasicTransformable implements Transformable {
     }
 
     @Override
-    public final void setPosition(float x, float y) {
-        setPosition(new Vector2f(x, y));
-    }
-
-    @Override
-    public final void setScale(float x, float y) {
-        setScale(new Vector2f(x, y));
-    }
-
-    @Override
-    public final void setOrigin(float x, float y) {
-        setOrigin(new Vector2f(x, y));
-    }
-
-    @Override
     public Vector2f getPosition() {
         return position;
     }
 
     @Override
-    public void setPosition(@NotNull Vector2f v) {
-        this.position = v;
+    public void setPosition(@NotNull Vector2f position) {
+        this.position = position;
 
         transformNeedsUpdate = true;
         inverseTransformNeedsUpdate = true;
+    }
+
+    @Override
+    public final void setPosition(float x, float y) {
+        setPosition(new Vector2f(x, y));
     }
 
     @Override
@@ -76,9 +66,7 @@ public class BasicTransformable implements Transformable {
     @Override
     public void setRotation(float angle) {
         this.rotation = angle % 360.0f;
-        if (this.rotation < 0)
-            this.rotation += 360.0f;
-
+        if (this.rotation < 0) this.rotation += 360.0f;
         transformNeedsUpdate = true;
         inverseTransformNeedsUpdate = true;
     }
@@ -91,9 +79,17 @@ public class BasicTransformable implements Transformable {
     @Override
     public void setScale(@NotNull Vector2f factors) {
         this.scale = factors;
-
         transformNeedsUpdate = true;
         inverseTransformNeedsUpdate = true;
+    }
+
+    public final void setScale(float factor) {
+        setScale(Vec2.f(factor, factor));
+    }
+
+    @Override
+    public final void setScale(float x, float y) {
+        setScale(Vec2.f(x, y));
     }
 
     @Override
@@ -102,11 +98,20 @@ public class BasicTransformable implements Transformable {
     }
 
     @Override
-    public void setOrigin(@NotNull Vector2f v) {
-        this.origin = v;
-
+    public void setOrigin(@NotNull Vector2f origin) {
+        this.origin = origin;
         transformNeedsUpdate = true;
         inverseTransformNeedsUpdate = true;
+    }
+
+    @Override
+    public final void setOrigin(float x, float y) {
+        setOrigin(new Vector2f(x, y));
+    }
+
+    @Override
+    public void move(@NotNull Vector2f offset) {
+        setPosition(Vec2.add(position, offset));
     }
 
     @Override
@@ -115,23 +120,22 @@ public class BasicTransformable implements Transformable {
     }
 
     @Override
-    public void move(@NotNull Vector2f v) {
-        setPosition(Vec2.add(position, v));
-    }
-
-    @Override
     public void rotate(float angle) {
         setRotation(rotation + angle);
     }
 
     @Override
-    public final void scale(float x, float y) {
-        scale(new Vector2f(x, y));
+    public void scale(@NotNull Vector2f scale) {
+        setScale(Vec2.multiply(this.scale, scale));
     }
 
     @Override
-    public void scale(@NotNull Vector2f factors) {
-        setScale(Vec2.multiply(scale, factors));
+    public final void scale(float factor) {
+        scale(Vec2.f(factor, factor));
+    }
+
+    public final void scale(float x, float y) {
+        scale(Vec2.f(x, y));
     }
 
     @Override

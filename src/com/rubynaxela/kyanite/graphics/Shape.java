@@ -269,8 +269,8 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     }
 
     @Override
-    public void setPosition(@NotNull Vector2f v) {
-        super.setPosition(v);
+    public void setPosition(@NotNull Vector2f position) {
+        super.setPosition(position);
         boundsNeedUpdate = true;
     }
 
@@ -281,8 +281,8 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     }
 
     @Override
-    public void setScale(@NotNull Vector2f v) {
-        super.setScale(v);
+    public void setScale(@NotNull Vector2f scale) {
+        super.setScale(scale);
         boundsNeedUpdate = true;
     }
 

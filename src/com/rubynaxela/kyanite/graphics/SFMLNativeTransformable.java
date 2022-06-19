@@ -15,6 +15,7 @@
 package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.core.IntercomHelper;
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.math.Vector2f;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +27,7 @@ import java.util.Objects;
 @SuppressWarnings("deprecation")
 public abstract class SFMLNativeTransformable extends org.jsfml.graphics.SFMLNativeTransformable implements Transformable {
 
-    private Vector2f position = Vector2f.ZERO, scale = new Vector2f(1, 1), origin = Vector2f.ZERO;
+    private Vector2f position = Vector2f.ZERO, scale = Vec2.f(1, 1), origin = Vector2f.ZERO;
     private float rotation = 0;
     private boolean transformNeedsUpdate = true;
     private Transform transformCache = null, inverseTransformCache = null;
@@ -35,30 +36,20 @@ public abstract class SFMLNativeTransformable extends org.jsfml.graphics.SFMLNat
     }
 
     @Override
-    public final void setPosition(float x, float y) {
-        setPosition(new Vector2f(x, y));
-    }
-
-    @Override
-    public final void setScale(float x, float y) {
-        setScale(new Vector2f(x, y));
-    }
-
-    @Override
-    public final void setOrigin(float x, float y) {
-        setOrigin(new Vector2f(x, y));
-    }
-
-    @Override
     public Vector2f getPosition() {
         return position;
     }
 
     @Override
-    public void setPosition(@NotNull Vector2f v) {
-        position = Objects.requireNonNull(v);
-        nativeSetPosition(v.x, v.y);
+    public void setPosition(@NotNull Vector2f position) {
+        this.position = position;
+        nativeSetPosition(position.x, position.y);
         transformNeedsUpdate = true;
+    }
+
+    @Override
+    public final void setPosition(float x, float y) {
+        setPosition(Vec2.f(x, y));
     }
 
     @Override
@@ -79,10 +70,19 @@ public abstract class SFMLNativeTransformable extends org.jsfml.graphics.SFMLNat
     }
 
     @Override
-    public void setScale(@NotNull Vector2f v) {
-        scale = Objects.requireNonNull(v);
-        nativeSetScale(v.x, v.y);
+    public void setScale(@NotNull Vector2f scale) {
+        this.scale = scale;
+        nativeSetScale(scale.x, scale.y);
         transformNeedsUpdate = true;
+    }
+
+    public final void setScale(float factor) {
+        setScale(Vec2.f(factor, factor));
+    }
+
+    @Override
+    public final void setScale(float x, float y) {
+        setScale(Vec2.f(x, y));
     }
 
     @Override
@@ -91,20 +91,25 @@ public abstract class SFMLNativeTransformable extends org.jsfml.graphics.SFMLNat
     }
 
     @Override
-    public void setOrigin(@NotNull Vector2f v) {
-        origin = Objects.requireNonNull(v);
-        nativeSetOrigin(v.x, v.y);
+    public void setOrigin(@NotNull Vector2f origin) {
+        this.origin = origin;
+        nativeSetOrigin(origin.x, origin.y);
         transformNeedsUpdate = true;
     }
 
     @Override
-    public final void move(float x, float y) {
-        setPosition(new Vector2f(position.x + x, position.y + y));
+    public final void setOrigin(float x, float y) {
+        setOrigin(Vec2.f(x, y));
     }
 
     @Override
-    public final void move(@NotNull Vector2f v) {
-        move(v.x, v.y);
+    public final void move(@NotNull Vector2f offset) {
+        move(offset.x, offset.y);
+    }
+
+    @Override
+    public final void move(float x, float y) {
+        setPosition(Vec2.f(position.x + x, position.y + y));
     }
 
     @Override
@@ -113,13 +118,17 @@ public abstract class SFMLNativeTransformable extends org.jsfml.graphics.SFMLNat
     }
 
     @Override
-    public final void scale(float x, float y) {
-        setScale(new Vector2f(scale.x * x, scale.y * y));
+    public final void scale(@NotNull Vector2f scale) {
+        scale(scale.x, scale.y);
+    }
+
+    public final void scale(float factor) {
+        setScale(Vec2.f(scale.x * factor, scale.y * factor));
     }
 
     @Override
-    public final void scale(@NotNull Vector2f factors) {
-        scale(factors.x, factors.y);
+    public final void scale(float x, float y) {
+        setScale(Vec2.f(scale.x * x, scale.y * y));
     }
 
     @Override

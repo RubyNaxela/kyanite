@@ -24,30 +24,6 @@ import org.jetbrains.annotations.NotNull;
 public interface Transformable {
 
     /**
-     * Sets the position of this object in the scene so that its origin will be exactly on it.
-     *
-     * @param x the new X coordinate
-     * @param y the new Y coordinate
-     */
-    void setPosition(float x, float y);
-
-    /**
-     * Sets the scaling of this object, using its origin as the scaling center.
-     *
-     * @param x the new X scaling factor
-     * @param y the new Y scaling factor
-     */
-    void setScale(float x, float y);
-
-    /**
-     * Sets the rotation, scaling and drawing origin of this object.
-     *
-     * @param x the new X coordinate of the origin
-     * @param y the new Y coordinate of the origin
-     */
-    void setOrigin(float x, float y);
-
-    /**
      * Gets the position of this object.
      *
      * @return the current position
@@ -57,9 +33,17 @@ public interface Transformable {
     /**
      * Sets the position of this object in the scene so that its origin will be exactly on it.
      *
-     * @param v the new position
+     * @param position the new position
      */
-    void setPosition(@NotNull Vector2f v);
+    void setPosition(@NotNull Vector2f position);
+
+    /**
+     * Sets the position of this object in the scene so that its origin will be exactly on it.
+     *
+     * @param x the new X coordinate
+     * @param y the new Y coordinate
+     */
+    void setPosition(float x, float y);
 
     /**
      * Gets the rotation angle of this object.
@@ -85,9 +69,24 @@ public interface Transformable {
     /**
      * Sets the scaling of this object, using its origin as the scaling center.
      *
-     * @param factors the new scaling factors
+     * @param scale the new scaling factors
      */
-    void setScale(@NotNull Vector2f factors);
+    void setScale(@NotNull Vector2f scale);
+
+    /**
+     * Sets the scaling of this object, using its origin as the scaling center.
+     *
+     * @param factor the new scaling factor
+     */
+    void setScale(float factor);
+
+    /**
+     * Sets the scaling of this object, using its origin as the scaling center.
+     *
+     * @param x the new X scaling factor
+     * @param y the new Y scaling factor
+     */
+    void setScale(float x, float y);
 
     /**
      * Gets the origin of this object.
@@ -99,9 +98,24 @@ public interface Transformable {
     /**
      * Sets the rotation, scaling and drawing origin of this object.
      *
-     * @param v the new origin
+     * @param origin the new origin
      */
-    void setOrigin(@NotNull Vector2f v);
+    void setOrigin(@NotNull Vector2f origin);
+
+    /**
+     * Sets the rotation, scaling and drawing origin of this object.
+     *
+     * @param x the new X coordinate of the origin
+     * @param y the new Y coordinate of the origin
+     */
+    void setOrigin(float x, float y);
+
+    /**
+     * Moves the object.
+     *
+     * @param offset the offset vector added to the current position
+     */
+    void move(@NotNull Vector2f offset);
 
     /**
      * Moves this object.
@@ -110,13 +124,6 @@ public interface Transformable {
      * @param y the Y offset added to the current position
      */
     void move(float x, float y);
-
-    /**
-     * Moves the object.
-     *
-     * @param v the offset vector added to the current position
-     */
-    void move(@NotNull Vector2f v);
 
     /**
      * Rotates this object around its origin.
@@ -128,17 +135,24 @@ public interface Transformable {
     /**
      * Scales the object, using its origin as the scaling center.
      *
-     * @param x the X scaling factor
-     * @param y the Y scaling factor
+     * @param scale the scaling factors
      */
-    void scale(float x, float y);
+    void scale(@NotNull Vector2f scale);
 
     /**
      * Scales the object, using its origin as the scaling center.
      *
-     * @param factors the scaling factors
+     * @param factor the scaling factor
      */
-    void scale(@NotNull Vector2f factors);
+    void scale(float factor);
+
+    /**
+     * Scales the object, using its origin as the scaling center.
+     *
+     * @param x the X scaling factor
+     * @param y the Y scaling factor
+     */
+    void scale(float x, float y);
 
     /**
      * Gets the current transformation matrix.
