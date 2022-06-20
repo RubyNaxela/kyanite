@@ -37,6 +37,7 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, FontStyle
     private boolean boundsNeedUpdate = true;
     private FloatRect localBounds = null, globalBounds = null;
     private Alignment alignment = Alignment.TOP_LEFT;
+    private int layer = 0;
 
     /**
      * Creates a new empty text with default font ({@link Typeface#JETBRAINS_MONO}, 32px, regular).
@@ -319,5 +320,15 @@ public class Text extends org.jsfml.graphics.Text implements Drawable, FontStyle
     @Override
     public void draw(@NotNull RenderTarget target, @NotNull RenderStates states) {
         SFMLNativeDrawer.draw(this, target, states);
+    }
+
+    @Override
+    public int getLayer() {
+        return layer;
+    }
+
+    @Override
+    public void setLayer(int layer) {
+        this.layer = layer;
     }
 }

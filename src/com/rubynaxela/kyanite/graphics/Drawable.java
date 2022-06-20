@@ -14,6 +14,8 @@
 
 package com.rubynaxela.kyanite.graphics;
 
+import com.rubynaxela.kyanite.game.RenderLayer;
+import com.rubynaxela.kyanite.game.RenderLayer.OrderingPolicy;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -30,4 +32,22 @@ public interface Drawable extends org.jsfml.graphics.Drawable {
      * @param states the current render states
      */
     void draw(@NotNull RenderTarget target, @NotNull RenderStates states);
+
+    /**
+     * Returns the layer index of this object. This setting is used by {@link RenderLayer} to draw objects in a specific order.
+     * If the render layer's layer-ordering policy is set, objects of higher values will be drawn over objects of lower values.
+     *
+     * @return the current layer index of this object
+     * @see OrderingPolicy
+     */
+    int getLayer();
+
+    /**
+     * Sets the layer index of this object. This setting is used by {@link RenderLayer} to draw objects in a specific order.
+     * If the render layer's layer-ordering policy is set, objects of higher values will be drawn over objects of lower values.
+     *
+     * @param layer the new layer index of this object
+     * @see OrderingPolicy
+     */
+    void setLayer(int layer);
 }

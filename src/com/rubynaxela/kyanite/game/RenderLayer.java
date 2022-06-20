@@ -23,13 +23,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
- * Provides a layer of {@link Drawable}s that can be displayed on a {@link Window}. The collection index of
- * an element is also its z-index. If two elements overlap each other, the one with the higher index will
- * be displayed over the other one. This class is the base of the {@link Scene} and {@link HUD} classes.
+ * This class is the base of the {@link Scene} and {@link HUD} classes. Provides a layer of {@link Drawable}s that can
+ * be displayed on a {@link Window}. Supports some features of a {@link List} such as adding, removing and random access.
  */
 public abstract sealed class RenderLayer implements Iterable<Drawable> permits HUD, Scene {
 
@@ -40,7 +38,7 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     /**
      * The list of objects on this render layer.
      */
-    protected final List<Drawable> drawables = new LinkedList<>();
+    protected final List<Drawable> drawables = new DrawablesList();
     private final Queue<Consumer<? super RenderLayer>> scheduledActions = new LinkedList<>();
     /**
      * The background color of this render layer.
@@ -55,6 +53,7 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
      */
     protected boolean ready = false;
     private Texture backgroundTexture;
+    private OrderingPolicy orderingPolicy = OrderingPolicy.LAST_ON_TOP;
 
     RenderLayer() {
     }
@@ -148,6 +147,38 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     }
 
     /**
+     * Returns the object at the specified position in this render layer.
+     *
+     * @param index the index of the object to return
+     * @return the object at the specified position in this render layer
+     */
+    public Drawable get(int index) {
+        return drawables.get(index);
+    }
+
+    /**
+     * Returns the index of the first occurrence of the specified element in this render layer.
+     *
+     * @param object the object to search for
+     * @return the index of the first occurrence of the specified object
+     * in this render layer, or -1 if this list does not contain the element
+     */
+    public int indexOf(@NotNull Drawable object) {
+        return drawables.indexOf(object);
+    }
+
+    /**
+     * Returns the index of the last occurrence of the specified element in this render layer.
+     *
+     * @param object the object to search for
+     * @return the index of the first occurrence of the specified object
+     * in this render layer, or -1 if this list does not contain the element
+     */
+    public int lastIndexOf(@NotNull Drawable object) {
+        return drawables.lastIndexOf(object);
+    }
+
+    /**
      * @return the number of objects in this render layer
      */
     public int size() {
@@ -172,13 +203,13 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     }
 
     /**
-     * Returns {@code true} if this render layer contains all of the elements in the specified collection.
+     * Returns {@code true} if this render layer contains all the elements in the specified collection.
      *
      * @param collection a collection whose objects' presence in this render layer is to be tested
-     * @return {@code true} if this list contains all of the elements in the specified collection
+     * @return {@code true} if this list contains all the elements in the specified collection
      */
     public boolean containsAll(@NotNull Collection<Drawable> collection) {
-        return drawables.containsAll(collection);
+        return new HashSet<>(drawables).containsAll(collection);
     }
 
     /**
@@ -192,18 +223,7 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     }
 
     /**
-     * Inserts the specified object at the specified position in this render layer. Shifts the object currently
-     * at that position (if any) and any subsequent objects to the right (adds one to their indices).
-     *
-     * @param index   the index at which the specified object is to be inserted
-     * @param element object to be added
-     */
-    public void add(int index, @NotNull Drawable element) {
-        drawables.add(index, element);
-    }
-
-    /**
-     * Adds all of the specified elements to this render layer.
+     * Adds all the specified elements to this render layer.
      *
      * @param objects the objects to be added to this render layer
      * @return {@code true} if this render layer changed as a result of the call
@@ -213,26 +233,13 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     }
 
     /**
-     * Adds all of the elements in the specified collection to this render layer.
+     * Adds all the elements in the specified collection to this render layer.
      *
      * @param collection a collection containing objects to be added to this render layer
      * @return {@code true} if this render layer changed as a result of the call
      */
     public boolean add(@NotNull Collection<? extends Drawable> collection) {
         return drawables.addAll(collection);
-    }
-
-    /**
-     * Inserts all of the objects in the specified collection into this render layer at the specified position (optional
-     * operation).
-     * Shifts the object currently at that position (if any) and any subsequent objects to the right (increases their indices).
-     *
-     * @param index      the index at which to insert the first object from the specified collection
-     * @param collection a collection containing objects to be added to this render layer
-     * @return {@code true} if this render layer changed as a result of the call
-     */
-    public boolean add(int index, @NotNull Collection<? extends Drawable> collection) {
-        return drawables.addAll(index, collection);
     }
 
     /**
@@ -287,7 +294,7 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     }
 
     /**
-     * Removes all of the objects of this render layer that satisfy the given predicate. Errors or
+     * Removes all the objects of this render layer that satisfy the given predicate. Errors or
      * runtime exceptions thrown during iteration or by the predicate are relayed to the caller.
      *
      * @param filter a predicate which returns {@code true} for objects to be removed
@@ -298,7 +305,7 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     }
 
     /**
-     * Removes all of the objects from this render layer.
+     * Removes all the objects from this render layer.
      */
     public void clear() {
         drawables.clear();
@@ -315,83 +322,18 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     }
 
     /**
-     * Returns the object at the specified position in this render layer.
-     *
-     * @param index the index of the object to return
-     * @return the object at the specified position in this render layer
-     */
-    public Drawable get(int index) {
-        return drawables.get(index);
-    }
-
-    /**
-     * Replaces the object at the specified position in this render layer with the specified object.
-     *
-     * @param index   the index of the object to replace
-     * @param element the object to be stored at the specified position
-     * @return the object previously at the specified position
-     */
-    public Drawable set(int index, @NotNull Drawable element) {
-        return drawables.set(index, element);
-    }
-
-    /**
-     * Replaces the first of the specified objects with the second one.
-     *
-     * @param previous the object to be replaced
-     * @param current  the object to replace the original one with
-     */
-    public void replace(@NotNull Drawable previous, @NotNull Drawable current) {
-        final int index = indexOf(previous);
-        if (index >= 0) {
-            remove(index);
-            add(index, current);
-        }
-    }
-
-    /**
-     * Replaces each object of this render layer with the result of applying the operator to that
-     * object. Errors or runtime exceptions thrown by the operator are relayed to the caller.
-     *
-     * @param operator the operator to apply to each object
-     */
-    public void replaceAll(@NotNull UnaryOperator<Drawable> operator) {
-        drawables.replaceAll(operator);
-    }
-
-    /**
-     * Returns the index of the first occurrence of the specified element in this render layer.
-     *
-     * @param object the object to search for
-     * @return the index of the first occurrence of the specified object
-     * in this render layer, or -1 if this list does not contain the element
-     */
-    public int indexOf(@NotNull Drawable object) {
-        return drawables.indexOf(object);
-    }
-
-    /**
-     * Returns the index of the last occurrence of the specified element in this render layer.
-     *
-     * @param object the object to search for
-     * @return the index of the first occurrence of the specified object
-     * in this render layer, or -1 if this list does not contain the element
-     */
-    public int lastIndexOf(@NotNull Drawable object) {
-        return drawables.lastIndexOf(object);
-    }
-
-    /**
      * Moves the specified object to the end of the render layer collection so that
      * it is drawn last on the window and therefore above all other objects.
      *
      * @param object the object to be moved to the z-axis top of the render layer
      */
     public void bringToTop(@NotNull Drawable object) {
-        if (contains(object)) {
-            remove(object);
-            add(object);
-        } else throw new NullPointerException("This render layer does not contain the specified object");
+        if (orderingPolicy == OrderingPolicy.LAST_ON_TOP)
+            if (drawables.contains(object)) {
+                drawables.remove(object);
+                drawables.add(object);
+            } else throw new NoSuchElementException("This render layer does not contain the specified object");
+        else throw new UnsupportedOperationException("Using the bringToTop method is not permitted with the LAYERS policy");
     }
 
     /**
@@ -401,16 +343,18 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
      * @param object the object to be moved to the z-axis bottom of the render layer
      */
     public void bringToBottom(@NotNull Drawable object) {
-        if (contains(object)) {
-            remove(object);
-            add(0, object);
-        } else throw new NullPointerException("This render layer does not contain the specified object");
+        if (orderingPolicy == OrderingPolicy.LAST_ON_TOP)
+            if (drawables.contains(object)) {
+                remove(object);
+                drawables.add(0, object);
+            } else throw new NoSuchElementException("This render layer does not contain the specified object");
+        else throw new UnsupportedOperationException("Using the bringToBottom method is not permitted with the LAYERS policy");
     }
 
     /**
-     * Creates an immutable list containing the elements of this render layer, in the same order as they are inside the render
-     * layer. Query operations on the returned list "read through" to the specified list, and attempts to modify the returned
-     * list, whether direct or via its iterator, result in an {@code UnsupportedOperationException}.
+     * Creates an immutable list containing the elements of this render layer, in the same order as they are inside
+     * the render layer. Query operations on the returned list "read through" to the specified list, and attempts to
+     * modify the returned list, whether direct or via its iterator, result in an {@code UnsupportedOperationException}.
      *
      * @return an immutable list containing the elements of this render layer
      */
@@ -419,11 +363,79 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     }
 
     /**
-     * This method is called automatically before every loop/draw iteration of a render layer. Calling it
-     * manually might cause a {@link ConcurrentModificationException} to be thrown and thus is not recommended.
+     * This method is called automatically before every loop/draw iteration of a render
+     * layer. Calling it manually might cause a {@link ConcurrentModificationException}.
      */
     protected void runScheduledActions() {
         scheduledActions.forEach(change -> change.accept(this));
         scheduledActions.clear();
+    }
+
+    /**
+     * Returns the currently set policy of ordering the elements on this render layer.
+     *
+     * @return currently set ordering policy
+     * @see OrderingPolicy#LAST_ON_TOP
+     * @see OrderingPolicy#LAYERS
+     */
+    public OrderingPolicy getOrderingPolicy() {
+        return orderingPolicy;
+    }
+
+    /**
+     * Sets the policy that should be followed when ordering the objects on the render layer and updates
+     * the order. Since the original order of insertion is not stored, changing this setting from
+     * {@link OrderingPolicy#LAYERS} to {@link OrderingPolicy#LAST_ON_TOP} does not change the order of objects.
+     *
+     * @param policy {@link OrderingPolicy#LAST_ON_TOP} or {@link OrderingPolicy#LAYERS}
+     */
+    public void setOrderingPolicy(@NotNull OrderingPolicy policy) {
+        orderingPolicy = policy;
+        updateOrder();
+    }
+
+    /**
+     * Updates the order of objects on this render layer if the ordering policy is set to {@link OrderingPolicy#LAYERS}.
+     */
+    public void updateOrder() {
+        if (orderingPolicy == OrderingPolicy.LAYERS) drawables.sort(Comparator.comparing(Drawable::getLayer));
+    }
+
+    /**
+     * Policies by which the objects are ordered when added to the render layer.
+     */
+    public enum OrderingPolicy {
+
+        /**
+         * A simple policy with which the items on the render layer are in the order they were added. The order may be
+         * changed using the {@link RenderLayer#bringToTop} and {@link RenderLayer#bringToBottom} methods. Objects with
+         * a higher layer index will be placed further in the list, making them drawn over objects with lower indices.
+         */
+        LAST_ON_TOP,
+        /**
+         * A policy that follows an order determined by the layer setting (the {@link Drawable#getLayer} method). Objects with
+         * a higher layer index will be placed further in the list, making them drawn over objects with lower indices. This
+         * policy involves sorting the objects as new ones are added, which might cause performance issues if the render layer
+         * contains many objects or is updated frequently. With this policy, manual shifting of the objects is not permitted.
+         */
+        LAYERS
+    }
+
+    private class DrawablesList extends LinkedList<Drawable> {
+
+        @Override
+        public boolean add(Drawable drawable) {
+            super.add(drawable);
+            if (orderingPolicy == OrderingPolicy.LAYERS) sort(Comparator.comparing(Drawable::getLayer));
+            return true;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Drawable> c) {
+            if (c.isEmpty()) return false;
+            super.addAll(c);
+            if (orderingPolicy == OrderingPolicy.LAYERS) sort(Comparator.comparing(Drawable::getLayer));
+            return true;
+        }
     }
 }

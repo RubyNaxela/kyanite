@@ -41,6 +41,7 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     private ConstTexture texture = null;
     private ConstAnimatedTexture animatedTexture = null;
     private FloatRect localBounds = null, globalBounds = null;
+    private int layer = 0;
 
     /**
      * Gets the shape's current fill color.
@@ -349,5 +350,15 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     @Override
     public void draw(@NotNull RenderTarget target, @NotNull RenderStates states) {
         SFMLNativeDrawer.draw(this, target, states);
+    }
+
+    @Override
+    public int getLayer() {
+        return layer;
+    }
+
+    @Override
+    public void setLayer(int layer) {
+        this.layer = layer;
     }
 }

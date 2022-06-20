@@ -39,6 +39,7 @@ public class CompoundEntity implements Drawable, Transformable {
     private final List<Drawable> components = new ArrayList<>();
     private float rotation = 0;
     private Vector2f origin = Vector2f.ZERO, position = Vector2f.ZERO, scale = Vec2.f(1, 1);
+    private int layer = 0;
 
     /**
      * Creates an empty compound entity.
@@ -133,6 +134,16 @@ public class CompoundEntity implements Drawable, Transformable {
                                                            Transform.combine(states.transform, getTransform()),
                                                            states.texture, states.shader);
         components.forEach(component -> target.draw(component, renderStates));
+    }
+
+    @Override
+    public int getLayer() {
+        return layer;
+    }
+
+    @Override
+    public void setLayer(int layer) {
+        this.layer = layer;
     }
 
     /**

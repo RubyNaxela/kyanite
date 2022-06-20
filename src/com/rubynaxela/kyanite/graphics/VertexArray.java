@@ -33,6 +33,7 @@ public class VertexArray extends BasicTransformable implements List<Vertex>, Ser
     private final List<Vertex> vertices;
     private PrimitiveType primitiveType;
     private Color fillColor = Colors.WHITE;
+    private int layer = 0;
 
     /**
      * Constructs a new empty vertex array using the {@link PrimitiveType#POINTS} type.
@@ -149,6 +150,16 @@ public class VertexArray extends BasicTransformable implements List<Vertex>, Ser
         final Transform transform = Transform.combine(states.transform, getTransform());
         final RenderStates renderStates = new RenderStates(states.blendMode, transform, states.texture, states.shader);
         if (!vertices.isEmpty()) target.draw(vertices.toArray(new Vertex[0]), primitiveType, renderStates);
+    }
+
+    @Override
+    public int getLayer() {
+        return layer;
+    }
+
+    @Override
+    public void setLayer(int layer) {
+        this.layer = layer;
     }
 
     /**

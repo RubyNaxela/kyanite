@@ -35,6 +35,7 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
     private ConstAnimatedTexture animatedTexture = null;
     private boolean boundsNeedUpdate = true, keepCentered = false;
     private FloatRect localBounds = null, globalBounds = null;
+    private int layer = 0;
 
     /**
      * Constructs a new sprite without a texture.
@@ -293,5 +294,15 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
     @Override
     public void draw(@NotNull RenderTarget target, @NotNull RenderStates states) {
         SFMLNativeDrawer.draw(this, target, states);
+    }
+
+    @Override
+    public int getLayer() {
+        return layer;
+    }
+
+    @Override
+    public void setLayer(int layer) {
+        this.layer = layer;
     }
 }
