@@ -23,7 +23,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * Represents RGBA colors.
+ * Represents an RGBA color. Provides arithmetic operations on colors and methods creating derived colors.
  */
 public final class Color implements Serializable {
 
@@ -82,6 +82,17 @@ public final class Color implements Serializable {
      */
     public static Color add(@NotNull Color a, @NotNull Color b) {
         return new Color(a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.a);
+    }
+
+    /**
+     * Modulates two colors by performing a component-wise subtraction.
+     *
+     * @param a the first color
+     * @param b the second color
+     * @return the modulated color
+     */
+    public static Color subtract(@NotNull Color a, @NotNull Color b) {
+        return new Color(a.r - b.r, a.g - b.g, a.b - b.b, a.a - b.a);
     }
 
     /**
@@ -156,6 +167,19 @@ public final class Color implements Serializable {
     @Contract(pure = true, value = "_ -> new")
     public Color brighter(float factor) {
         return new Color((int) (r + factor * (255 - r)), (int) (g + factor * (255 - g)), (int) (b + factor * (255 - b)), a);
+    }
+
+    /**
+     * Converts this color to a grayscale version. Each component of the resulting color (except alpha, which remains
+     * the same) is computed using the NTSC formula: {@code  (0.299 * r + 0.587 * g + 0.114 * b)}. This formula
+     * closely represents the average person's relative perception of the brightness of red, green, and blue light.
+     *
+     * @return a grayscale version of this color
+     */
+    @Contract(pure = true, value = "-> new")
+    public Color grayscale() {
+        final int c = (int) ((0.299 * r + 0.587 * g + 0.114 * b));
+        return new Color(c, c, c, a);
     }
 
     @Override
