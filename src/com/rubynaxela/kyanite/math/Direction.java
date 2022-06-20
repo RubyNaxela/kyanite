@@ -51,7 +51,11 @@ public enum Direction {
     /**
      * The north-west direction.
      */
-    NORTH_WEST(Axis.BOTH, Vec2.f(-MathUtils.SQRT2_2, -MathUtils.SQRT2_2));
+    NORTH_WEST(Axis.BOTH, Vec2.f(-MathUtils.SQRT2_2, -MathUtils.SQRT2_2)),
+    /**
+     * The null direction - with a zero vector.
+     */
+    NULL(Axis.BOTH, Vector2f.zero());
 
     /**
      * The axis or axes with which overlap the components of a vector pointing in this direction.

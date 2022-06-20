@@ -27,8 +27,8 @@ import com.rubynaxela.kyanite.core.SFMLNative;
 public final class Listener extends org.jsfml.audio.Listener {
 
     private static float volume = 100;
-    private static Vector3f position = Vector3f.ZERO;
-    private static Vector3f direction = Vector3f.ZERO;
+    private static Vector3f position = Vector3f.zero();
+    private static Vector3f direction = Vector3f.zero();
 
     static {
         SFMLNative.loadNativeLibraries();

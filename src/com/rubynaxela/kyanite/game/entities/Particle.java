@@ -58,7 +58,7 @@ public class Particle extends CircleShape implements AnimatedEntity, MovingEntit
      * @param lifetime the duration of this {@code Particle}'s lifetime
      */
     public Particle(@NotNull Scene scene, @NotNull Texture[] frames, float lifetime) {
-        this(scene, frames, lifetime, Vector2f.ZERO);
+        this(scene, frames, lifetime, Vector2f.zero());
     }
 
     private void nextFrame() {

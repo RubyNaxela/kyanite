@@ -27,7 +27,7 @@ import java.nio.FloatBuffer;
 public abstract class SoundSource extends org.jsfml.audio.SoundSource {
 
     private float volume = 100, pitch = 1, minDistance = 1, attenuation = 1;
-    private Vector3f position = Vector3f.ZERO;
+    private Vector3f position = Vector3f.zero();
     private boolean relativeToListener = false;
 
     /**

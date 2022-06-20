@@ -99,7 +99,7 @@ public final class IntercomHelper {
      * @return the decoded vector
      */
     public static Vector2i decodeVector2i(long vector) {
-        return vector == 0 ? Vector2i.ZERO : new Vector2i((int) vector, (int) (vector >> 32));
+        return vector == 0 ? Vector2i.zero() : new Vector2i((int) vector, (int) (vector >> 32));
     }
 
     /**

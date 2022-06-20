@@ -48,7 +48,7 @@ public final class Vertex implements Serializable {
      * @param position the vertex' position
      */
     public Vertex(@NotNull Vector2f position) {
-        this(position, Colors.WHITE, Vector2f.ZERO);
+        this(position, Colors.WHITE, Vector2f.zero());
     }
 
     /**
@@ -58,7 +58,7 @@ public final class Vertex implements Serializable {
      * @param color    the vertex' color
      */
     public Vertex(@NotNull Vector2f position, @NotNull Color color) {
-        this(position, color, Vector2f.ZERO);
+        this(position, color, Vector2f.zero());
     }
 
     /**

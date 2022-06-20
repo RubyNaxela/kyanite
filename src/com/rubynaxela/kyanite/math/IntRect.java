@@ -14,6 +14,7 @@
 
 package com.rubynaxela.kyanite.math;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
@@ -41,6 +42,14 @@ public final class IntRect implements Serializable {
      */
     public final int top;
     /**
+     * The X-coordinate of the right side of this rectangle.
+     */
+    public final int right;
+    /**
+     * The Y-coordinate of the top bottom of this rectangle.
+     */
+    public final int bottom;
+    /**
      * The width of the rectangle.
      */
     public final int width;
@@ -60,6 +69,8 @@ public final class IntRect implements Serializable {
     public IntRect(int left, int top, int width, int height) {
         this.left = left;
         this.top = top;
+        this.right = left + width;
+        this.bottom = top + height;
         this.width = width;
         this.height = height;
     }
@@ -71,19 +82,20 @@ public final class IntRect implements Serializable {
      * @param size     the rectangle's dimension
      */
     public IntRect(@NotNull Vector2i position, @NotNull Vector2i size) {
-        this.left = position.x;
-        this.top = position.y;
-        this.width = size.x;
-        this.height = size.y;
+        this(position.x, position.y, size.x, size.y);
     }
 
     /**
-     * Constructs a new rectangle by converting a floating point rectangle. The fractions of the components will be removed.
+     * Creates a new rectangle with the specified coordinates.
      *
-     * @param rect the rectangle to convert.
+     * @param left   the X-coordinate of the left side of this rectangle
+     * @param top    the Y-coordinate of the top side of this rectangle
+     * @param right  the X-coordinate of the right side of this rectangle
+     * @param bottom the Y-coordinate of the bottom side of this rectangle
      */
-    public IntRect(@NotNull FloatRect rect) {
-        this((int) rect.left, (int) rect.top, (int) rect.width, (int) rect.height);
+    @Contract(pure = true, value = "_, _, _, _ -> new")
+    public static IntRect fromCoordinates(int left, int top, int right, int bottom) {
+        return new IntRect(left, top, right - left, bottom - top);
     }
 
     /**
@@ -118,14 +130,120 @@ public final class IntRect implements Serializable {
      * @param rect the rectangle to test against
      * @return the intersection rectangle, or {@code null} if the rectangles do not intersect
      */
-    public IntRect intersection(@NotNull IntRect rect) {
-        final int interLeft = Math.max(Math.min(left, left + width), Math.min(rect.left, rect.left + rect.width)),
-                interTop = Math.max(Math.min(top, top + height), Math.min(rect.top, rect.top + rect.height)),
-                interRight = Math.min(Math.max(left, left + width), Math.max(rect.left, rect.left + rect.width)),
-                interBottom = Math.min(Math.max(top, top + height), Math.max(rect.top, rect.top + rect.height));
+    @Contract(pure = true)
+    public FloatRect intersection(@NotNull FloatRect rect) {
+        final float interLeft = Math.max(Math.min(left, right), Math.min(rect.left, rect.right)),
+                interTop = Math.max(Math.min(top, bottom), Math.min(rect.top, rect.bottom)),
+                interRight = Math.min(Math.max(left, right), Math.max(rect.left, rect.right)),
+                interBottom = Math.min(Math.max(top, bottom), Math.max(rect.top, rect.bottom));
         if ((interLeft < interRight) && (interTop < interBottom))
-            return new IntRect(interLeft, interTop, interRight - interLeft, interBottom - interTop);
+            return FloatRect.fromCoordinates(interLeft, interTop, interRight, interBottom);
         else return null;
+    }
+
+    /**
+     * Tests whether this rectangle intersects with another rectangle and calculates the rectangle of intersection.
+     *
+     * @param rect the rectangle to test against
+     * @return the intersection rectangle, or {@code null} if the rectangles do not intersect
+     */
+    @Contract(pure = true)
+    public IntRect intersection(@NotNull IntRect rect) {
+        final int interLeft = Math.max(Math.min(left, right), Math.min(rect.left, rect.right)),
+                interTop = Math.max(Math.min(top, bottom), Math.min(rect.top, rect.bottom)),
+                interRight = Math.min(Math.max(left, right), Math.max(rect.left, rect.right)),
+                interBottom = Math.min(Math.max(top, bottom), Math.max(rect.top, rect.bottom));
+        if ((interLeft < interRight) && (interTop < interBottom))
+            return IntRect.fromCoordinates(interLeft, interTop, interRight, interBottom);
+        else return null;
+    }
+
+    /**
+     * Tests whether this rectangle intersects with another rectangle.
+     *
+     * @param rect the rectangle to test against
+     * @return {@code true} if this rectangle intersects with {@code rect}, {@code false} otherwise
+     */
+    @Contract(pure = true)
+    public boolean intersects(@NotNull FloatRect rect) {
+        return intersection(rect) != null;
+    }
+
+    /**
+     * Tests whether this rectangle intersects with another rectangle.
+     *
+     * @param rect the rectangle to test against
+     * @return {@code true} if this rectangle intersects with {@code rect}, {@code false} otherwise
+     */
+    @Contract(pure = true)
+    public boolean intersects(@NotNull IntRect rect) {
+        return intersection(rect) != null;
+    }
+
+    /**
+     * Tests whether the specified point is above this rectangle.
+     *
+     * @param point a 2D point
+     * @return {@code true} if the specified point is above this rectangle, {@code false} otherwise
+     */
+    @Contract(pure = true)
+    public boolean isAbove(@NotNull Vector2i point) {
+        return point.y < top;
+    }
+
+    /**
+     * Tests whether the specified point is on the right of this rectangle.
+     *
+     * @param point a 2D point
+     * @return {@code true} if the specified point is on the right of this rectangle, {@code false} otherwise
+     */
+    @Contract(pure = true)
+    public boolean isOnTheRight(@NotNull Vector2i point) {
+        return point.x > right;
+    }
+
+    /**
+     * Tests whether the specified point is below this rectangle.
+     *
+     * @param point a 2D point
+     * @return {@code true} if the specified point is below this rectangle, {@code false} otherwise
+     */
+    @Contract(pure = true)
+    public boolean isBelow(@NotNull Vector2i point) {
+        return point.y > bottom;
+    }
+
+    /**
+     * Test whether the specified point is on the left of this rectangle.
+     *
+     * @param point a 2D point
+     * @return {@code true} if the specified point is on the left of this rectangle, {@code false} otherwise
+     */
+    @Contract(pure = true)
+    public boolean isOnTheLeft(@NotNull Vector2i point) {
+        return point.x < left;
+    }
+
+    /**
+     * Calculates the middle point of this rectangle.
+     *
+     * @return the middle point of this rectangle
+     */
+    @Contract(pure = true, value = "-> new")
+    public Vector2f getCenter() {
+        return Vec2.f((left + width) / 2.0f, (top + height) / 2.0f);
+    }
+
+    /**
+     * Gets the corner of this rectangle nearest to the specified point.
+     *
+     * @param point a 2D point
+     * @return this rectangle's corner that is the nearest to the specified point
+     */
+    @Contract(pure = true, value = "_ -> new")
+    public Vector2i getNearestCorner(@NotNull Vector2i point) {
+        int x = point.x, y = point.y;
+        return Vec2.i(x - left < right - x ? left : right, y - bottom < top - y ? top : bottom);
     }
 
     @Override
@@ -138,8 +256,8 @@ public final class IntRect implements Serializable {
     }
 
     @Override
-    public boolean equals(Object oother) {
-        if (oother instanceof final IntRect r)
+    public boolean equals(Object other) {
+        if (other instanceof final IntRect r)
             return (left == r.left && top == r.top && width == r.width && height == r.height);
         else return false;
     }
@@ -147,5 +265,14 @@ public final class IntRect implements Serializable {
     @Override
     public String toString() {
         return "IntRect{left=" + left + ", top=" + top + ", width=" + width + ", height=" + height + '}';
+    }
+
+    /**
+     * Creates a new floating point rectangle by converting this rectangle.
+     */
+    @NotNull
+    @Contract(pure = true, value = "-> new")
+    public FloatRect asFloatRect() {
+        return new FloatRect(left, top, right, bottom);
     }
 }

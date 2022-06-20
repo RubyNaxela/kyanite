@@ -54,7 +54,7 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
 
     private final String path;
     private boolean smooth = false, repeated = false, missing = false, suppressWarning = false;
-    private Vector2i size = Vector2i.ZERO;
+    private Vector2i size = Vector2i.zero();
 
     /**
      * Creates a new texture from the source specified by the path.

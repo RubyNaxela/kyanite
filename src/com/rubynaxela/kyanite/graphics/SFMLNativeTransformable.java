@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("deprecation")
 public abstract class SFMLNativeTransformable extends org.jsfml.graphics.SFMLNativeTransformable implements Transformable {
 
-    private Vector2f position = Vector2f.ZERO, scale = Vec2.f(1, 1), origin = Vector2f.ZERO;
+    private Vector2f position = Vector2f.zero(), scale = Vec2.f(1, 1), origin = Vector2f.zero();
     private float rotation = 0;
     private boolean transformNeedsUpdate = true;
     private Transform transformCache = null, inverseTransformCache = null;

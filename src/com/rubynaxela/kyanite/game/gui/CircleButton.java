@@ -14,13 +14,12 @@
 
 package com.rubynaxela.kyanite.game.gui;
 
-import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
+import com.rubynaxela.kyanite.graphics.CircleShape;
 import com.rubynaxela.kyanite.math.MathUtils;
 import com.rubynaxela.kyanite.math.Vec2;
-import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.graphics.CircleShape;
 import com.rubynaxela.kyanite.math.Vector2i;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link CircleShape} extension implementing the {@link MouseActionListener} interface with a
@@ -63,6 +62,6 @@ public class CircleButton extends CircleShape implements MouseActionListener {
      */
     @Override
     public boolean isCursorInside(@NotNull Vector2i cursorPosition) {
-        return MathUtils.isInsideCircle(Vec2.f(cursorPosition), GlobalRect.from(getGlobalBounds()).getCenter(), getRadius());
+        return MathUtils.isInsideCircle(Vec2.f(cursorPosition), getGlobalBounds().getCenter(), getRadius());
     }
 }

@@ -24,8 +24,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BasicTransformable implements Transformable {
 
-    private Vector2f origin = Vector2f.ZERO;
-    private Vector2f position = Vector2f.ZERO;
+    private Vector2f origin = Vector2f.zero();
+    private Vector2f position = Vector2f.zero();
     private float rotation = 0;
     private Vector2f scale = new Vector2f(1, 1);
 

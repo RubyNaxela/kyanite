@@ -85,7 +85,7 @@ public class ConvexShape extends org.jsfml.graphics.ConvexShape {
     public void setPointCount(int pointCount) {
         nativeSetPointCount(pointCount);
         points = new Vector2f[pointCount];
-        for (int i = 0; i < pointCount; i++) points[i] = Vector2f.ZERO;
+        for (int i = 0; i < pointCount; i++) points[i] = Vector2f.zero();
         updateOrigin(keepCentered);
         boundsNeedUpdate = true;
     }

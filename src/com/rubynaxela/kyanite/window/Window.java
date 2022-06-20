@@ -19,13 +19,10 @@ import com.rubynaxela.kyanite.game.Scene;
 import com.rubynaxela.kyanite.game.assets.AudioHandler;
 import com.rubynaxela.kyanite.game.assets.Icon;
 import com.rubynaxela.kyanite.game.entities.CompoundEntity;
-import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
 import com.rubynaxela.kyanite.graphics.*;
 import com.rubynaxela.kyanite.input.Mouse;
-import com.rubynaxela.kyanite.math.Vec2;
-import com.rubynaxela.kyanite.math.Vector2f;
-import com.rubynaxela.kyanite.math.Vector2i;
+import com.rubynaxela.kyanite.math.*;
 import com.rubynaxela.kyanite.util.Utils;
 import com.rubynaxela.kyanite.window.event.*;
 import org.intellij.lang.annotations.MagicConstant;
@@ -127,9 +124,8 @@ public class Window extends RenderWindow {
      * @return a {@code GlobalRect} covering the entire window
      */
     @Contract(pure = true)
-    public GlobalRect getBounds() {
-        final Vector2f size = Vec2.f(getSize());
-        return new GlobalRect(0, size.x, size.y, 0);
+    public IntRect getBounds() {
+        return new IntRect(Vec2.i(0, 0), getSize());
     }
 
     /**
@@ -139,7 +135,7 @@ public class Window extends RenderWindow {
      * @return whether any portion of the object bounding rectangle is inside the window
      */
     public boolean isInside(@NotNull Shape object) {
-        return getBounds().intersects(GlobalRect.from(object.getGlobalBounds()));
+        return getBounds().intersects(object.getGlobalBounds());
     }
 
     /**
@@ -149,7 +145,7 @@ public class Window extends RenderWindow {
      * @return whether any portion of the object bounding rectangle is inside the window
      */
     public boolean isInside(@NotNull Sprite object) {
-        return getBounds().intersects(GlobalRect.from(object.getGlobalBounds()));
+        return getBounds().intersects(object.getGlobalBounds());
     }
 
     /**

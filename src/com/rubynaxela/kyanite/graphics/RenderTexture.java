@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 public class RenderTexture extends org.jsfml.graphics.RenderTexture implements RenderTarget {
 
     private final Texture texture;
-    private Vector2i size = Vector2i.ZERO;
+    private Vector2i size = Vector2i.zero();
     private ConstView defaultView, view;
 
     /**
@@ -50,7 +50,7 @@ public class RenderTexture extends org.jsfml.graphics.RenderTexture implements R
      * @throws TextureCreationException if the render texture could not be created
      */
     public void create(int width, int height, boolean depthBuffer) throws TextureCreationException {
-        size = Vector2i.ZERO;
+        size = Vector2i.zero();
         SFMLErrorCapture.start();
         final boolean success = nativeCreateTexture(width, height, depthBuffer);
         final String msg = SFMLErrorCapture.finish();

@@ -14,13 +14,12 @@
 
 package com.rubynaxela.kyanite.math;
 
-import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.data.Pair;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import com.rubynaxela.kyanite.graphics.CircleShape;
 import com.rubynaxela.kyanite.graphics.RectangleShape;
 import com.rubynaxela.kyanite.graphics.Transform;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -297,7 +296,7 @@ public final class MathUtils {
 
     /**
      * Computes the direction unit vector (normalzed) from the origin to the target
-     * point, or {@link Vector2f#ZERO} if the specified points have the same coordinates
+     * point, or {@link Vector2f#zero} if the specified points have the same coordinates
      *
      * @param origin the target point
      * @param target the origin point
@@ -306,7 +305,7 @@ public final class MathUtils {
     @NotNull
     @Contract(pure = true, value = "_, _ -> new")
     public static Vector2f direction(@NotNull Vector2f origin, @NotNull Vector2f target) {
-        if (target.equals(origin)) return Vector2f.ZERO;
+        if (target.equals(origin)) return Vector2f.zero();
         final float delta_x = target.x - origin.x, delta_y = target.y - origin.y,
                 distance = (float) Math.sqrt(delta_x * delta_x + delta_y * delta_y);
         return Vec2.f(delta_x / distance, delta_y / distance);
@@ -328,7 +327,7 @@ public final class MathUtils {
                                               @NotNull RectangleShape rectangle) {
 
         final Vector2f circlePosition = circle.getPosition();
-        final GlobalRect rectangleBounds = GlobalRect.from(rectangle.getGlobalBounds());
+        final FloatRect rectangleBounds = rectangle.getGlobalBounds();
 
         final boolean horizontalCollision = rectangleBounds.isOnTheLeft(circlePosition) ||
                                             rectangleBounds.isOnTheRight(circlePosition);

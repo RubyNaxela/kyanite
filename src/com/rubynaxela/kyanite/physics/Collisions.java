@@ -15,19 +15,18 @@
 package com.rubynaxela.kyanite.physics;
 
 import com.rubynaxela.kyanite.game.entities.AnimatedEntity;
-import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MovingEntity;
+import com.rubynaxela.kyanite.graphics.Shape;
+import com.rubynaxela.kyanite.graphics.Sprite;
 import com.rubynaxela.kyanite.math.Direction;
 import com.rubynaxela.kyanite.math.Direction.Axis;
+import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.Vec2;
+import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.util.Time;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.rubynaxela.kyanite.math.FloatRect;
-import com.rubynaxela.kyanite.graphics.Shape;
-import com.rubynaxela.kyanite.graphics.Sprite;
-import com.rubynaxela.kyanite.util.Time;
-import com.rubynaxela.kyanite.math.Vector2f;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +41,7 @@ public class Collisions {
      * assumed to be stationary) in the next scene frame provided its velocity would not change in the current scene frame.
      *
      * @param moving     a moving object
-     * @param stationary a stationary object ({@link GlobalRect}, {@link FloatRect}, {@link Shape}, or {@link Sprite})
+     * @param stationary a stationary object {@link FloatRect}, {@link Shape}, or {@link Sprite})
      * @param deltaTime  the time difference between the last two scene frames
      *                   (typically from the {@link AnimatedEntity#animate} method)
      * @return axis perpendicular to the sides that would collide with each other (the direction of ground reaction force),
@@ -52,8 +51,8 @@ public class Collisions {
     @Contract(pure = true)
     public static Axis checkAABBCollision(@NotNull MovingEntity moving, @NotNull Object stationary, @NotNull Time deltaTime) {
         final Vector2f offset = Vec2.multiply(moving.getVelocity(), deltaTime.asSeconds());
-        final boolean horizontal = collisionHorizontal(extractGlobalRect(moving), offset.x, extractGlobalRect(stationary));
-        final boolean vertical = collisionVertical(extractGlobalRect(moving), offset.y, extractGlobalRect(stationary));
+        final boolean horizontal = collisionHorizontal(extractBounds(moving), offset.x, extractBounds(stationary));
+        final boolean vertical = collisionVertical(extractBounds(moving), offset.y, extractBounds(stationary));
         if (horizontal && vertical) return Axis.BOTH;
         if (horizontal) return Axis.X;
         if (vertical) return Axis.Y;
@@ -69,7 +68,7 @@ public class Collisions {
      * @param stationary a stationary axis-aligned rectangular object
      */
     public static void shiftToEdge(@NotNull MovingEntity moving, @NotNull Object stationary) {
-        final GlobalRect movingRect = extractGlobalRect(moving), stationaryRect = extractGlobalRect(stationary);
+        final FloatRect movingRect = extractBounds(moving), stationaryRect = extractBounds(stationary);
         final Shift shiftUp = new Shift(movingRect.bottom - stationaryRect.top, Direction.NORTH);
         final Shift shiftRight = new Shift(stationaryRect.right - movingRect.left, Direction.EAST);
         final Shift shiftDown = new Shift(stationaryRect.bottom - movingRect.top, Direction.SOUTH);
@@ -83,25 +82,24 @@ public class Collisions {
 
     @NotNull
     @Contract(pure = true)
-    static GlobalRect extractGlobalRect(@NotNull Object object) {
-        final GlobalRect rectangle;
-        if (object instanceof final GlobalRect rectA) rectangle = rectA;
-        else if (object instanceof final FloatRect rectA) rectangle = GlobalRect.from(rectA);
-        else if (object instanceof final Shape shapeA) rectangle = GlobalRect.from(shapeA.getGlobalBounds());
-        else if (object instanceof final Sprite spriteA) rectangle = GlobalRect.from(spriteA.getGlobalBounds());
+    static FloatRect extractBounds(@NotNull Object object) {
+        final FloatRect rectangle;
+        if (object instanceof final FloatRect rect) rectangle = rect;
+        else if (object instanceof final Shape shape) rectangle = shape.getGlobalBounds();
+        else if (object instanceof final Sprite sprite) rectangle = sprite.getGlobalBounds();
         else
-            throw new IllegalArgumentException("Collision objects must be of one of the following " +
-                                               "types: FloatRect, GlobalRect, Shape, Sprite");
+            throw new IllegalArgumentException("Collision objects must be of one of the " +
+                                               "following types: FloatRect, Shape, Sprite");
         return rectangle;
     }
 
     @Contract(pure = true)
-    private static boolean collisionHorizontal(@NotNull GlobalRect a, float dx, @NotNull GlobalRect b) {
+    private static boolean collisionHorizontal(@NotNull FloatRect a, float dx, @NotNull FloatRect b) {
         return a.left + dx < b.right && a.right + dx > b.left && !(a.top >= b.bottom || a.bottom <= b.top);
     }
 
     @Contract(pure = true)
-    private static boolean collisionVertical(@NotNull GlobalRect a, float dy, @NotNull GlobalRect b) {
+    private static boolean collisionVertical(@NotNull FloatRect a, float dy, @NotNull FloatRect b) {
         return a.top + dy < b.bottom && a.bottom + dy > b.top && !(a.left >= b.right || a.right <= b.left);
     }
 

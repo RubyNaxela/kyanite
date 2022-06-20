@@ -17,11 +17,11 @@ package com.rubynaxela.kyanite.window;
 import com.rubynaxela.kyanite.core.IntercomHelper;
 import com.rubynaxela.kyanite.core.SFMLError;
 import com.rubynaxela.kyanite.core.SFMLNative;
+import com.rubynaxela.kyanite.graphics.Image;
 import com.rubynaxela.kyanite.math.Vector2i;
 import com.rubynaxela.kyanite.window.event.*;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.graphics.Image;
 import org.jsfml.window.Window;
 
 import java.nio.IntBuffer;

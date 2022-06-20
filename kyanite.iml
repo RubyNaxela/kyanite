@@ -27,6 +27,14 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="jsfml-intercom" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jsfml-intercom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

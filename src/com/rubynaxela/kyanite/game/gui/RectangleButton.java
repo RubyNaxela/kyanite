@@ -14,16 +14,10 @@
 
 package com.rubynaxela.kyanite.game.gui;
 
-import com.rubynaxela.kyanite.game.entities.GlobalRect;
 import com.rubynaxela.kyanite.game.entities.MouseActionListener;
-import com.rubynaxela.kyanite.graphics.CircleShape;
-import com.rubynaxela.kyanite.math.MathUtils;
-import com.rubynaxela.kyanite.math.Vec2;
-import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.graphics.RectangleShape;
-import com.rubynaxela.kyanite.math.Vector2f;
-import com.rubynaxela.kyanite.math.Vector2i;
+import com.rubynaxela.kyanite.math.*;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link RectangleShape} extension implementing the {@link MouseActionListener} interface with a
@@ -58,8 +52,7 @@ public class RectangleButton extends RectangleShape implements MouseActionListen
         if (bounds.width != bounds.height)
             throw new IllegalStateException("For a RectangleButton to be considered a circle, " +
                                             "it must be the same width and height");
-        return MathUtils.isInsideCircle(Vec2.f(cursorPosition), GlobalRect.from(bounds).getCenter(),
-                                        getGlobalBounds().width / 2);
+        return MathUtils.isInsideCircle(Vec2.f(cursorPosition), bounds.getCenter(), getGlobalBounds().width / 2);
     }
 
     /**

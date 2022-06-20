@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("deprecation")
 public class RectangleShape extends org.jsfml.graphics.RectangleShape {
 
-    private Vector2f size = Vector2f.ZERO;
+    private Vector2f size = Vector2f.zero();
 
     /**
      * Constructs a new rectangle shape with no dimensions.

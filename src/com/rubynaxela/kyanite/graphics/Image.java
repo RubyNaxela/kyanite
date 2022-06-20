@@ -36,7 +36,7 @@ import java.nio.file.Path;
 @SuppressWarnings("deprecation")
 public class Image extends org.jsfml.graphics.Image {
 
-    private Vector2i size = Vector2i.ZERO;
+    private Vector2i size = Vector2i.zero();
     private IntBuffer pixels = null;
     private boolean changed = true;
 

@@ -26,7 +26,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * An entity consisting of many components. A {@code CompoundEntity} can be drawn to a render target, as well as
@@ -38,7 +37,7 @@ public class CompoundEntity implements Drawable, Transformable {
 
     private final List<Drawable> components = new ArrayList<>();
     private float rotation = 0;
-    private Vector2f origin = Vector2f.ZERO, position = Vector2f.ZERO, scale = Vec2.f(1, 1);
+    private Vector2f origin = Vector2f.zero(), position = Vector2f.zero(), scale = Vec2.f(1, 1);
     private int layer = 0;
 
     /**
@@ -87,20 +86,16 @@ public class CompoundEntity implements Drawable, Transformable {
      * @throws UnsupportedOperationException if any of the component's global bounds cannot be determined
      */
     public FloatRect getGlobalBounds() {
+        if (components.isEmpty()) return null;
         Float top = null, right = null, bottom = null, left = null;
         for (final Drawable component : components) {
-            final GlobalRect globalRect = GlobalRect.from(getGlobalBounds(component, this));
-            top = MathUtils.min(top, globalRect.top);
-            right = MathUtils.max(right, globalRect.right);
-            bottom = MathUtils.max(bottom, globalRect.bottom);
-            left = MathUtils.min(left, globalRect.left);
+            final FloatRect bounds = getGlobalBounds(component, this);
+            left = MathUtils.min(left, bounds.left);
+            top = MathUtils.min(top, bounds.top);
+            right = MathUtils.max(right, bounds.right);
+            bottom = MathUtils.max(bottom, bounds.bottom);
         }
-        try {
-            return new GlobalRect(Objects.requireNonNull(top), Objects.requireNonNull(right),
-                                  Objects.requireNonNull(bottom), Objects.requireNonNull(left)).toFloatRect();
-        } catch (NullPointerException e) {
-            return null;
-        }
+        return FloatRect.fromCoordinates(left, top, right, bottom);
     }
 
     /**

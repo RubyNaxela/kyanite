@@ -319,7 +319,7 @@ public final class Vec3 {
     /**
      * Computes the Hadamard (element-wise) quotient of the specified vectors, which is the result of the following expression:
      * <pre>[x1 / x2, y1 / y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
-     * Note that integer division is used. For floating-point division use {@link Vec3#divideFloat(Vector3i, Vector3i)}.
+     * Note that integer division is used. For floating point division use {@link Vec3#divideFloat(Vector3i, Vector3i)}.
      *
      * @param vector1 the first vector
      * @param vector2 the second vector
@@ -333,7 +333,7 @@ public final class Vec3 {
     /**
      * Computes the Hadamard (element-wise) quotient of the specified vectors, which is the result of the following expression:
      * <pre>[x1 / x2, y1 / y2]</pre> for <pre>vector1 = [x1, y1], vector2 = [x2, y2]</pre>
-     * Note that floating-point division is used. For integer division use {@link Vec3#divide(Vector3i, Vector3i)}.
+     * Note that floating point division is used. For integer division use {@link Vec3#divide(Vector3i, Vector3i)}.
      *
      * @param vector1 the first vector
      * @param vector2 the second vector
@@ -360,7 +360,7 @@ public final class Vec3 {
 
     /**
      * Multiplies a vector by the inverse of a scalar.
-     * Note that integer division is used. For floating-point division use {@link Vec3#divideFloat(Vector3i, Number)}.
+     * Note that integer division is used. For floating point division use {@link Vec3#divideFloat(Vector3i, Number)}.
      *
      * @param vector the vector
      * @param scalar the scalar to divide by
@@ -374,7 +374,7 @@ public final class Vec3 {
 
     /**
      * Multiplies a vector by the inverse of a scalar.
-     * Note that floating-point division is used. For integer division use {@link Vec3#divide(Vector3i, Number)}.
+     * Note that floating point division is used. For integer division use {@link Vec3#divide(Vector3i, Number)}.
      *
      * @param vector the vector
      * @param scalar the scalar to divide by
