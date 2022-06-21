@@ -15,6 +15,7 @@
 package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.core.KyaniteException;
+import com.rubynaxela.kyanite.system.Clock;
 import com.rubynaxela.kyanite.system.SystemUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,7 +47,7 @@ public abstract class Game {
             if (game.context.getWindow() == null)
                 throw new NullPointerException("A game window has not been created. Please run " +
                                                "getContext().setupWindow in the init() method of the game class");
-            game.context.getClock().tryStart();
+            ((Clock) game.context.getClock()).tryStart();
             game.context.getWindow().startLoop();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();

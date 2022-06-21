@@ -33,7 +33,7 @@ import java.util.ConcurrentModificationException;
  */
 public abstract non-sealed class Scene extends RenderLayer {
 
-    private final Clock clock = context.getClock();
+    private final Clock clock = (Clock) context.getClock();
     private Time previousFrameTime, currentFrameTime;
     private boolean suspended = false;
     private float maxLagFactor = 5f, maxSceneDuration = 5f / 60;

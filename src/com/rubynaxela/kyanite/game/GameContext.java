@@ -19,6 +19,7 @@ import com.rubynaxela.kyanite.game.assets.AudioHandler;
 import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.math.Vector2i;
 import com.rubynaxela.kyanite.system.Clock;
+import com.rubynaxela.kyanite.system.ConstClock;
 import com.rubynaxela.kyanite.window.VideoMode;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.Contract;
@@ -144,7 +145,7 @@ public final class GameContext {
      * @return reference to the game clock
      */
     @NotNull
-    public Clock getClock() {
+    public ConstClock getClock() {
         return clock;
     }
 
