@@ -15,7 +15,6 @@
 package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.math.IntRect;
-import com.rubynaxela.kyanite.util.Time;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public interface SceneObject extends BoundsObject {
 
     /**
-     * Returns whether this {@code SceneObject} is set to be centered.
+     * Returns {@code true} if this {@code SceneObject} is set to be centered.
      *
      * @return {@code true} if this {@code SceneObject} is set to be centered, {@code false} otherwise.
      */
@@ -40,43 +39,53 @@ public interface SceneObject extends BoundsObject {
     void setCentered(boolean centered);
 
     /**
-     * Gets the object's current texture.
-     *
-     * @return the object's current texture
+     * Removes the animated or non-animated texture from this object without affecting the texture rectangle.
      */
-    ConstTexture getTexture();
+    void removeTexture();
+
+    /**
+     * Removes the animated or non-animated texture from this object.
+     *
+     * @param resetRect {@code true} to reset the texture rect
+     */
+    void removeTexture(boolean resetRect);
+
+    /**
+     * Gets the object's current non-animated texture.
+     *
+     * @return the object's current non-animated texture
+     */
+    @Nullable ConstTexture getTexture();
 
     /**
      * Sets the texture of the object without affecting the texture rectangle.
-     * The texture may be {@code null} if no texture is to be used.
      *
-     * @param texture the texture of the object, or {@code null} to indicate that no texture is to be used
+     * @param texture the texture of the object
      */
-    void setTexture(@Nullable ConstTexture texture);
+    void setTexture(@NotNull ConstTexture texture);
 
     /**
      * Sets the animated texture of the object without affecting the texture rectangle.
-     * The texture may be {@code null} if no animated texture is to be used.
      *
-     * @param texture the animated texture of the object, or {@code null} to indicate that no texture is to be used
+     * @param texture the animated texture of the object
      */
-    void setTexture(@Nullable ConstAnimatedTexture texture);
+    void setTexture(@NotNull ConstAnimatedTexture texture);
 
     /**
-     * Sets the texture of the object. The texture may be {@code null} if no texture is to be used.
+     * Sets the texture of the object.
      *
      * @param texture   the texture of the object, or {@code null} to indicate that no texture is to be used
-     * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
+     * @param resetRect {@code true} to reset the texture rect
      */
-    void setTexture(@Nullable ConstTexture texture, boolean resetRect);
+    void setTexture(@NotNull ConstTexture texture, boolean resetRect);
 
     /**
-     * Sets the animated texture of the object. The texture may be {@code null} if no texture is to be used.
+     * Sets the animated texture of the object.
      *
      * @param texture   the animated texture of the object, or {@code null} to indicate that no texture is to be used
-     * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
+     * @param resetRect {@code true} to reset the texture rect
      */
-    void setTexture(@Nullable ConstAnimatedTexture texture, boolean resetRect);
+    void setTexture(@NotNull ConstAnimatedTexture texture, boolean resetRect);
 
     /**
      * Gets the object's current animated texture.
@@ -86,18 +95,27 @@ public interface SceneObject extends BoundsObject {
     ConstAnimatedTexture getAnimatedTexture();
 
     /**
-     * Updates this texture for this object. This method is run by the scene loop and does not need to be invoked manualy.
-     *
-     * @param elapsedTime the time since the game started
+     * Updates this texture for this object. This method is run by the scene loop and does not need to be invoked manually.
      */
-    void updateAnimatedTexture(@NotNull Time elapsedTime);
+    void updateAnimatedTexture();
+
+    /**
+     * Freezes the animated texture at the current frame. To resume the animation, use {@link #resumeAnimatedTexture}.
+     */
+    void freezeAnimatedTexture();
+
+    /**
+     * Resumes the previously stopped animated texture. The animation
+     * will continue from the frame where the animation has stopped.
+     */
+    void resumeAnimatedTexture();
 
     /**
      * Gets the object's current texture portion.
      *
      * @return the object's current texture portion
      */
-    IntRect getTextureRect();
+    @NotNull IntRect getTextureRect();
 
     /**
      * Sets the portion of the texture that will be used for drawing. An empty rectangle can be

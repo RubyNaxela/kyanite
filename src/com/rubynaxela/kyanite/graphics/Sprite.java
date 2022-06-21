@@ -19,7 +19,7 @@ import com.rubynaxela.kyanite.data.Pair;
 import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.IntRect;
 import com.rubynaxela.kyanite.math.Vector2f;
-import com.rubynaxela.kyanite.util.Time;
+import com.rubynaxela.kyanite.system.Clock;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,11 +29,12 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("deprecation")
 public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, SceneObject {
 
+    private boolean boundsNeedUpdate = true, keepCentered = false;
     private Color color = Colors.WHITE;
     private IntRect textureRect = IntRect.EMPTY;
     private ConstTexture texture = null;
     private ConstAnimatedTexture animatedTexture = null;
-    private boolean boundsNeedUpdate = true, keepCentered = false;
+    private Clock animationClock = null;
     private FloatRect localBounds = null, globalBounds = null;
     private int layer = 0;
 
@@ -84,71 +85,99 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
     }
 
     /**
-     * Returns whether this {@code Sprite} is set to be centered.
+     * Returns {@code true} if this sprite is set to be centered.
      *
-     * @return {@code true} if this {@code Sprite} is set to be centered, {@code false} otherwise.
+     * @return {@code true} if this sprite is set to be centered, {@code false} otherwise.
      */
+    @Override
     public boolean isCentered() {
         return keepCentered;
     }
 
     /**
-     * Sets whether this {@code Sprite} has to be centered by keeping its origin at the center
+     * Sets whether this sprite has to be centered by keeping its origin at the center
      * of its local bounds. If the origin is changed manually after this sprite is set to be
      * centered, it will be set back to the center of the sprite whenever its size changes.
      *
-     * @param centered {@code true} to keep this {@code Sprite} centered, {@code false} to reset the origin to the point (0,0)
+     * @param centered {@code true} to keep this sprite centered, {@code false} to reset the origin to the point (0,0)
      */
+    @Override
     public void setCentered(boolean centered) {
         updateOrigin(keepCentered = centered);
     }
 
     /**
-     * Gets the sprite's current texture.
-     *
-     * @return the sprite's current texture
+     * Removes the animated or non-animated texture from this sprite without affecting the texture rectangle.
      */
     @Override
+    public void removeTexture() {
+        removeTexture(false);
+    }
+
+    /**
+     * Removes the animated or non-animated texture from this sprite.
+     *
+     * @param resetRect {@code true} to reset the texture rect
+     */
+    @Override
+    public void removeTexture(boolean resetRect) {
+        nativeSetTexture(null, false);
+        this.texture = null;
+        this.animatedTexture = null;
+        this.animationClock = null;
+        if (resetRect) textureRect = IntRect.EMPTY;
+        updateOrigin(keepCentered);
+        boundsNeedUpdate = true;
+    }
+
+    /**
+     * Gets the sprite's current non-animated texture.
+     *
+     * @return the sprite's current non-animated texture
+     */
+    @Override
+    @Nullable
     public ConstTexture getTexture() {
         return texture;
     }
 
     /**
-     * Sets the texture of this sprite without affecting the texture rectangle, unless the texture is set
-     * to be tileable. If this {@code Sprite} has this texture already applied, this method does nothing.
+     * Sets the texture of this sprite without affecting the texture rectangle, unless the texture
+     * is set to be tileable. If this sprite already has this texture, this method does nothing.
      *
      * @param texture the new texture
      */
     @Override
-    public final void setTexture(@Nullable ConstTexture texture) {
+    public final void setTexture(@NotNull ConstTexture texture) {
         setTexture(texture, false);
     }
 
     /**
-     * Sets the animated texture of the sprite without affecting the texture rectangle.
-     * The texture may be {@code null} if no animated texture is to be used.
+     * Sets the animated texture of the sprite without affecting the texture
+     * rectangle. If this sprite already has this texture, this method does nothing.
      *
      * @param texture the animated texture of the object, or {@code null} to indicate that no texture is to be used
      */
     @Override
-    public void setTexture(@Nullable ConstAnimatedTexture texture) {
+    public void setTexture(@NotNull ConstAnimatedTexture texture) {
         setTexture(texture, false);
     }
 
     /**
-     * Sets the texture of this sprite. If this {@code Sprite} has this texture already applied, this method does nothing.
+     * Sets the texture of the sprite. If this sprite already has this texture, this method does nothing.
      *
-     * @param texture   the new texture
-     * @param resetRect {@code true} to reset the texture rectangle, {@code false}
-     *                  otherwise (this setting is ignored if {@code texture} is tileable)
+     * @param texture   the texture of the shape, or {@code null} to indicate that no texture is to be used
+     * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
+     *                  (this setting is ignored if {@code texture} is tileable)
      */
     @Override
-    public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
+    public void setTexture(@NotNull ConstTexture texture, boolean resetRect) {
         final Pair<Boolean, Boolean> updates = Texture.checkUpdates(texture, this);
         if (updates.value1()) {
             nativeSetTexture((Texture) texture, resetRect);
             this.texture = texture;
             this.animatedTexture = null;
+            this.animationClock = null;
             if (resetRect && !updates.value2()) textureRect = IntRect.EMPTY;
             updateOrigin(keepCentered);
             boundsNeedUpdate = true;
@@ -156,16 +185,18 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
     }
 
     /**
-     * Sets the animated texture of the object. The texture may be {@code null} if no texture is to be used.
+     * Sets the animated texture of the sprite without affecting the texture rectangle, unless the
+     * texture is set to be tileable. If this sprite already has this texture, this method does nothing.
      *
-     * @param texture   the animated texture of the object, or {@code null} to indicate that no texture is to be used
+     * @param texture   the animated texture of the shape
      * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
      */
     @Override
-    public void setTexture(@Nullable ConstAnimatedTexture texture, boolean resetRect) {
+    public void setTexture(@NotNull ConstAnimatedTexture texture, boolean resetRect) {
         if (texture != animatedTexture) {
-            nativeSetTexture(texture != null ? (Texture) texture.getFrame(0) : null, resetRect);
+            nativeSetTexture((Texture) texture.getFrame(0), resetRect);
             this.animatedTexture = texture;
+            this.animationClock = new Clock();
             this.texture = null;
             if (resetRect) textureRect = IntRect.EMPTY;
             updateOrigin(keepCentered);
@@ -174,32 +205,59 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
     }
 
     /**
-     * Gets the object's current animated texture.
+     * Gets the sprite's current animated texture.
      *
-     * @return the object's current animated texture
+     * @return the sprite's current animated texture
      */
     @Override
     public ConstAnimatedTexture getAnimatedTexture() {
         return animatedTexture;
     }
 
-    /**
-     * Updates this texture for this object. This method is run by the scene loop and does not need to be invoked manualy.
-     *
-     * @param elapsedTime the time since the game started
-     */
     @Override
-    public void updateAnimatedTexture(@NotNull Time elapsedTime) {
-        final int frame = (int) (elapsedTime.asSeconds() / animatedTexture.getFrameDuration());
-        nativeSetTexture((Texture) animatedTexture.getFrame(frame % animatedTexture.getFramesCount()), false);
+    public void updateAnimatedTexture() {
+        if (animationClock.isPaused()) return;
+        final int frame = (int) (animationClock.getTime().asSeconds() / animatedTexture.getFrameDuration())
+                          % animatedTexture.getFramesCount();
+        nativeSetTexture((Texture) animatedTexture.getFrame(frame), false);
     }
 
     /**
-     * Gets the sprite's current texture rectangle.
+     * Freezes the animated texture at the current frame. To resume the animation, use {@link #resumeAnimatedTexture}.
      *
-     * @return the sprite's current texture rectangle
+     * @throws IllegalStateException if this sprite does not have an animated texture
      */
     @Override
+    public void freezeAnimatedTexture() {
+        if (animatedTexture == null) throw new IllegalStateException("This sprite does not have an animated texture");
+        try {
+            animationClock.pause();
+        } catch (IllegalStateException ignored) {
+        }
+    }
+
+    /**
+     * Resumes the previously stopped animated texture. The animation
+     * will continue from the frame where the animation has stopped.
+     *
+     * @throws IllegalStateException if this sprite does not have an animated texture
+     */
+    @Override
+    public void resumeAnimatedTexture() {
+        if (animatedTexture == null) throw new IllegalStateException("This sprite does not have an animated texture");
+        try {
+            animationClock.resume();
+        } catch (IllegalStateException ignored) {
+        }
+    }
+
+    /**
+     * Gets the sprite's current texture portion.
+     *
+     * @return the sprite's current texture portion
+     */
+    @Override
+    @NotNull
     public IntRect getTextureRect() {
         return textureRect;
     }

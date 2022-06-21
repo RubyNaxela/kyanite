@@ -49,32 +49,16 @@ public class AnimatedTexture implements ConstAnimatedTexture, Asset {
         this(Utils.flatten2DArray(ConstTexture.class, frames), frameDuration);
     }
 
-    /**
-     * Gets the frame of this animated texture at the specified index.
-     *
-     * @param index index of a frame
-     * @return the frame of this animated texture at the specified index
-     */
     @Override
     public ConstTexture getFrame(int index) {
         return frames[index];
     }
 
-    /**
-     * Returns the number of frames of this animated texture.
-     *
-     * @return the number of frames of this animated texture
-     */
     @Override
     public int getFramesCount() {
         return frames.length;
     }
 
-    /**
-     * Gets the duration of a single frame (in seconds) set for this animated texture.
-     *
-     * @return the duration of a single frame
-     */
     @Override
     public float getFrameDuration() {
         return frameDuration;

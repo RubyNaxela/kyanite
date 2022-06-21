@@ -87,9 +87,9 @@ public abstract non-sealed class HUD extends RenderLayer {
                 if (object instanceof final GravityAffected entity)
                     entity.setVelocity(Vec2.add(entity.getVelocity(), Vec2.f(0, entity.getGravity() * dt)));
                 if (object instanceof final AnimatedEntity entity) entity.animate(deltaTime, elapsedTime);
-                updateAnimatedTexture(object, elapsedTime);
+                updateAnimatedTexture(object);
                 if (object instanceof final CompoundEntity entity)
-                    for (final Drawable component : entity.getComponents()) updateAnimatedTexture(component, elapsedTime);
+                    for (final Drawable component : entity.getComponents()) updateAnimatedTexture(component);
                 if (object instanceof final MovingEntity entity) entity.move(Vec2.multiply(entity.getVelocity(), dt));
                 window.draw(object);
             });

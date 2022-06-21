@@ -16,7 +16,6 @@ package com.rubynaxela.kyanite.game;
 
 import com.rubynaxela.kyanite.graphics.*;
 import com.rubynaxela.kyanite.math.Vec2;
-import com.rubynaxela.kyanite.util.Time;
 import com.rubynaxela.kyanite.window.Window;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,9 +57,9 @@ public abstract sealed class RenderLayer implements Iterable<Drawable> permits H
     RenderLayer() {
     }
 
-    static void updateAnimatedTexture(@NotNull Drawable object, @NotNull Time elapsedTime) {
+    static void updateAnimatedTexture(@NotNull Drawable object) {
         if (object instanceof final SceneObject sceneObject && sceneObject.getAnimatedTexture() != null)
-            sceneObject.updateAnimatedTexture(elapsedTime);
+            sceneObject.updateAnimatedTexture();
     }
 
     /**

@@ -19,7 +19,7 @@ import com.rubynaxela.kyanite.data.Pair;
 import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.math.IntRect;
 import com.rubynaxela.kyanite.math.Vector2f;
-import com.rubynaxela.kyanite.util.Time;
+import com.rubynaxela.kyanite.system.Clock;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,6 +40,7 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     private IntRect textureRect = IntRect.EMPTY;
     private ConstTexture texture = null;
     private ConstAnimatedTexture animatedTexture = null;
+    private Clock animationClock = null;
     private FloatRect localBounds = null, globalBounds = null;
     private int layer = 0;
 
@@ -104,85 +105,111 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
     }
 
     /**
-     * Returns whether this {@code Shape} is set to be centered.
+     * Returns {@code true} if this shape is set to be centered.
      *
-     * @return {@code true} if this {@code Shape} is set to be centered, {@code false} otherwise.
+     * @return {@code true} if this shape is set to be centered, {@code false} otherwise.
      */
+    @Override
     public boolean isCentered() {
         return keepCentered;
     }
 
     /**
-     * Sets whether this {@code Shape} has to be centered by keeping its origin at the center
+     * Sets whether this shape has to be centered by keeping its origin at the center
      * of its local bounds. If the origin is changed manually after this shape is set to be
      * centered, it will be set back to the center of the sprite whenever its size changes.
      *
-     * @param centered {@code true} to keep this {@code Shape} centered, {@code false} to reset the origin to the point (0,0)
+     * @param centered {@code true} to keep this shape centered, {@code false} to reset the origin to the point (0,0)
      */
+    @Override
     public void setCentered(boolean centered) {
         updateOrigin(keepCentered = centered);
     }
 
     /**
-     * Gets the shape's current texture.
-     *
-     * @return the shape's current texture
+     * Removes the animated or non-animated texture from this shape without affecting the texture rectangle.
      */
     @Override
+    public void removeTexture() {
+        removeTexture(false);
+    }
+
+    /**
+     * Removes the animated or non-animated texture from this shape.
+     *
+     * @param resetRect {@code true} to reset the texture rect
+     */
+    @Override
+    public void removeTexture(boolean resetRect) {
+        nativeSetTexture(null, false);
+        this.texture = null;
+        this.animatedTexture = null;
+        this.animationClock = null;
+        if (resetRect) textureRect = IntRect.EMPTY;
+    }
+
+    /**
+     * Gets the shape's current non-animated texture.
+     *
+     * @return the object's current non-animated texture
+     */
+    @Override
+    @Nullable
     public ConstTexture getTexture() {
         return texture;
     }
 
     /**
      * Sets the texture of the shape without affecting the texture rectangle, unless the texture
-     * is set to be tileable. If this {@code Sprite} has this texture already applied, this
-     * method does nothing. The texture may be {@code null} if no texture is to be used.
+     * is set to be tileable. If this shape already has this texture, this
+     * method does nothing.
      *
      * @param texture the texture of the shape, or {@code null} to indicate that no texture is to be used
      */
     @Override
-    public final void setTexture(@Nullable ConstTexture texture) {
+    public final void setTexture(@NotNull ConstTexture texture) {
         setTexture(texture, false);
     }
 
     /**
      * Sets the animated texture of the shape without affecting the texture rectangle.
-     * The texture may be {@code null} if no animated texture is to be used.
      *
      * @param texture the animated texture of the shape, or {@code null} to indicate that no texture is to be used
      */
-    public void setTexture(@Nullable ConstAnimatedTexture texture) {
+    public void setTexture(@NotNull ConstAnimatedTexture texture) {
         setTexture(texture, false);
     }
 
     /**
-     * Sets the texture of the shape. If this {@code Sprite} has this texture already applied,
-     * this method does nothing. The texture may be {@code null} if no texture is to be used.
+     * Sets the texture of the shape. If this shape already has this texture, this method does nothing.
      *
      * @param texture   the texture of the shape, or {@code null} to indicate that no texture is to be used
      * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
      *                  (this setting is ignored if {@code texture} is tileable)
      */
     @Override
-    public void setTexture(@Nullable ConstTexture texture, boolean resetRect) {
+    public void setTexture(@NotNull ConstTexture texture, boolean resetRect) {
         final Pair<Boolean, Boolean> updates = Texture.checkUpdates(texture, this);
         if (updates.value1()) {
             nativeSetTexture((Texture) texture, resetRect && !updates.value2());
             this.texture = texture;
             this.animatedTexture = null;
+            this.animationClock = null;
         }
     }
 
     /**
-     * Sets the animated texture of the shape. The texture may be {@code null} if no texture is to be used.
+     * Sets the animated texture of the shape without affecting the texture rectangle, unless the
+     * texture is set to be tileable. If this shape already has this texture, this method does nothing.
      *
-     * @param texture   the animated texture of the shape, or {@code null} to indicate that no texture is to be used
+     * @param texture   the animated texture of the shape
      * @param resetRect {@code true} to reset the texture rect, {@code false} otherwise
      */
-    public void setTexture(@Nullable ConstAnimatedTexture texture, boolean resetRect) {
+    public void setTexture(@NotNull ConstAnimatedTexture texture, boolean resetRect) {
         if (texture != this.animatedTexture) {
-            nativeSetTexture(texture != null ? (Texture) texture.getFrame(0) : null, resetRect);
+            nativeSetTexture((Texture) texture.getFrame(0), resetRect);
             this.animatedTexture = texture;
+            this.animationClock = new Clock();
             this.texture = null;
         }
     }
@@ -197,15 +224,41 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
         return animatedTexture;
     }
 
+    @Override
+    public void updateAnimatedTexture() {
+        if (animationClock.isPaused()) return;
+        final int frame = (int) (animationClock.getTime().asSeconds() / animatedTexture.getFrameDuration())
+                          % animatedTexture.getFramesCount();
+        nativeSetTexture((Texture) animatedTexture.getFrame(frame), false);
+    }
+
     /**
-     * Updates this texture for this shape. This method is run by the scene loop and does not need to be invoked manualy.
+     * Freezes the animated texture at the current frame. To resume the animation, use {@link #resumeAnimatedTexture}.
      *
-     * @param elapsedTime the time since the game started
+     * @throws IllegalStateException if this sprite does not have an animated texture
      */
     @Override
-    public void updateAnimatedTexture(@NotNull Time elapsedTime) {
-        final int frame = (int) (elapsedTime.asSeconds() / animatedTexture.getFrameDuration());
-        nativeSetTexture((Texture) animatedTexture.getFrame(frame % animatedTexture.getFramesCount()), false);
+    public void freezeAnimatedTexture() {
+        if (animatedTexture == null) throw new IllegalStateException("This sprite does not have an animated texture");
+        try {
+            animationClock.pause();
+        } catch (IllegalStateException ignored) {
+        }
+    }
+
+    /**
+     * Resumes the previously stopped animated texture. The animation
+     * will continue from the frame where the animation has stopped.
+     *
+     * @throws IllegalStateException if this sprite does not have an animated texture
+     */
+    @Override
+    public void resumeAnimatedTexture() {
+        if (animatedTexture == null) throw new IllegalStateException("This sprite does not have an animated texture");
+        try {
+            animationClock.resume();
+        } catch (IllegalStateException ignored) {
+        }
     }
 
     /**
@@ -214,6 +267,7 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
      * @return the shape's current texture portion
      */
     @Override
+    @NotNull
     public IntRect getTextureRect() {
         return textureRect;
     }
@@ -222,7 +276,7 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
      * Sets the portion of the texture that will be used for drawing. An empty rectangle can be
      * passed to indicate that the whole texture shall be used. The width and / or height of the
      * rectangle may be negative to indicate that the respective axis should be flipped. For example,
-     * a width of {@code -32} will result in a sprite that is 32 pixels wide and flipped horizontally.
+     * a width of {@code -32} will result in a shape that is 32 pixels wide and flipped horizontally.
      *
      * @param rect the texture portion
      */
@@ -297,7 +351,7 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
      * Gets the text's local bounding rectangle, <i>not</i> taking the text's transformation into account.
      *
      * @return the text's local bounding rectangle
-     * @see Sprite#getGlobalBounds()
+     * @see Shape#getGlobalBounds()
      */
     @Override
     public FloatRect getLocalBounds() {
@@ -309,7 +363,7 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
      * Gets the text's global bounding rectangle in the scene, taking the text's transformation into account.
      *
      * @return the text's global bounding rectangle
-     * @see Text#getLocalBounds()
+     * @see Shape#getLocalBounds()
      */
     @Override
     public FloatRect getGlobalBounds() {
