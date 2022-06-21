@@ -53,13 +53,13 @@ public abstract class Texture extends SFMLNativeObject {
 
     protected native boolean nativeLoadFromFile(String path, Buffer area);
 
-    protected native boolean nativeLoadFromImage(com.rubynaxela.kyanite.graphics.Image image, Buffer area);
+    protected native boolean nativeLoadFromImage(Image image, Buffer area);
 
     protected native long nativeGetSize();
 
     protected native long nativeCopyToImage();
 
-    protected native void nativeUpdate(com.rubynaxela.kyanite.graphics.Image image, int x, int y);
+    protected native void nativeUpdate(Image image, int x, int y);
 
     protected native void nativeUpdate(BasicWindow window, int x, int y);
 
