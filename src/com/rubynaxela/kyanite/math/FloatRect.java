@@ -126,6 +126,19 @@ public final class FloatRect implements Serializable {
     }
 
     /**
+     * Tests whether a line touches, intersects or is inside the rectangle's boundaries by
+     * checking if one of its points is inside the rectangle's boundaries, including its edges.
+     *
+     * @param line the line to be tested
+     * @return {@code true} if one of the {@code line}'s the point
+     * lies within the rectangle's boundaries, {@code false} otherwise
+     */
+    @Contract(pure = true)
+    public boolean contains(@NotNull FloatLine line) {
+        return contains(line.point1.x, line.point1.y) || contains(line.point2.x, line.point2.y);
+    }
+
+    /**
      * Tests whether this rectangle intersects with another rectangle and calculates the rectangle of intersection.
      *
      * @param rect the rectangle to test against

@@ -350,6 +350,10 @@ public final class MathUtils {
         else return circleDirection;
     }
 
+    static double determinant(@NotNull Vector2f vec1, @NotNull Vector2f vec2) {
+        return vec1.x * vec2.y - vec1.y * vec2.x;
+    }
+
     private static <T extends Number> Pair<Boolean, T> checkNullAndNaN(T a, T b) {
         if (a != null && b == null) return new Pair<>(true, a);
         else if (a == null) return new Pair<>(true, b);
