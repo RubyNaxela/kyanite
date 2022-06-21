@@ -15,16 +15,19 @@
 package com.rubynaxela.kyanite.input;
 
 import com.rubynaxela.kyanite.core.SFMLNative;
+import com.rubynaxela.kyanite.math.Direction;
 import com.rubynaxela.kyanite.window.event.KeyListener;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Provides access to the the real-time state of the keyboard. The methods in this class provide
+ * Provides access to the real-time state of the keyboard. The methods in this class provide
  * direct access to the keyboard state, that means that they work independently of a window's
  * focus. In order to react to window based events, use the {@link KeyListener} interface instead.
  */
 @SuppressWarnings("deprecation")
 public final class Keyboard extends org.jsfml.window.Keyboard {
+
+    private static final int NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3;
 
     static {
         SFMLNative.loadNativeLibraries();
@@ -41,6 +44,64 @@ public final class Keyboard extends org.jsfml.window.Keyboard {
      */
     public static boolean isKeyPressed(@NotNull Key key) {
         return nativeIsKeyPressed(key.ordinal() - 1);
+    }
+
+    /**
+     * Gets the direction currently inputted on the keyboard, according to the specified control setting.
+     * The inter-cardinal directions are allowed (i.e. two keys for perpendicular directions can be pressed
+     * at a time). To disable them, use the {@link #getDirection(MovementControls, Direction.Axis)} method.
+     *
+     * @param controls a control setting
+     * @return the direction being currently inputted on the keyboard
+     */
+    public static Direction getDirection(@NotNull MovementControls controls) {
+        final boolean[] keys = getDirectionKeys(controls);
+        final boolean north = keys[NORTH] && !keys[SOUTH],
+                east = keys[EAST] && !keys[WEST],
+                south = keys[SOUTH] && !keys[NORTH],
+                west = keys[WEST] && !keys[EAST];
+        if (north) {
+            if (east) return Direction.NORTH_EAST;
+            else if (west) return Direction.NORTH_WEST;
+            else return Direction.NORTH;
+        } else if (south) {
+            if (east) return Direction.SOUTH_EAST;
+            else if (west) return Direction.SOUTH_WEST;
+            else return Direction.SOUTH;
+        } else if (east) return Direction.EAST;
+        else if (west) return Direction.WEST;
+        return Direction.NULL;
+    }
+
+    /**
+     * Gets the direction currently inputted on the keyboard, according to the specified control
+     * setting. Inter-cardinal directions are not allowed (i.e. two keys for perpendicular directions
+     * cannot be pressed at a time). To resolve conflicts, the specified axis is prioritized.
+     *
+     * @param controls a control setting
+     * @param priority the axis to take priority when two keys for perpendicular directions are pressed
+     * @return the direction being currently inputted on the keyboard
+     */
+    public static Direction getDirection(@NotNull MovementControls controls, @NotNull Direction.Axis priority) {
+        final boolean[] keys = getDirectionKeys(controls);
+        if (priority == Direction.Axis.Y) {
+            if (keys[NORTH] && !keys[SOUTH]) return Direction.NORTH;
+            else if (keys[SOUTH] && !keys[NORTH]) return Direction.SOUTH;
+        }
+        if (keys[EAST] && !keys[WEST]) return Direction.EAST;
+        else if (keys[WEST] && !keys[EAST]) return Direction.WEST;
+        if (keys[NORTH] && !keys[SOUTH]) return Direction.NORTH;
+        else if (keys[SOUTH] && !keys[NORTH]) return Direction.SOUTH;
+        return Direction.NULL;
+    }
+
+    private static boolean[] getDirectionKeys(@NotNull MovementControls controls) {
+        boolean[] keys = new boolean[4];
+        keys[NORTH] = isKeyPressed(controls.getNorthKey());
+        keys[EAST] = isKeyPressed(controls.getEastKey());
+        keys[SOUTH] = isKeyPressed(controls.getSouthKey());
+        keys[WEST] = isKeyPressed(controls.getWestKey());
+        return keys;
     }
 
     /**
@@ -500,5 +561,96 @@ public final class Keyboard extends org.jsfml.window.Keyboard {
          * The Pause key.
          */
         PAUSE
+    }
+
+    /**
+     * Interface for 2-axis movement controls. Objects implementing this interface
+     * can be used as quick settings of key binding for objects movement control.
+     */
+    public interface MovementControls {
+
+        @NotNull Key getNorthKey();
+
+        @NotNull Key getEastKey();
+
+        @NotNull Key getSouthKey();
+
+        @NotNull Key getWestKey();
+    }
+
+    /**
+     * Provides a set of common movement controls.
+     */
+    public static final class StandardControls {
+
+        /**
+         * The standard WASD movement control setting:
+         * <ul>
+         *     <li>north: {@link Key#W}</li>
+         *     <li>east: {@link Key#D}</li>
+         *     <li>south: {@link Key#S}</li>
+         *     <li>west: {@link Key#A}</li>
+         * </ul>
+         */
+        public static final MovementControls WASD = new MovementControls() {
+            @Override
+            @NotNull
+            public Key getNorthKey() {
+                return Key.W;
+            }
+
+            @Override
+            @NotNull
+            public Key getEastKey() {
+                return Key.D;
+            }
+
+            @Override
+            @NotNull
+            public Key getSouthKey() {
+                return Key.S;
+            }
+
+            @Override
+            @NotNull
+            public Key getWestKey() {
+                return Key.A;
+            }
+        };
+
+        /**
+         * The standard arrows movement control setting:
+         * <ul>
+         *     <li>north: {@link Key#UP}</li>
+         *     <li>east: {@link Key#RIGHT}</li>
+         *     <li>south: {@link Key#DOWN}</li>
+         *     <li>west: {@link Key#LEFT}</li>
+         * </ul>
+         */
+        public static final MovementControls ARROWS = new MovementControls() {
+            @Override
+            @NotNull
+            public Key getNorthKey() {
+                return Key.UP;
+            }
+
+            @Override
+            @NotNull
+            public Key getEastKey() {
+                return Key.RIGHT;
+            }
+
+            @Override
+            @NotNull
+            public Key getSouthKey() {
+                return Key.DOWN;
+            }
+
+            @Override
+            @NotNull
+            public Key getWestKey() {
+                return Key.LEFT;
+            }
+        };
     }
 }
