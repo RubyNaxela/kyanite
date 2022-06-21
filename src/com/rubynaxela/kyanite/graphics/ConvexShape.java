@@ -14,6 +14,7 @@
 
 package com.rubynaxela.kyanite.graphics;
 
+import com.rubynaxela.kyanite.math.FloatLine;
 import com.rubynaxela.kyanite.math.Vector2f;
 import org.jetbrains.annotations.NotNull;
 
@@ -109,6 +110,12 @@ public class ConvexShape extends org.jsfml.graphics.ConvexShape {
     public Vector2f[] getPoints() {
         pointsNeedUpdate = false;
         return super.getPoints();
+    }
+
+    @Override
+    public FloatLine[] getEdges() {
+        pointsNeedUpdate = false;
+        return super.getEdges();
     }
 
     /**

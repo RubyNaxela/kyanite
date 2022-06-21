@@ -16,9 +16,7 @@ package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.core.IntercomHelper;
 import com.rubynaxela.kyanite.data.Pair;
-import com.rubynaxela.kyanite.math.FloatRect;
-import com.rubynaxela.kyanite.math.IntRect;
-import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.math.*;
 import com.rubynaxela.kyanite.system.Clock;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.util.Arrays;
 
 /**
  * Abstract base class for (optionally) textured shapes with (optional) outlines.
@@ -34,6 +33,7 @@ import java.nio.FloatBuffer;
 public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable, SceneObject {
 
     protected Vector2f[] points = null;
+    protected FloatLine[] edges = null;
     protected boolean pointsNeedUpdate = true, boundsNeedUpdate = true, keepCentered = false;
     private Color fillColor = Colors.WHITE, outlineColor = Colors.WHITE;
     private float outlineThickness = 0;
@@ -299,7 +299,9 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
             final FloatBuffer buffer = ByteBuffer.allocateDirect(2 * n * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
             nativeGetPoints(n, buffer);
             points = new Vector2f[n];
+            edges = new FloatLine[n];
             for (int i = 0; i < n; i++) points[i] = new Vector2f(buffer.get(2 * i), buffer.get(2 * i + 1));
+            for (int i = 0; i < n; i++) edges[i] = new FloatLine(points[i], points[(i + 1) % n]);
             pointsNeedUpdate = false;
         }
     }
@@ -337,6 +339,18 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
         return points;
     }
 
+    /**
+     * Gets all the edges of the shape.
+     *
+     * @return an array containing the edges of the shape
+     */
+    public FloatLine[] getEdges() {
+        final int n = getPointCount();
+        FloatLine[] edges = new FloatLine[n];
+        System.arraycopy(this.edges, 0, edges, 0, n);
+        return edges;
+    }
+
     private void updateBounds() {
         if (boundsNeedUpdate) {
             nativeGetLocalBounds(IntercomHelper.getBuffer());
@@ -345,6 +359,31 @@ public abstract class Shape extends org.jsfml.graphics.Shape implements Drawable
             globalBounds = IntercomHelper.decodeFloatRect();
             boundsNeedUpdate = false;
         }
+    }
+
+    /**
+     * Tests whether this shape intersects another shape, using the specified built-in algorithm.
+     * <ul>
+     *     <li>{@link CollisionAlgorithm#AABB} - axis-aligned bounding box method</li>
+     *     <li>{@link CollisionAlgorithm#EDGES} - intersecting edges method</li>
+     * </ul>
+     *
+     * @param other     a shape
+     * @param algorithm one of the algorithms described above
+     * @return {@code true} if the specified algorithm detected a collision, {@code false} otherwise
+     */
+    public boolean intersects(@NotNull Shape other, @NotNull CollisionAlgorithm algorithm) {
+        final FloatRect bounds = getGlobalBounds(), otherBounds = other.getGlobalBounds();
+        return switch (algorithm) {
+            case AABB -> bounds.intersects(otherBounds);
+            case EDGES -> {
+                if (!bounds.intersects(otherBounds)) yield false;
+                for (final FloatLine e1 : Arrays.stream(getEdges()).filter(bounds::contains).toList())
+                    for (final FloatLine e2 : Arrays.stream(other.getEdges()).filter(otherBounds::contains).toList())
+                        if (e1.intersects(e2)) yield true;
+                yield false;
+            }
+        };
     }
 
     /**
