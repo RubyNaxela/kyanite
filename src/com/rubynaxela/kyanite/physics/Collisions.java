@@ -60,9 +60,9 @@ public class Collisions {
     }
 
     /**
-     * If {@code moving} intersects with {@code stationary}, moves {@code moving} away to the closest side
-     * of {@code stationary} so that the objects do not intersect anymore. If the objects were not
-     * intersecting, moves {@code moving} by the shortest path to {@code stationary} so that they are touching.
+     * If {@code moving} intersects with {@code stationary}, moves {@code moving} away to the closest side of
+     * {@code stationary} so that the objects do not intersect anymore. If the objects were not intersecting,
+     * moves {@code moving} by the shortest path to {@code stationary} so that they are touching.
      *
      * @param moving     a moving axis-aligned rectangular object
      * @param stationary a stationary axis-aligned rectangular object

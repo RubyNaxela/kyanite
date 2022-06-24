@@ -78,6 +78,7 @@ public final class SystemUtils {
      * Gets the pathname of the JAR file containing the specified class, or
      * {@code c.getName() + "!"} if that class is not contained in a JAR file.
      *
+     * @param c a class contained within the desired JAR file
      * @return the pathname of this JAR file, {@code c.getName() + "!"} if the code is not running from a JAR file
      */
     public static String getJarPath(@NotNull Class<?> c) {
@@ -91,8 +92,10 @@ public final class SystemUtils {
     /**
      * Gets an {@link InputStream} from a specified file from the specified class resources.
      *
+     * @param c        a class belonging to the module whose root the {@code pathname} is relative to
      * @param pathname a path relative to the root of the specified class module
      * @return an input stream from the specified file
+     * @throws FileNotFoundException if the file is not found inside the jar file
      */
     @NotNull
     @Contract(pure = true)

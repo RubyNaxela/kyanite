@@ -56,6 +56,8 @@ public final class Vector3i implements Serializable {
 
     /**
      * Creates a zero vector.
+     *
+     * @return a new {@code Vector3i} with zero coordinates
      */
     @Contract(pure = true, value = "-> new")
     public static Vector3i zero() {

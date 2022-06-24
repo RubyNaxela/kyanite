@@ -154,14 +154,14 @@ public class TextureAtlas implements Asset {
     /**
      * Creates a 2D array of textures from this atlas, starting from the specified
      * coordinates of the image file. All textures are the same size. Example usage:<pre>
-     * Texture[][] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
-     *                           .getMatrix(16, 16, 8, 2);
-     * smoke[3][1].apply(this);</pre>
-     * The above code will create an 8 columns by 2 rows 2D array of 16x16 textures and
-     * apply the fourth texture from the second row to the object that ran this code.
+     * Texture[][] smoke = assets.&lt;TextureAtlas>get("particle.smoke")
+     *                           .getMatrix(0, 64, 16, 16, 8, 2);
+     * shape.setTexture(smoke[3][1]);</pre>
+     * The above code will create an 8 columns by 2 rows 2D array of 16x16 textures (the first texture will be taken from
+     * the <i>(0,64)</i> point of the image) and apply the fourth texture from the second row to the {@code shape} object.
      *
-     * @param startX x-coordindate of the texture atlas starting point
-     * @param startY y-coordindate of the texture atlas starting point
+     * @param startX the X coordinate of the first texture's top-left corner
+     * @param startY the Y coordinate of the first texture's top-left corner
      * @param width  a single texture width
      * @param height a single texture height
      * @param countX the number of textures in a row
@@ -180,9 +180,9 @@ public class TextureAtlas implements Asset {
      * corner of the image file. All textures are the same size. Example usage:<pre>
      * Texture[][] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
      *                           .getMatrix(16, 16, 8, 2);
-     * smoke[3][1].apply(this);</pre>
-     * The above code will create an 8 columns by 2 rows 2D array of 16x16 textures and
-     * apply the fourth texture from the second row to the object that ran this code.
+     * shape.setTexture(smoke[3][1]);</pre>
+     * The above code will create an 8 columns by 2 rows 2D array of 16x16 textures
+     * and apply the fourth texture from the second row to the {@code shape} object.
      *
      * @param width  a single texture width
      * @param height a single texture height
@@ -198,10 +198,13 @@ public class TextureAtlas implements Asset {
      * Creates a row of textures from this atlas, starting from the specified
      * coordinates of the image file. All textures are the same size. Example usage:<pre>
      * Texture[] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
-     *                         .getRow(16, 16, 8);
-     * smoke[3].apply(this);</pre>
-     * The above code will create an array of 8 16x16 textures and apply the fourth one to the object that ran this code.
+     *                         .getRow(0, 64, 16, 16, 8);
+     * shape.setTexture(smoke[3]);</pre>
+     * The above code will create an array of 8 16x16 textures (the first texture will be taken from
+     * the <i>(0,64)</i> point of the image) and apply the fourth texture to the {@code shape} object.
      *
+     * @param startX the X coordinate of the first texture's top-left corner
+     * @param startY the Y coordinate of the first texture's top-left corner
      * @param width  a single texture width
      * @param height a single texture height
      * @param count  the number of textures
@@ -214,10 +217,10 @@ public class TextureAtlas implements Asset {
     /**
      * Creates a row of textures from this atlas, starting from the top-left
      * corner of the image file. All textures are the same size. Example usage:<pre>
-     * Texture[] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
+     * Texture[] smoke = assets.&lt;TextureAtlas>get("particle.smoke")
      *                         .getRow(16, 16, 8);
-     * smoke[3].apply(this);</pre>
-     * The above code will create an array of 8 16x16 textures and apply the fourth one to the object that ran this code.
+     * shape.setTexture(smoke[3]);</pre>
+     * The above code will create an array of 8 16x16 textures and apply the fourth one to the {@code shape} object.
      *
      * @param width  a single texture width
      * @param height a single texture height
@@ -231,11 +234,14 @@ public class TextureAtlas implements Asset {
     /**
      * Creates a column of textures from this atlas, starting from the specified
      * coordinates of the image file. All textures are the same size. Example usage:<pre>
-     * Texture[] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
-     *                         .getRow(16, 16, 8);
-     * smoke[3].apply(this);</pre>
-     * The above code will create an array of 8 16x16 textures and apply the fourth one to the object that ran this code.
+     * Texture[] smoke = assets.&lt;TextureAtlas>get("particle.smoke")
+     *                         .getRow(0, 64, 16, 16, 8);
+     * shape.setTexture(smoke[3]);</pre>
+     * The above code will create an array of 8 16x16 textures (the first texture will be taken from
+     * the <i>(0,64)</i> point of the image) and apply the fourth texture to the {@code shape} object.
      *
+     * @param startX the X coordinate of the first texture's top-left corner
+     * @param startY the Y coordinate of the first texture's top-left corner
      * @param width  a single texture width
      * @param height a single texture height
      * @param count  the number of textures
@@ -250,8 +256,8 @@ public class TextureAtlas implements Asset {
      * corner of the image file. All textures are the same size. Example usage:<pre>
      * Texture[] smoke = assets.get&lt;TextureAtlas>("particle.smoke")
      *                         .getRow(16, 16, 8);
-     * smoke[3].apply(this);</pre>
-     * The above code will create an array of 8 16x16 textures and apply the fourth one to the object that ran this code.
+     * shape.setTexture(smoke[3]);</pre>
+     * The above code will create an array of 8 16x16 textures and apply the fourth one to the {@code shape} object.
      *
      * @param width  a single texture width
      * @param height a single texture height

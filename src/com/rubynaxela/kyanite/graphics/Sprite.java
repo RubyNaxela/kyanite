@@ -278,7 +278,7 @@ public class Sprite extends org.jsfml.graphics.Sprite implements Drawable, Scene
         boundsNeedUpdate = true;
     }
 
-    protected void updateOrigin(boolean center) {
+    private void updateOrigin(boolean center) {
         if (center) {
             final FloatRect bounds = getLocalBounds();
             setOrigin(bounds.width / 2, bounds.height / 2);

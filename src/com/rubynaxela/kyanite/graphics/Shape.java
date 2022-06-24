@@ -16,7 +16,10 @@ package com.rubynaxela.kyanite.graphics;
 
 import com.rubynaxela.kyanite.core.IntercomHelper;
 import com.rubynaxela.kyanite.data.Pair;
-import com.rubynaxela.kyanite.math.*;
+import com.rubynaxela.kyanite.math.FloatLine;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.math.IntRect;
+import com.rubynaxela.kyanite.math.Vector2f;
 import com.rubynaxela.kyanite.system.Clock;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

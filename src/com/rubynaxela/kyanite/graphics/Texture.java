@@ -65,6 +65,12 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
         this(path, IntRect.EMPTY);
     }
 
+    /**
+     * Creates a new texture from the source specified by the path, cropping it according to the specified rectangle.
+     *
+     * @param path path to the source image file
+     * @param area the area to be taken from the image as the texture
+     */
     public Texture(@NotNull Path path, @NotNull IntRect area) {
         this.path = path.toString();
         try {
@@ -84,6 +90,12 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
         this(Paths.get(path), IntRect.EMPTY);
     }
 
+    /**
+     * Creates a new texture from the source specified by the path, cropping it according to the specified rectangle.
+     *
+     * @param path path to the source image file
+     * @param area the area to be taken from the image as the texture
+     */
     public Texture(@NotNull String path, @NotNull IntRect area) {
         this(Paths.get(path), area);
     }
@@ -97,6 +109,12 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
         this(file.toPath(), IntRect.EMPTY);
     }
 
+    /**
+     * Creates a new texture from a {@link File}, cropping it according to the specified rectangle.
+     *
+     * @param file the source image file
+     * @param area the area to be taken from the image as the texture
+     */
     public Texture(@NotNull File file, @NotNull IntRect area) {
         this(file.toPath(), area);
     }
@@ -110,6 +128,12 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
         this(stream, IntRect.EMPTY);
     }
 
+    /**
+     * Creates a new texture from an {@link InputStream}, cropping it according to the specified rectangle.
+     *
+     * @param stream the image data input stream
+     * @param area   the area to be taken from the image as the texture
+     */
     public Texture(@NotNull InputStream stream, @NotNull IntRect area) {
         this.path = this + " (created from an InputStream)";
         try {
@@ -129,6 +153,12 @@ public class Texture extends org.jsfml.graphics.Texture implements ConstTexture,
         this(image, IntRect.EMPTY);
     }
 
+    /**
+     * Creates a new texture from an {@link Image}, cropping it according to the specified rectangle.
+     *
+     * @param image the image data
+     * @param area  the area to be taken from the image as the texture
+     */
     public Texture(@NotNull Image image, @NotNull IntRect area) {
         this.path = this + " (created from an InputStream)";
         try {

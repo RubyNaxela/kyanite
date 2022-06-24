@@ -39,7 +39,7 @@ public class Sound implements Asset {
     /**
      * Creates a new sound from the source specified by the path.
      *
-     * @param path path to source audio file
+     * @param path path to the source audio file
      */
     public Sound(@NotNull Path path) {
         sound = new com.rubynaxela.kyanite.audio.Sound(load(path));

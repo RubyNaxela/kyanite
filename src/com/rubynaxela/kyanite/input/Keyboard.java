@@ -569,12 +569,32 @@ public final class Keyboard extends org.jsfml.window.Keyboard {
      */
     public interface MovementControls {
 
+        /**
+         * The key associated with going north (typically forwards, up, or jumping; towards the top of the window).
+         *
+         * @return the key associated with going north
+         */
         @NotNull Key getNorthKey();
 
+        /**
+         * The key associated with going east (typically right or forwards; towards the right side of the window).
+         *
+         * @return the key associated with going east
+         */
         @NotNull Key getEastKey();
 
+        /**
+         * The key associated with going south (typically backwards down or sneaking; towards the bottom of the window,).
+         *
+         * @return the key associated with going south
+         */
         @NotNull Key getSouthKey();
 
+        /**
+         * The key associated with going west (typically left or backwards; towards the left side of the window).
+         *
+         * @return the key associated with going west
+         */
         @NotNull Key getWestKey();
     }
 

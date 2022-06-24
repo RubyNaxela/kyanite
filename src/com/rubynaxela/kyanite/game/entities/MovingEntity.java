@@ -14,15 +14,15 @@
 
 package com.rubynaxela.kyanite.game.entities;
 
-import com.rubynaxela.kyanite.physics.Collisions;
-import com.rubynaxela.kyanite.math.Direction;
-import com.rubynaxela.kyanite.math.Vec2;
-import org.jetbrains.annotations.NotNull;
-import com.rubynaxela.kyanite.math.FloatRect;
 import com.rubynaxela.kyanite.graphics.Shape;
 import com.rubynaxela.kyanite.graphics.Sprite;
-import com.rubynaxela.kyanite.util.Time;
+import com.rubynaxela.kyanite.math.Direction;
+import com.rubynaxela.kyanite.math.FloatRect;
+import com.rubynaxela.kyanite.math.Vec2;
 import com.rubynaxela.kyanite.math.Vector2f;
+import com.rubynaxela.kyanite.physics.Collisions;
+import com.rubynaxela.kyanite.util.Time;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Objects that implement {@code MovingEntity} are being moved automatically by the scene loop.
@@ -54,8 +54,7 @@ public interface MovingEntity {
      * Detects collision of this object with another axis-aligned rectangle object
      * and blocks the movement of this object so that it stops at the specified barrier.
      *
-     * @param barrier   a stationary axis-aligned rectangle object ({@link GlobalRect},
-     *                  {@link FloatRect}, {@link Shape}, or {@link Sprite})
+     * @param barrier   a stationary axis-aligned rectangle object ({@link FloatRect}, {@link Shape}, or {@link Sprite})
      * @param deltaTime the time difference between the last two scene frames
      *                  (typically from the {@link AnimatedEntity#animate} method)
      */

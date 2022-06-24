@@ -92,6 +92,7 @@ public final class FloatRect implements Serializable {
      * @param top    the Y-coordinate of the top side of this rectangle
      * @param right  the X-coordinate of the right side of this rectangle
      * @param bottom the Y-coordinate of the bottom side of this rectangle
+     * @return a new rectangle with the specified side coordinates
      */
     @Contract(pure = true, value = "_, _, _, _ -> new")
     public static FloatRect fromCoordinates(float left, float top, float right, float bottom) {
