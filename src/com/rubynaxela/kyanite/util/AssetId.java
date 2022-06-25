@@ -21,7 +21,7 @@ import java.lang.annotation.*;
  * this annotation to enhance code readability. It does not have any uses other than that.
  */
 @Documented
-@Target({ElementType.PARAMETER, ElementType.FIELD, ElementType.METHOD})
+@Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.SOURCE)
 public @interface AssetId {
 
