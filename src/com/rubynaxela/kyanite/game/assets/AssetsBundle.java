@@ -14,10 +14,16 @@
 
 package com.rubynaxela.kyanite.game.assets;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rubynaxela.kyanite.game.GameContext;
+import com.rubynaxela.kyanite.graphics.*;
 import com.rubynaxela.kyanite.util.AssetId;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -29,6 +35,33 @@ import java.util.TreeMap;
 public final class AssetsBundle {
 
     private final Map<String, Asset> assets = new TreeMap<>();
+
+    /**
+     * Registers assets from an asset index file.
+     *
+     * @param file the asset index file
+     */
+    public void registerFromIndex(@NotNull File file) {
+        new DataAsset(file).convertTo(AssetIndex.class).registerAll(this);
+    }
+
+    /**
+     * Registers assets from an asset index file.
+     *
+     * @param pathname path to the asset index file
+     */
+    public void registerFromIndex(@NotNull String pathname) {
+        registerFromIndex(new File(pathname));
+    }
+
+    /**
+     * Registers assets from an asset index file.
+     *
+     * @param path path to the asset index file
+     */
+    public void registerFromIndex(@NotNull Path path) {
+        registerFromIndex(path.toFile());
+    }
 
     /**
      * Registers an {@link Asset} in the bundle.
@@ -58,5 +91,52 @@ public final class AssetsBundle {
             throw new NullPointerException("Asset of ID " + id + " either does not exist or " +
                                            "was attempted to be used before being registered");
         return (T) assets.get(id);
+    }
+
+    private static class AssetIndex {
+
+        private final Map<String, Asset> assets = new TreeMap<>();
+
+        @JsonProperty("animated_textures")
+        private Map<String, AnimatedTextureProperties> animatedTextures = new LinkedHashMap<>();
+        @JsonProperty("data_assets")
+        private Map<String, String> dataAssets = new LinkedHashMap<>();
+        @JsonProperty("icons")
+        private Map<String, String> icons = new LinkedHashMap<>();
+        @JsonProperty("sounds")
+        private Map<String, String> sounds = new LinkedHashMap<>();
+        @JsonProperty("textures")
+        private Map<String, String> textures = new LinkedHashMap<>();
+        @JsonProperty("texture_atlases")
+        private Map<String, String> textureAtlases = new LinkedHashMap<>();
+        @JsonProperty("typefaces")
+        private Map<String, String> typefaces = new LinkedHashMap<>();
+
+        private void registerAll(@NotNull AssetsBundle assetsBundle) {
+            dataAssets.forEach((id, path) -> assets.put(id, new DataAsset(path)));
+            icons.forEach((id, path) -> assets.put(id, new Icon(path)));
+            sounds.forEach((id, path) -> assets.put(id, new Sound(path)));
+            textures.forEach((id, path) -> assets.put(id, new Texture(path)));
+            textureAtlases.forEach((id, path) -> assets.put(id, new TextureAtlas(path)));
+            animatedTextures.forEach((id, properties) -> assets.put(id, createAnimatedTexture(properties)));
+            typefaces.forEach((id, path) -> assets.put(id, new Typeface(path)));
+            assets.forEach(assetsBundle::register);
+        }
+
+        private AnimatedTexture createAnimatedTexture(@NotNull AnimatedTextureProperties properties) {
+
+            if (properties.frameDuration == -1) throw new TextureCreationException("\"frame_duration\" property not specified");
+            if (properties.frames != null)
+                return new AnimatedTexture(properties.frames.toArray(Texture[]::new), properties.frameDuration);
+            return new AnimatedTexture(new Texture[0], properties.frameDuration);
+        }
+
+        private static class AnimatedTextureProperties {
+
+            @JsonProperty("frame_duration")
+            float frameDuration = -1;
+            @JsonProperty("frames")
+            List<Texture> frames;
+        }
     }
 }
